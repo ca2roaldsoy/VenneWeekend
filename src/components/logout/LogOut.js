@@ -10,12 +10,12 @@ function LogOut() {
   // log out user, and redirect home page
   function logOutUser() {
     logout();
-    navigate("/")
+    navigate("/login")
   }
 
   return (
     <Button onClick={logOutUser} role="button" className="logOut__btn">
-      Log Out
+      Logg ut
     </Button>
   );
 }

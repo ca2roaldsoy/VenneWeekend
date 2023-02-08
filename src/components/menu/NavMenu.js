@@ -13,6 +13,7 @@ import Protect from "./Protect";
 import LogOut from "../logout/LogOut";
 import Login from "../login/Login";
 import Home from "../home/Home";
+import Food from "../food/Food";
 //import Food from "../food/Food";
 
 function NavMenu() {
@@ -34,25 +35,13 @@ function NavMenu() {
             {/*check if user exist in local storage*/}
             {!user ? (
               <>
-                <NavLink
-                  to="/"
-                  className="navbarTop__link--item"
-                  role="link"
-                >
-                  Home
-                </NavLink>
-                <NavLink
-                  to="/contact"
-                  className="navbarTop__link--item"
-                  role="link"
-                >
-                  Contact
-                </NavLink>
-                <Login />
+                <NavLink to="/login">Logg inn</NavLink>
               </>
             ) : (
               <>
-                <NavLink to="/admin">Admin</NavLink>
+                <NavLink to="#">Meny</NavLink>
+                <NavLink to="#">Media</NavLink>
+                <NavLink to="#">Innlegg</NavLink>
                 <LogOut />
               </>
             )}
@@ -63,8 +52,9 @@ function NavMenu() {
       {/* Navigation showing correct component */}
       <Container fluid>
         <Routes>
-          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/menu" element={<Food />} />
          {/*  <Protect path="/menu" component={Meny} />
           <Protect path="/menu:id" component={MenyDetails} />
           <Protect path="/innlegg" component={Innlegg} />

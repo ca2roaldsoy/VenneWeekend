@@ -1,7 +1,7 @@
 import React from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 
-function foodMenu() {
+function FoodMenu() {
 
     <ListGroup>
         <ListGroupItem action href="#2023">
@@ -10,4 +10,4 @@ function foodMenu() {
     </ListGroup>
 }
 
-export default foodMenu;
+export default FoodMenu;
