@@ -14,7 +14,11 @@ import LogOut from "../logout/LogOut";
 import Login from "../login/Login";
 import Home from "../home/Home";
 import Food from "../food/Food";
-//import Food from "../food/Food";
+import FoodMenu from "../food/FoodMenu";
+import FoodForm from "../food/FoodForm";
+import Media from "../media/Media";
+import Posts from "../blogPost/Posts";
+import RoomSelection from "../roomSelection/RoomSelection";
 
 function NavMenu() {
   const { user } = useContext(AdminContext);
@@ -35,7 +39,6 @@ function NavMenu() {
             {/*check if user exist in local storage*/}
             {!user ? (
               <>
-                <NavLink to="/login">Logg inn</NavLink>
               </>
             ) : (
               <>
@@ -52,9 +55,10 @@ function NavMenu() {
       {/* Navigation showing correct component */}
       <Container fluid>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/menu" element={<Food />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/menu" element={<RoomSelection />} />
+          <Route path="/create-menu" element={<FoodForm />} />
          {/*  <Protect path="/menu" component={Meny} />
           <Protect path="/menu:id" component={MenyDetails} />
           <Protect path="/innlegg" component={Innlegg} />
