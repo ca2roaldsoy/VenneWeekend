@@ -1,217 +1,101 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
+import useFormPersist from 'react-hook-form-persist'
 import * as yup from "yup";
-import { Formik } from 'formik';
-import { foodMenu } from "../../constants/foodMenu"
-import Validated from "../formValidation/Validated";
-import { v4 as uuidv4 } from 'uuid';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
-const schema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  username: yup.string().required(),
-  city: yup.string().required(),
-  state: yup.string().required(),
-  zip: yup.string().required(),
-  terms: yup.bool().required().oneOf([true], 'Terms must be accepted'),
-});
 
 function FoodForm() {
-  const [validated, setValidated] = useState(false);
 
-function setLocalStorage() {
-    // add the array to local storage
-    localStorage.setItem("acommodation", JSON.stringify(foodMenu))
- }
+const loadedIngredients = JSON.parse(localStorage.getItem("foodMenu")) || [];  //new  
+const [ingredients, setIngredients] = useState(loadedIngredients);
+ 
+//validate input field
+ const schema = yup.object().shape({
+  title: yup.string().required("Please enter a name"),
+}); 
 
- useEffect(() => {
-  setLocalStorage();
- }, [])
+ const { register, handleSubmit, formState:{errors}, watch, setValue } = useForm({
+   resolver: yupResolver(schema),
+  }); 
 
- function onSubmit(data, event) {
-   console.log("data", data);
+  useFormPersist("foodMenu", {
+    watch, 
+    setValue,
+  }, {    
+    storage: window.localStorage
+  });
 
-   // push data to array
-   foodMenu.push(data);
+  useEffect(() => {
+    localStorage.setItem("foodMenu", JSON.stringify(ingredients));
+    }, [ingredients]);  
 
-   setLocalStorage();
+  function onSubmit(data, event) {
+    console.log("data", data); 
+    
+  const newIngredient = {
+      id: new Date().getTime(),
+      text: data,
+  };
+
+
+    const json = JSON.stringify(newIngredient);
+    localStorage.setItem("foodMenu", json); 
    
-   event.target.reset();
-   setValidated(true);
- }
+  }
 
- // scroll back to top after submit
- const backToTop = () => {
-   window.scrollTo({ behavior: "smooth", top: 0 });
- };
+  function addInputOnBtnClick () {
+      setIngredients(ingredients.concat(<Inputs key={ingredients.length} id={ingredients.length} />))
+  }
 
- const reset = () => setValidated(false);
+  const Inputs = () => {
+    return (
+      <Form.Group>
+        <Form.Label htmlFor={"ingredients"+ingredients.length}>Ingrediens</Form.Label>
+        <Form.Control type="text" name={"ingredients"+ingredients.length} {...register("ingredients"+ingredients.length)} />
+   {errors.ingredients && <Form.Text>{errors.ingredients.message}</Form.Text>}
+        <Button onClick={removeInputOnBtnClick}>
+        Fjern ingrediens
+      </Button>
+      </Form.Group>
+    )
+  }
+
+  function removeInputOnBtnClick (id) {
+    const updatedIngredients = [...ingredients].filter((ing) => ing.id !== id);
+    setIngredients(updatedIngredients);
+  }
+  
 
   return (
-    <Formik
-      validationSchema={schema}
-      onSubmit={onSubmit()}
-      initialValues={{
-        meal: '',
-        lastName: '',
-        username: '',
-        city: '',
-        state: '',
-        zip: '',
-        terms: false,
-      }}
-    >
-      {({
-        handleSubmit,
-        handleChange,
-        values,
-        touched,
-        isValid,
-        errors,
-      }) => (
-        <>
-        <Validated validated={validated} message={3} />
-        <Form noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Row className="mb-3">
-          <Form.Group as={Col} md="4" controlId="validationFormikName">
-              <Form.Label>Matrett</Form.Label>
-              <InputGroup hasValidation>
-                <Form.Control
-                  type="text"
-                  placeholder="Matrett"
-                  name="meal"
-                  value={values.meal}
-                  onChange={handleChange}
-                  isInvalid={!!errors.meal}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.meal}
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationFormik02">
-              <Form.Label>Last name</Form.Label>
-              <Form.Control
-                type="text"
-                name="lastName"
-                value={values.lastName}
-                onChange={handleChange}
-                isValid={touched.lastName && !errors.lastName}
-              />
+    <>
+      <Form onSubmit={handleSubmit(onSubmit)} role="form">
+        <Form.Group>
+          <Form.Label htmlFor="title">Tittel</Form.Label>
+          <Form.Control type="text" name="title" {...register("title")} />
+          {errors.title && <Form.Text>{errors.title.message}</Form.Text>}  
+        </Form.Group>
 
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationFormikUsername">
-              <Form.Label>Username</Form.Label>
-              <InputGroup hasValidation>
-                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  placeholder="Username"
-                  aria-describedby="inputGroupPrepend"
-                  name="username"
-                  value={values.username}
-                  onChange={handleChange}
-                  isInvalid={!!errors.username}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.username}
-                </Form.Control.Feedback>
-              </InputGroup>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="6" controlId="validationFormik03">
-              <Form.Label>City</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="City"
-                name="city"
-                value={values.city}
-                onChange={handleChange}
-                isInvalid={!!errors.city}
-              />
+        <Form.Group>
+          <Form.Label htmlFor="ingredients">Ingredients</Form.Label>
+          <Form.Control type="text" name="ingredients" {...register("ingredients")} />
+          {errors.ingredients && <Form.Text>{errors.ingredients.message}</Form.Text>}
+        </Form.Group>
 
-              <Form.Control.Feedback type="invalid">
-                {errors.city}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationFormik04">
-              <Form.Label>State</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="State"
-                name="state"
-                value={values.state}
-                onChange={handleChange}
-                isInvalid={!!errors.state}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.state}
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationFormik05">
-              <Form.Label>Zip</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Zip"
-                name="zip"
-                value={values.zip}
-                onChange={handleChange}
-                isInvalid={!!errors.zip}
-              />
+      {ingredients}
 
-              <Form.Control.Feedback type="invalid">
-                {errors.zip}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Form.Group className="mb-3">
-            <Form.Check
-              required
-              name="terms"
-              label="Agree to terms and conditions"
-              onChange={handleChange}
-              isInvalid={!!errors.terms}
-              feedback={errors.terms}
-              feedbackType="invalid"
-              id="validationFormik0"
-            />
-          </Form.Group>
-          <Col lg={12}>
-                <Form.Group className="form__btn" as="section">
-                  <Button
-                    type="submit"
-                    role="button"
-                    onClick={backToTop}
-                    className="form__btn--submit"
-                  >
-                    SUBMIT
-                  </Button>
-                  <Button
-                    type="reset"
-                    onClick={reset}
-                    role="button"
-                    className="form__btn--reset"
-                  >
-                    Reset
-                  </Button>
-                </Form.Group>
-              </Col>
+        <Button onClick={addInputOnBtnClick}>
+          Legg til ingrediens
+        </Button>
 
-              <Form.Group as="section">
-                  <Form.Control type="hidden" name="id" value={uuidv4()} />
-                </Form.Group>
-        </Form>
-        </>
-      )}
-    </Formik>
-  );
-}
-
+        <Button type="submit" role="button">
+          Lagre
+        </Button>
+      </Form>
+    </>
+  ); 
+  }
 
 export default FoodForm;
