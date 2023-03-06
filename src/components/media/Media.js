@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageUploading from 'react-images-uploading';
 
-export function App() {
+export function Media() {
   const [images, setImages] = React.useState([]);
   const maxNumber = 100;
 
@@ -56,4 +56,7 @@ export function App() {
       </ImageUploading>
     </div>
   );
+
+
 }
+export default Media
