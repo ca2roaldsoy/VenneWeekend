@@ -10,7 +10,7 @@ function LogOut() {
   // log out user, and redirect home page
   function logOutUser() {
     logout();
-    navigate("/login")
+    navigate("/")
   }
 
   return (
