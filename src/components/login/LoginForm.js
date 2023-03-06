@@ -32,7 +32,7 @@ function LoginForm() {
     console.log("data", data);
 
     localStoreUser(data.userName);
-    history("/");
+    history("/home");
 
     // reset field after login
     event.target.reset();
