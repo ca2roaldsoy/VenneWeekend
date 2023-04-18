@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Button from "react-bootstrap/Button";
@@ -6,23 +6,26 @@ import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
 import { AdminContext } from "../../context/AdminContext";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+import { FormText } from "react-bootstrap";
 
 // validate input field
 const schema = yup.object().shape({
-  userName: yup.string().required("Please enter your username"),
+  username: yup.string().required("Please enter your username"),
   password: yup
     .string()
-    .min(8, "Password must contain of least 8 characters")
     .required()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      "Password must contain of one lower case letter, one uppercase letter and one number"
-    ),
-});
+}); 
 
 function LoginForm() {
-  const { register, handleSubmit, formState:{errors} } = useForm({
-    //validationSchema: schema,
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState("");
+
+
+  axios.defaults.withCredentials = true;
+
+  const { register, handleSubmit, formState:{errors}} = useForm({
     resolver: yupResolver(schema)
   });
   const { localStoreUser } = useContext(AdminContext);
@@ -31,31 +34,57 @@ function LoginForm() {
   function onSubmit(data, event) {
     console.log("data", data);
 
-    localStoreUser(data.userName);
-    history("/home");
+    axios.post("http://localhost:3001/login", {
+      username: data.username, 
+      password: data.password,
+    }).then((response) => {
+      console.log(response);
+      if(!response.data.auth) {
+        setLoggedIn(response.data.message)
+        history("/");
+      } else {
+        setLoggedIn("")
+        localStorage.setItem("token", response.data.token)
+        localStoreUser(response.data.auth);
+        history("/home");
+      }
+    });
 
     // reset field after login
     event.target.reset();
   }
 
+  /* const isAuth = () => {
+    axios.get("http://localhost:3001/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      }
+    }).then((response) => console.log(response));
+  } */
+
   return (
     <>
-      <Form onSubmit={handleSubmit(onSubmit)} role="form">
+     <Form onSubmit={handleSubmit(onSubmit)} role="form">
         <Form.Group>
-          <Form.Label htmlFor="username">Username</Form.Label>
-          <Form.Control type="text" name="userName" {...register("userName")} />
-         {errors.userName && <Form.Text>{errors.userName.message}</Form.Text>}
+          <Form.Label htmlFor="username" required >Brukernavn</Form.Label>
+          <Form.Control type="text" name="username" {...register("username", {
+            onChange:((e) => setUsername(e.target.value))
+          })} />
+          {errors.username && <Form.Text>{errors.username.message}</Form.Text>}
         </Form.Group>
 
         <Form.Group>
-          <Form.Label htmlFor="password">Password</Form.Label>
-          <Form.Control type="password" name="password" {...register("password")}  />
-          {errors.password && <Form.Text>{errors.password.message}</Form.Text>}
+          <Form.Label htmlFor="password" required >Passord</Form.Label>
+          <Form.Control type="password" name="password" {...register("password", {
+            onChange: ((e) => setPassword(e.target.value))
+          })}  />
+           {errors.password && <Form.Text>{errors.password.message}</Form.Text>}
         </Form.Group>
 
         <Button type="submit" role="button">
           Logg Inn
         </Button>
+        <FormText>{loggedIn}</FormText>
       </Form>
     </>
   );
