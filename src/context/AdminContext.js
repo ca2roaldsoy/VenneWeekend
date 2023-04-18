@@ -1,4 +1,5 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
+import axios from "axios";
 
 // create context to work with all components
 
@@ -10,7 +11,6 @@ const AdminContextProvider = ({ children }) => {
 
   function localStoreUser(user) {
     localStorage.setItem("user", user);
-
     setUser(user);
   }
 
@@ -18,6 +18,7 @@ const AdminContextProvider = ({ children }) => {
   function logout() {
     setUser(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
   }
 
   return (
