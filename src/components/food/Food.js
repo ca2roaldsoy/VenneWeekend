@@ -6,7 +6,7 @@ function Food() {
     return (
         <Container className="containerForm">
           <div className="containerForm__form">
-            <h2 className="text-center">Create New Menu</h2>
+            <h2 className="text-center">Opprett meny</h2>
             <FoodForm />
           </div> 
         </Container>
