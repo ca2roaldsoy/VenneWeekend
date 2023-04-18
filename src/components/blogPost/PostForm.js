@@ -8,36 +8,33 @@ import { AdminContext } from "../../context/AdminContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { blogPosts } from "../../constants/blogPosts";
 import useFormPersist from 'react-hook-form-persist'
+import Axios from "axios";
 
 // validate input field
 const schema = yup.object().shape({
   userName: yup.string().required("Please enter your username"),
-  password: yup
+  message: yup
     .string()
-    .min(8, "Password must contain of least 8 characters")
-    .required()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      "Password must contain of one lower case letter, one uppercase letter and one number"
-    ),
 });
 
-const getForm = () => {
+/* const getForm = () => {
     const storedValues = localStorage.getItem("blogPosts");
     if (!storedValues)
       return {
         name: "",
+        title: "",
+        message: ""
       };
     return JSON.parse(storedValues);
-  };
+  }; */
 
 function PostForm() {
 
-const [values, setValues] = useState(getForm);
+const [values, setValues] = useState([]);
 
-useEffect(() => {
+/* useEffect(() => {
     localStorage.setItem("blogPosts", JSON.stringify(values));
-  }, [values]);
+  }, [values]); */
 
 const { register, handleSubmit, formState:{errors}} = useForm({
     //validationSchema: schema,
@@ -53,8 +50,13 @@ const { register, handleSubmit, formState:{errors}} = useForm({
 
   function onSubmit(data, event) {
     console.log("data", data);
+    /* event.preventDefault() */
+
+    Axios.post("http://localhost:3001/post/insert", {author: data.userName, title: data.title, message: data.message});
+    setValues([...values, {author: data.userName, title: data.title, message: data.message }])
 
     localStorage.setItem("blogPosts", JSON.stringify(data));
+    setValues(data)
 
   }
 
@@ -68,6 +70,20 @@ const { register, handleSubmit, formState:{errors}} = useForm({
             value: values.name
           })} />
          {errors.userName && <Form.Text>{errors.userName.message}</Form.Text>}
+
+         <Form.Label htmlFor="title">Tittel</Form.Label>
+          <Form.Control type="text" name="title" {...register("title", {
+            onChange: handleChange, 
+            value: values.title
+          })} />
+         {errors.message && <Form.Text>{errors.message.message}</Form.Text>}
+
+         <Form.Label htmlFor="message">Melding</Form.Label>
+          <Form.Control type="text" name="message" {...register("message", {
+            onChange: handleChange, 
+            value: values.message
+          })} />
+         {errors.message && <Form.Text>{errors.message.message}</Form.Text>}
         </Form.Group>
 
         <Button type="submit" role="button">
