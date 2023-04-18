@@ -33,8 +33,8 @@ function NavMenu() {
     <Router>
       <Navbar role="navigation" expand="sm" className="navbarTop">
         <Navbar.Brand as="h1" className="navbarTop__title">
-          <NavLink to="/" role="link" className="navbarTop__title--text">
-            Holidaze
+          <NavLink to="/home" role="link" className="navbarTop__title--text">
+            VenneWeekend
           </NavLink>
         </Navbar.Brand>
 
@@ -48,9 +48,12 @@ function NavMenu() {
               </>
             ) : (
               <>
-                <NavLink to="#">Meny</NavLink>
-                <NavLink to="#">Media</NavLink>
-                <NavLink to="#">Innlegg</NavLink>
+                <NavLink to="/participate">Delta</NavLink>
+                <NavLink to="/menu">Meny</NavLink>
+                <NavLink to="/foodtable">Mattabell</NavLink>
+                <NavLink to="/media">Media</NavLink>
+                <NavLink to="/posts">Innlegg</NavLink>
+                <NavLink to="/roomselection">Rom seleksjon</NavLink>
                 <LogOut />
               </>
             )}
@@ -63,7 +66,12 @@ function NavMenu() {
         <Routes>
           <Route element={<Protect />}>
             <Route element={<Home />} path="/home" />
-            <Route element={<ParticipateForm />} path="/menu" />
+            <Route element={<ParticipateForm />} path="/participate" />
+            <Route element={<Food />} path="/menu" />
+            <Route element={<FoodTable />} path="/foodtable" />
+            <Route element={<Media />} path="/media" />
+            <Route element={<Posts />} path="/posts" />
+            <Route element={<RoomSelection />} path="/roomselection" />
           </Route>
           <Route path="/" element={<Login />} />
         </Routes>

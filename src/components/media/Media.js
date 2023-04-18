@@ -36,18 +36,18 @@ export function Media() {
               {...dragProps}
               className="btn btn-primary"
             >
-              Upload Image
+              Last opp bildet
             </button>
             &nbsp;
-            <button onClick={onImageRemoveAll} className="btn btn-danger">Remove all images</button>
+            <button onClick={onImageRemoveAll} className="btn btn-danger">Slett alle bildene</button>
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
                 <h3>2022</h3>
                 <hr />
                 <img src={image['data_url']} alt="" width="100" />
                 <div className="image-item__btn-wrapper">
-                  <button onClick={() => onImageUpdate(index)}>Update</button>
-                  <button onClick={() => onImageRemove(index)}>Remove</button>
+                  <button onClick={() => onImageUpdate(index)}>Oppdater</button>
+                  <button onClick={() => onImageRemove(index)}>Slett</button>
                 </div>
               </div>
             ))}
