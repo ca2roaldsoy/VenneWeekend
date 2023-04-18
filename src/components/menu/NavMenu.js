@@ -14,14 +14,20 @@ import LogOut from "../logout/LogOut";
 import Login from "../login/Login";
 import Home from "../home/Home";
 import Food from "../food/Food";
-import FoodMenu from "../food/FoodMenu";
 import FoodForm from "../food/FoodForm";
 import Media from "../media/Media";
 import Posts from "../blogPost/Posts";
 import RoomSelection from "../roomSelection/RoomSelection";
+import FoodTable from "../foodTable/FoodTable";
+import PostForm from "../blogPost/PostForm"
+import ParticipentsForm from "../participate/ParticipateForm";
+import ParticipateForm from "../participate/ParticipateForm";
+import Registration from "../registration/Registration";
 
 function NavMenu() {
   const { user } = useContext(AdminContext);
+
+  console.log(user);
 
   return (
     <Router>
@@ -55,15 +61,11 @@ function NavMenu() {
       {/* Navigation showing correct component */}
       <Container fluid>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route element={<Protect />}>
+            <Route element={<Home />} path="/home" />
+            <Route element={<ParticipateForm />} path="/menu" />
+          </Route>
           <Route path="/" element={<Login />} />
-          <Route path="/menu" element={<RoomSelection />} />
-          <Route path="/create-menu" element={<FoodForm />} />
-         {/*  <Protect path="/menu" component={Meny} />
-          <Protect path="/menu:id" component={MenyDetails} />
-          <Protect path="/innlegg" component={Innlegg} />
-          <Protect path="/innlegg:id" component={InnleggDetails} />
-          <Protect path="/media" component={Media} /> */}
         </Routes>
       </Container>
     </Router>
