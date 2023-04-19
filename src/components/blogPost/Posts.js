@@ -12,8 +12,8 @@ function Posts () {
      axios.get("http://localhost:3001/post/get").then((response) => setPosts(response.data));
       }, [posts]);
 
-      const deletePost = (blogTitle) => {
-        axios.delete(`http://localhost:3001/post/delete/${blogTitle}`)
+      const deletePost = (id) => {
+        axios.delete(`http://localhost:3001/post/delete/${id}`)
       }
 
       const updatePost = (blogTitle) => {
@@ -25,19 +25,19 @@ function Posts () {
 
     return (
         <>
-        <h1>Hello</h1>
-        {posts.map(p => {
-            return( 
-            <> 
-            <h1>Author: {p.author} {p.title} {p.message}</h1> 
-            <Button onClick={() => (deletePost(p.title))}>Delete</Button> 
-            <input type="text" id="updateInput" onChange={(e) => {
-              setNewPost(e.target.value)
-            }} /> 
-            <Button onClick={() => (updatePost(p.title))}>Update</Button>
-            </>
-            )
-          })}
+          <h1>Hello</h1>
+            {posts.map(p => {
+                return( 
+                <> 
+                  <h1>Author: {p.author} {p.title} {p.message}</h1> 
+                  <Button onClick={() => (deletePost(p.id))}>Delete</Button> 
+                  <input type="text" id="updateInput" onChange={(e) => {
+                    setNewPost(e.target.value)
+                  }} /> 
+                  <Button onClick={() => (updatePost(p.title))}>Update</Button>
+                </>
+                )
+              })}
         </>
     )
 }

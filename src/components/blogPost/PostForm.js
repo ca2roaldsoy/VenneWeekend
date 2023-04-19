@@ -12,7 +12,7 @@ import Axios from "axios";
 
 // validate input field
 const schema = yup.object().shape({
-  userName: yup.string().required("Please enter your username"),
+  userName: yup.string().required("Dette feltet må fylles"),
   message: yup
     .string()
 });
@@ -53,10 +53,10 @@ const { register, handleSubmit, formState:{errors}} = useForm({
     /* event.preventDefault() */
 
     Axios.post("http://localhost:3001/post/insert", {author: data.userName, title: data.title, message: data.message});
-    setValues([...values, {author: data.userName, title: data.title, message: data.message }])
+    //setValues([...values, {author: data.userName, title: data.title, message: data.message }])
 
-    localStorage.setItem("blogPosts", JSON.stringify(data));
-    setValues(data)
+    /* localStorage.setItem("blogPosts", JSON.stringify(data));
+    setValues(data) */
 
   }
 
@@ -64,7 +64,7 @@ const { register, handleSubmit, formState:{errors}} = useForm({
     <>
       <Form onSubmit={handleSubmit(onSubmit)} role="form">
         <Form.Group>
-          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Label htmlFor="username">Forfatter</Form.Label>
           <Form.Control type="text" name="userName" {...register("userName", {
             onChange: handleChange, 
             value: values.name
@@ -79,7 +79,7 @@ const { register, handleSubmit, formState:{errors}} = useForm({
          {errors.message && <Form.Text>{errors.message.message}</Form.Text>}
 
          <Form.Label htmlFor="message">Melding</Form.Label>
-          <Form.Control type="text" name="message" {...register("message", {
+          <Form.Control as="textarea" type="text" name="message" {...register("message", {
             onChange: handleChange, 
             value: values.message
           })} />
