@@ -53,6 +53,7 @@ function NavMenu() {
                 <NavLink to="/foodtable">Mattabell</NavLink>
                 <NavLink to="/media">Media</NavLink>
                 <NavLink to="/posts">Innlegg</NavLink>
+                <NavLink to="/postform">InnleggForm</NavLink>
                 <NavLink to="/roomselection">Rom seleksjon</NavLink>
                 <LogOut />
               </>
@@ -70,6 +71,7 @@ function NavMenu() {
             <Route element={<Food />} path="/menu" />
             <Route element={<FoodTable />} path="/foodtable" />
             <Route element={<Media />} path="/media" />
+            <Route element={<PostForm />} path="/postform" />
             <Route element={<Posts />} path="/posts" />
             <Route element={<RoomSelection />} path="/roomselection" />
           </Route>
