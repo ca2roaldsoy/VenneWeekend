@@ -1,34 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { Button } from 'react-bootstrap';
-
-
-const persons = [
-  { id: "1", content: "Person 1" },
-  { id: "2", content: "Person 2" },
-  { id: "3", content: "Person 3" },
-  { id: "4", content: "Person 4" },
-  { id: "5", content: "Person 5" }
-];
-
-const rooms = {
-  persons: {
-    name: "Persons",
-    items: persons
-  },
-  room1: {
-    name: "Room 1",
-    items: []
-  },
-  room2: {
-    name: "Room 2",
-    items: []
-  },
-  room3: {
-    name: "Room 3",
-    items: []
-  }
-};
+import axios from 'axios';
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -69,7 +42,56 @@ const onDragEnd = (result, columns, setColumns) => {
 
 function RoomSelection() {
   const [columns, setColumns] = useState(JSON.parse(localStorage.getItem("RS")) || []);
+  const [participents, setParticipents] = useState({})
+  
+  
+  useEffect(() => {
+    axios.get("http://localhost:3001/participents/get").then((response) => setParticipents(response.data));
+  }, []); 
 
+  const personss = [
+   { id: "2", content: "Person 2" },
+    { id: "3", content: "Person 3" },
+    { id: "4", content: "Person 4" },
+    { id: "5", content: "Person 5" } ]
+
+    console.log(personss);
+
+  const persons = [];
+  (() => {
+    for(let i=0; i<participents.length; i++) {
+      const participentId = participents[i].id; 
+      const participentName = participents[i].name;
+      
+      const obj = {
+        id: participentId.toString(),
+        content: participentName
+      }
+
+      persons.push(obj)
+    }
+  })()
+  
+
+ const rooms = {
+    persons: {
+      name: "Persons",
+      items: persons
+    },
+    room1: {
+      name: "Room 1",
+      items: []
+    },
+    room2: {
+      name: "Room 2",
+      items: []
+    },
+    room3: {
+      name: "Room 3",
+      items: []
+    }
+  }; 
+  
   const reset = () => setColumns(rooms)
 
   useEffect(() => {
