@@ -3,14 +3,21 @@ import { Button } from "react-bootstrap";
 
 function ReadOnlyParticipents({ person, handleEditClick, handleDeleteClick}) {
 
-  const arr = [person.lactose, person.gluten, person.other];
-  const removeEmptyStrings = arr.filter(a => a !== "").join(", ");
+  console.log(person);
+
+  const allergiesArr = [person.lactose, person.gluten, person.other];
+  const removeEmptyStringsFromAllergies = allergiesArr.filter(a => a !== "").join(", ");
+
+  const daysArr = [person.friday, person.saturday, person.sunday, person.monday];
+  const removeEmptyStringsFromDays = daysArr.filter(b => b !== "").join(", ");
 
   return (
     <tr>
       <td>{person.name}</td>
+      <td>{person.age}</td>
+      <td>{removeEmptyStringsFromDays}</td>
       <td>{person.sheets}</td>
-      <td>{removeEmptyStrings}</td>
+      <td>{removeEmptyStringsFromAllergies}</td>
       <td>
         <Button
           type="button"

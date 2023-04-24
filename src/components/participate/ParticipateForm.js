@@ -22,6 +22,11 @@ function ParticipateForm () {
 
   const [addFormData, setAddFormData] = useState({
     name: "",
+    age: "",
+    friday: "",
+    saturday: "",
+    sunday: "",
+    monday: "",
     sheets: "",
     lactose: "",
     gluten: "",
@@ -30,7 +35,13 @@ function ParticipateForm () {
 
   const [editFormData, setEditFormData] = useState({
     name: "",
+    age: "",
+    friday: "",
+    saturday: "",
+    sunday: "",
+    monday: "",
     sheets: "",
+    days: "",
     lactose: "",
     gluten: "",
     other: ""
@@ -53,6 +64,32 @@ function ParticipateForm () {
     }, []);  
 
   const handleAddFormChange = (event) => {
+
+    console.log(event.target.name);
+
+    if(event.target.checked && event.target.name === "friday") {
+      addFormData.friday = event.target.name;
+    } else if(!event.target.checked && event.target.name === "friday") {
+      addFormData.friday = "";
+    }
+
+    if(event.target.checked && event.target.name === "saturday") {
+      addFormData.saturday = event.target.name;
+    } else if(!event.target.checked && event.target.name === "saturday") {
+      addFormData.saturday = "";
+    }
+
+    if(event.target.checked && event.target.name === "sunday") {
+      addFormData.sunday = event.target.name;
+    } else if(!event.target.checked && event.target.name === "sunday") {
+      addFormData.sunday = "";
+    }
+
+    if(event.target.checked && event.target.name === "monday") {
+      addFormData.monday = event.target.name;
+    } else if(!event.target.checked && event.target.name === "monday") {
+      addFormData.monday = "";
+    }
 
     if(event.target.checked && event.target.name === "laktose") {
       addFormData.lactose = event.target.name;
@@ -97,6 +134,11 @@ function ParticipateForm () {
 
     const newParticipent = {
       name: addFormData.name,
+      age: addFormData.age,
+      friday: addFormData.friday,
+      saturday: addFormData.saturday,
+      sunday: addFormData.sunday,
+      monday: addFormData.monday,
       sheets: addFormData.sheets,
       lactose: addFormData.lactose,
       gluten: addFormData.gluten,
@@ -115,6 +157,11 @@ function ParticipateForm () {
     const editedParticipent = {
       id: editPersonId,
       name: editFormData.name,
+      age: editFormData.age,
+      friday: editFormData.friday,
+      saturday: editFormData.saturday,
+      sunday: editFormData.sunday,
+      monday: editFormData.monday,
       sheets: editFormData.sheets,
       lactose: editFormData.lactose,
       gluten: editFormData.gluten,
@@ -137,6 +184,11 @@ function ParticipateForm () {
 
     const FormValues = {
       name: person.name,
+      age: person.age,
+      friday: person.friday,
+      saturday: person.saturday,
+      sunday: person.sunday,
+      monday: person.monday,
       sheets: person.sheets,
       lactose: person.lactose,
       gluten: person.gluten,
@@ -196,6 +248,8 @@ function ParticipateForm () {
           <thead>
             <tr>
               <th>Navn</th>
+              <th>Alder</th>
+              <th>Antall dager</th>
               <th>Sengtøy</th>
               <th>Allergener</th>
               <th></th>
@@ -245,6 +299,48 @@ function ParticipateForm () {
           onChange={handleAddFormChange}
           autoFocus
         />
+        <Form.Control
+          type="number"
+          name="age"
+          placeholder="Alder"
+          onChange={handleAddFormChange}
+        />
+          <Form.Check type={"checkbox"}>
+    <Form.Check.Input
+      type={"checkbox"}
+      value="Fredag"
+      name="friday"
+      onChange={handleAddFormChange}
+    />
+    <Form.Check.Label>Fredag</Form.Check.Label>
+  </Form.Check>
+  <Form.Check type={"checkbox"}>
+    <Form.Check.Input
+      type={"checkbox"}
+      value="Lørdag"
+      name="saturday"
+      onChange={handleAddFormChange}
+    />
+    <Form.Check.Label>Lørdag</Form.Check.Label>
+  </Form.Check>
+  <Form.Check type={"checkbox"}>
+    <Form.Check.Input
+      type={"checkbox"}
+      value="Søndag"
+      name="sunday"
+      onChange={handleAddFormChange}
+    />
+    <Form.Check.Label>Søndag</Form.Check.Label>
+  </Form.Check>
+  <Form.Check type={"checkbox"}>
+    <Form.Check.Input
+      type={"checkbox"}
+      value="Mandag"
+      name="monday"
+      onChange={handleAddFormChange}
+    />
+    <Form.Check.Label>Mandag</Form.Check.Label>
+  </Form.Check>
         <Form.Check type={"checkbox"}>
     <Form.Check.Input
       type={"checkbox"}
@@ -254,7 +350,7 @@ function ParticipateForm () {
     />
     <Form.Check.Label>Sengetøy</Form.Check.Label>
   </Form.Check>
-        <Form.Check type={"checkbox"}>
+  <Form.Check type={"checkbox"}>
     <Form.Check.Input
       type={"checkbox"}
       value="laktose"
