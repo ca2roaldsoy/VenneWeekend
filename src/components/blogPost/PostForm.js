@@ -8,11 +8,14 @@ import { AdminContext } from "../../context/AdminContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { blogPosts } from "../../constants/blogPosts";
 import useFormPersist from 'react-hook-form-persist'
-import Axios from "axios";
+import axios from "axios";
+import EditPostRow from "./EditPostRow";
+import ReadOnlyPostRow from "./ReadOnlyPostRow";
+import { Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter, Table } from "react-bootstrap";
 
 // validate input field
 const schema = yup.object().shape({
-  userName: yup.string().required("Dette feltet må fylles"),
+  author: yup.string().required("Dette feltet må fylles"),
   message: yup
     .string()
 });
@@ -30,68 +33,190 @@ const schema = yup.object().shape({
 
 function PostForm() {
 
-const [values, setValues] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [editPostId, setEditPostId] = useState(null);
+  const [show, setShow] = useState(false);
 
-/* useEffect(() => {
-    localStorage.setItem("blogPosts", JSON.stringify(values));
-  }, [values]); */
-
-const { register, handleSubmit, formState:{errors}} = useForm({
-    //validationSchema: schema,
-    resolver: yupResolver(schema)
+  const [addFormData, setAddFormData] = useState({
+    author: "",
+    title: "",
+    message: "",
   });
 
-  const handleChange = (e) => {
-    setValues((previousValues) => ({
-      ...previousValues,
-      [e.target.name]: e.target.value,
-    }))
-  }
+  const [editFormData, setEditFormData] = useState({
+    author: "",
+    title: "",
+    message: "",
+  });
 
-  function onSubmit(data, event) {
-    console.log("data", data);
-    /* event.preventDefault() */
+  const { watch, setValue } = useForm({
+    resolver: yupResolver(schema),
+   }); 
 
-    Axios.post("http://localhost:3001/post/insert", {author: data.userName, title: data.title, message: data.message});
-    //setValues([...values, {author: data.userName, title: data.title, message: data.message }])
+  useFormPersist("post", {
+    watch, 
+    setValue,
+  }, {    
+    storage: window.localStorage
+  }); 
 
-    /* localStorage.setItem("blogPosts", JSON.stringify(data));
-    setValues(data) */
+  useEffect(() => {
+    //localStorage.setItem("foodTable", JSON.stringify(posts));
+    axios.get("http://localhost:3001/post/get").then((response) => setPosts(response.data));
+    }, []);  
 
-  }
+  const handleAddFormChange = (event) => {
 
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...addFormData };
+    newFormData[fieldName] = fieldValue;
+
+    setAddFormData(newFormData);
+  };
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...editFormData };
+    newFormData[fieldName] = fieldValue;
+
+    setEditFormData(newFormData);
+  };
+
+  const handleAddFormSubmit = (event) => {
+
+    const newPost = {
+      author: addFormData.author,
+      title: addFormData.title,
+      message: addFormData.message,
+    };
+
+    axios.post("http://localhost:3001/post/insert", newPost);
+    const newposts = [...posts, newPost];
+    setPosts(newposts);
+  };
+
+  const handleEditFormSubmit = (event) => {
+    //event.preventDefault();
+
+    const editedPost = {
+      id: editPostId,
+      author: editFormData.author,
+      title: editFormData.title,
+      message: editFormData.message,
+    };
+
+    axios.put(`http://localhost:3001/post/update`, editedPost)
+    const newposts = [...posts];
+    const index = posts.findIndex((ing) => ing.id === editPostId);
+    newposts[index] = editedPost;
+
+    setPosts(newposts);
+    setEditPostId(null);
+  };
+
+  const handleEditClick = (event, p) => {
+   //event.preventDefault();
+    setEditPostId(p.id);
+
+    const FormValues = {
+      author: p.author,
+      title: p.title,
+      message: p.message,
+    };
+
+    setEditFormData(FormValues);
+  };
+
+  const handleCancelClick = () => {
+    setEditPostId(null);
+  };
+
+  const handleDeleteClick = (postId) => {
+    const newposts = [...posts];
+    const index = posts.findIndex((p) => p.id === postId);
+
+    newposts.splice(index, 1);
+    axios.delete(`http://localhost:3001/post/delete/${postId}`)
+    setPosts(newposts);
+  };
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+ 
   return (
     <>
-      <Form onSubmit={handleSubmit(onSubmit)} role="form">
-        <Form.Group>
-          <Form.Label htmlFor="username">Forfatter</Form.Label>
-          <Form.Control type="text" name="userName" {...register("userName", {
-            onChange: handleChange, 
-            value: values.name
-          })} />
-         {errors.userName && <Form.Text>{errors.userName.message}</Form.Text>}
-
-         <Form.Label htmlFor="title">Tittel</Form.Label>
-          <Form.Control type="text" name="title" {...register("title", {
-            onChange: handleChange, 
-            value: values.title
-          })} />
-         {errors.message && <Form.Text>{errors.message.message}</Form.Text>}
-
-         <Form.Label htmlFor="message">Melding</Form.Label>
-          <Form.Control as="textarea" type="text" name="message" {...register("message", {
-            onChange: handleChange, 
-            value: values.message
-          })} />
-         {errors.message && <Form.Text>{errors.message.message}</Form.Text>}
-        </Form.Group>
-
-        <Button type="submit" role="button">
-          Add Post
-        </Button>
+      <Button variant="primary" onClick={handleShow}> Skriv ny melding </Button>
+      <Form onSubmit={handleEditFormSubmit} className="mt-5">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Forfatter</th>
+              <th>Tittel</th>
+              <th>Melding</th>
+            </tr>
+          </thead>
+          <tbody>
+            {posts.map((p, i) => (
+              <>
+                {editPostId === p.id ? (
+                  <EditPostRow
+                    key={p.id}
+                    handleEditFormSubmit={handleEditFormSubmit}
+                    editFormData={editFormData}
+                    handleEditFormChange={handleEditFormChange}
+                    handleCancelClick={handleCancelClick}
+                  />
+                ) : (
+                  <ReadOnlyPostRow
+                    key={p.id}
+                    p={p}
+                    handleEditClick={handleEditClick}
+                    handleDeleteClick={handleDeleteClick}
+                  />
+                )}
+              </>
+            ))}
+          </tbody>
+        </Table>
       </Form>
+
+      <Modal show={show} onHide={handleClose}>
+        <ModalHeader closeButton>
+          <ModalTitle>Skriv ny melding</ModalTitle>
+        </ModalHeader>
+        <ModalBody>
+      <Form onSubmit={handleAddFormSubmit}>
+        <Form.Control
+          type="text"
+          required
+          name="author"
+          onChange={handleAddFormChange}
+          autoFocus
+        />
+        <Form.Control
+          type="text"
+          name="title"
+          onChange={handleAddFormChange}
+        />
+        <Form.Control
+          type="text"
+          name="message"
+          onChange={handleAddFormChange}
+        />
+        <ModalFooter>
+          <Button type="submit" variant="success">Lagre</Button>
+        </ModalFooter>
+      </Form>
+        </ModalBody>
+        </Modal>
     </>
   );
-}
+};
 
 export default PostForm;

@@ -1,41 +1,26 @@
 import axios from "axios";
 import React, {useState, useEffect} from "react";
-import { Button } from "react-bootstrap";
-
+import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function Posts () {
     const [posts, setPosts] = useState([])
 
-    const [newPost, setNewPost] = useState("");
-
     useEffect(() => {
-     axios.get("http://localhost:3001/post/get").then((response) => setPosts(response.data));
-      }, [posts]);
-
-      const deletePost = (id) => {
-        axios.delete(`http://localhost:3001/post/delete/${id}`)
-      }
-
-      const updatePost = (blogTitle) => {
-        axios.put(`http://localhost:3001/post/update`, {author: posts.userName, title: blogTitle, message: newPost})
-        setNewPost("")
-      }
-    
-      
+     axios.get("http://localhost:3001/post/get").then((response) =>{setPosts(response.data)});
+      }, []);
 
     return (
         <>
-          <h1>Hello</h1>
-            {posts.map(p => {
+          <h1>Innlegg</h1>
+            {posts.map((p, i) => {
                 return( 
-                <> 
-                  <h1>Author: {p.author} {p.title} {p.message}</h1> 
-                  <Button onClick={() => (deletePost(p.id))}>Delete</Button> 
-                  <input type="text" id="updateInput" onChange={(e) => {
-                    setNewPost(e.target.value)
-                  }} /> 
-                  <Button onClick={() => (updatePost(p.title))}>Update</Button>
-                </>
+                <Card key={i}> 
+                  <Card.Title>{p.title}</Card.Title>
+                  <Card.Text>{p.message}</Card.Text>
+                  <Card.Footer>{p.author}, {new Date().getFullYear()+"/"+new Date().getMonth()+"/"+new Date().getDate()}</Card.Footer>
+                  <Link to={`${p.title}/${p.id}`}><Button>Les mer</Button></Link>
+                </Card>
                 )
               })}
         </>
