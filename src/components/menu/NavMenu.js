@@ -23,6 +23,8 @@ import PostForm from "../blogPost/PostForm"
 import ParticipentsForm from "../participate/ParticipateForm";
 import ParticipateForm from "../participate/ParticipateForm";
 import Registration from "../registration/Registration";
+import PostsDetails from "../blogPost/PostsDetails";
+import Map from "../map/Map";
 
 function NavMenu() {
   const { user } = useContext(AdminContext);
@@ -73,7 +75,9 @@ function NavMenu() {
             <Route element={<Media />} path="/media" />
             <Route element={<PostForm />} path="/postform" />
             <Route element={<Posts />} path="/posts" />
+            <Route element={<PostsDetails />} path="/posts/:title/:id" />
             <Route element={<RoomSelection />} path="/roomselection" />
+            <Route element={<Map />} path="/kart" />
           </Route>
           <Route path="/" element={<Login />} />
         </Routes>
