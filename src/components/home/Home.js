@@ -1,18 +1,15 @@
-import React, { useState, useEffect, useRef, forwardRef } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import LundenImg from "../../images/lunden_img.jpg";
-import { Button, Col, Figure, Card, Stack } from "react-bootstrap";
+import { Button, Col, Figure, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import ImgCarousel from "./ImgCarousel";
 import Carousel from "react-multi-carousel";
 
 function Home() {
   const [posts, setPosts] = useState([]);
   const [data, setData] = useState([]);
-  const elementRef = useRef();
 
   useEffect(() => {
     axios.get("http://localhost:3001/post/get").then((response) => {
@@ -61,7 +58,6 @@ function Home() {
 
   const responsive = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 5,
     },
@@ -71,13 +67,40 @@ function Home() {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2,
+      items: 1,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
       items: 1,
     },
   };
+
+  console.log(data.length);
+
+  function showImages() {
+    const allImages = [];
+    for (let i = 0; i < data.length; i++) {
+      if (i >= 5) {
+        break;
+      } else {
+        allImages.push(
+          <Figure key={i}>
+            <Figure.Image
+              variant="top"
+              src={"http://localhost:3001/images/" + data[i].image}
+              style={{
+                width: 400,
+                margin: "auto",
+                marginTop: 10,
+                height: 400,
+              }}
+            />
+          </Figure>
+        );
+      }
+    }
+    return allImages;
+  }
 
   return (
     <>
@@ -103,30 +126,23 @@ function Home() {
         <h3>Nyeste Innlegg</h3>
         <Row className="md-3 lg-4">{getPosts()}</Row>
       </Container>
-      <Carousel
-      centerMode={true}
-        responsive={responsive}
-        ssr={true} // means to render carousel on server-side.
-        infinite={true}
-        autoPlaySpeed={1000}
-        keyBoardControl={true}
-        customTransition="all .5"
-        transitionDuration={100}
-        containerClass="carousel-container"
-        removeArrowOnDeviceType={["tablet", "mobile"]}
-        dotListClass="custom-dot-list-style"
-        //itemClass="carousel-item-padding-40-px"
-      >
-        {data.map((d, index) => (
-          <Figure key={index}>
-            <Figure.Image
-              variant="top"
-              src={"http://localhost:3001/images/" + d.image}
-              style={{width: 400, margin: "auto", marginTop: 10, height: 400}}
-            />
-          </Figure>
-        ))}
-      </Carousel>
+      {
+        <Carousel
+          centerMode={true}
+          responsive={responsive}
+          ssr={true} // means to render carousel on server-side.
+          autoPlaySpeed={1000}
+          keyBoardControl={true}
+          customTransition="all .5"
+          transitionDuration={100}
+          containerClass="carousel-container"
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          dotListClass="custom-dot-list-style"
+          itemClass="carousel-item-padding-40-px"
+        >
+          {showImages()}
+        </Carousel>
+      }
     </>
   );
 }

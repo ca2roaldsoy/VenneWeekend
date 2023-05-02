@@ -25,12 +25,9 @@ import ParticipateForm from "../participate/ParticipateForm";
 import Registration from "../registration/Registration";
 import PostsDetails from "../blogPost/PostsDetails";
 import Map from "../map/Map";
-import ImgCarousel from "../home/ImgCarousel";
 
 function NavMenu() {
   const { user } = useContext(AdminContext);
-
-  console.log(user);
 
   return (
     <Router>
@@ -57,6 +54,7 @@ function NavMenu() {
                 <NavLink to="/posts">Innlegg</NavLink>
                 <NavLink to="/postform">InnleggForm</NavLink>
                 <NavLink to="/roomselection">Rom seleksjon</NavLink>
+                <NavLink to="/kart">Kart</NavLink>
                 <LogOut />
               </>
             )}
@@ -76,7 +74,7 @@ function NavMenu() {
             <Route element={<PostForm />} path="/postform" />
             <Route element={<Posts />} path="/posts" />
             <Route element={<PostsDetails />} path="/posts/:title/:id" />
-            <Route element={<ImgCarousel />} path="/roomselection" />
+            <Route element={<RoomSelection />} path="/roomselection" />
             <Route element={<Map />} path="/kart" />
           </Route>
           <Route path="/" element={<Login />} />
