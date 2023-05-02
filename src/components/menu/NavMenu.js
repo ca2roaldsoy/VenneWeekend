@@ -19,12 +19,13 @@ import Media from "../media/Media";
 import Posts from "../blogPost/Posts";
 import RoomSelection from "../roomSelection/RoomSelection";
 import FoodTable from "../foodTable/FoodTable";
-import PostForm from "../blogPost/PostForm"
+import PostForm from "../blogPost/PostForm";
 import ParticipentsForm from "../participate/ParticipateForm";
 import ParticipateForm from "../participate/ParticipateForm";
 import Registration from "../registration/Registration";
 import PostsDetails from "../blogPost/PostsDetails";
 import Map from "../map/Map";
+import ImgCarousel from "../home/ImgCarousel";
 
 function NavMenu() {
   const { user } = useContext(AdminContext);
@@ -46,8 +47,7 @@ function NavMenu() {
           <Nav className="ml-auto navbarTop__link">
             {/*check if user exist in local storage*/}
             {!user ? (
-              <>
-              </>
+              <></>
             ) : (
               <>
                 <NavLink to="/participate">Delta</NavLink>
@@ -76,7 +76,7 @@ function NavMenu() {
             <Route element={<PostForm />} path="/postform" />
             <Route element={<Posts />} path="/posts" />
             <Route element={<PostsDetails />} path="/posts/:title/:id" />
-            <Route element={<RoomSelection />} path="/roomselection" />
+            <Route element={<ImgCarousel />} path="/roomselection" />
             <Route element={<Map />} path="/kart" />
           </Route>
           <Route path="/" element={<Login />} />
