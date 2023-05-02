@@ -41,12 +41,12 @@ export function Media() {
   console.log(fileList);
 
   const deleteFile = (fileId) => {
-    const newParticipents = [...files];
+    const newFiles = [...files];
     const index = files.findIndex((file) => file.id === fileId);
 
-    newParticipents.splice(index, 1);
+    newFiles.splice(index, 1);
     axios.delete(`http://localhost:3001/media/delete/${fileId}`);
-    setFiles(newParticipents);
+    setFiles(newFiles);
   };
 
   return (
