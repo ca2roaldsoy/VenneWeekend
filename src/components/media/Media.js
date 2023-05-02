@@ -38,17 +38,16 @@ export function Media() {
   };
 
   const fileList = files ? [...files] : [];
+  console.log(fileList);
 
-  /* const deleteFile = (id) => {
-     const newData = [...data];
-      const index = data.findIndex((d) => d.id === id);
+  const deleteFile = (fileId) => {
+    const newParticipents = [...files];
+    const index = files.findIndex((file) => file.id === fileId);
 
-      console.log(data);
-
-      newData.splice(index, 1);
-      axios.delete(`http://localhost:3001/media/delete/${id}`)
-      setData(newData);
-    } */
+    newParticipents.splice(index, 1);
+    axios.delete(`http://localhost:3001/media/delete/${fileId}`);
+    setFiles(newParticipents);
+  };
 
   return (
     <>
@@ -72,23 +71,24 @@ export function Media() {
           }}
         >
           {fileList.map((file, i) => (
-            <li key={i} style={{ position: "relative", paddingTop: "66%" }}>
-              <Image
-                key={file.id}
-                src={"http://localhost:3001/images/" + file.image}
-                alt={file.name}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: "100%",
-                  width: "100%",
-                  objectFit: "cover",
-                }}
-              />
-            </li>
+            <>
+              <li key={i} style={{ position: "relative", paddingTop: "66%" }}>
+                <button onClick={() => deleteFile(file.id)}>Slett</button>
+                <Image
+                  key={file.id}
+                  src={"http://localhost:3001/images/" + file.image}
+                  alt={file.name}
+                  style={{
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: "auto",
+                    width: "50%",
+                  }}
+                />
+              </li>
+            </>
           ))}
         </ul>
       </ImageGroup>
