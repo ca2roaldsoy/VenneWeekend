@@ -5,13 +5,58 @@ import axios from "axios";
 
 const AdminContext = createContext();
 
+const events = [
+  "load",
+  "mousemove",
+  "mousedown",
+  "click",
+  "scroll",
+  "keypress",
+];
+
 const AdminContextProvider = ({ children }) => {
   const getUser = localStorage.getItem("user") || null;
   const [user, setUser] = useState(getUser);
 
+  let timer;
+
+  /* function handleLogoutTimer() {
+    timer = setTimeout(() => {
+      resetTimer();
+
+      Object.values(events).forEach((item) => {
+        window.removeEventListener(item, resetTimer);
+      });
+
+      logoutAction();
+    }, 30000);
+  }
+
+  const resetTimer = () => {
+    if (timer) clearTimeout(timer);
+  };
+
+  useEffect(() => {
+    Object.values(events).forEach((item) => {
+      window.addEventListener(item, () => {
+        resetTimer();
+        handleLogoutTimer();
+      });
+    });
+  }, []);
+
+  const logoutAction = () => {
+    logout();
+  }; */
+
   function localStoreUser(user) {
-    localStorage.setItem("user", user);
-    setUser(user);
+    axios
+      .get("http://localhost:3001/login", {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then(localStorage.setItem("user", user), setUser(user));
   }
 
   // log out user
@@ -19,10 +64,13 @@ const AdminContextProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    window.location.pathname = "/";
   }
 
   return (
-    <AdminContext.Provider value={{ user, localStoreUser, logout }}>
+    <AdminContext.Provider
+      value={{ user, localStoreUser, logout /* handleLogoutTimer  */ }}
+    >
       {children}
     </AdminContext.Provider>
   );
