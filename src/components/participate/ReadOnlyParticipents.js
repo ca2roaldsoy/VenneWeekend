@@ -1,15 +1,19 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-function ReadOnlyParticipents({ person, handleEditClick, handleDeleteClick}) {
-
-  console.log(person);
-
+function ReadOnlyParticipents({ person, handleEditClick, handleDeleteClick }) {
   const allergiesArr = [person.lactose, person.gluten, person.other];
-  const removeEmptyStringsFromAllergies = allergiesArr.filter(a => a !== "").join(", ");
+  const removeEmptyStringsFromAllergies = allergiesArr
+    .filter((a) => a !== "")
+    .join(", ");
 
-  const daysArr = [person.friday, person.saturday, person.sunday, person.monday];
-  const removeEmptyStringsFromDays = daysArr.filter(b => b !== "").join(", ");
+  const daysArr = [
+    person.friday,
+    person.saturday,
+    person.sunday,
+    person.monday,
+  ];
+  const removeEmptyStringsFromDays = daysArr.filter((b) => b !== "").join(", ");
 
   return (
     <tr>
@@ -26,12 +30,16 @@ function ReadOnlyParticipents({ person, handleEditClick, handleDeleteClick}) {
         >
           Rediger
         </Button>
-        <Button type="button" variant="danger" onClick={() => handleDeleteClick(person.id)}>
+        <Button
+          type="button"
+          variant="danger"
+          onClick={() => handleDeleteClick(person.id)}
+        >
           Slett
         </Button>
       </td>
     </tr>
   );
-};
+}
 
 export default ReadOnlyParticipents;

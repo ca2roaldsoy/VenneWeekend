@@ -38,7 +38,6 @@ export function Media() {
   };
 
   const fileList = files ? [...files] : [];
-  console.log(fileList);
 
   const deleteFile = (fileId) => {
     const newFiles = [...files];

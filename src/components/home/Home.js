@@ -75,8 +75,6 @@ function Home() {
     },
   };
 
-  console.log(data.length);
-
   function showImages() {
     const allImages = [];
     for (let i = 0; i < data.length; i++) {
