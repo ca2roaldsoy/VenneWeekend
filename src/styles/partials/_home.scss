@@ -1,0 +1,80 @@
+.home {
+    background-image: url("../../images/lunden_img.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 700px;
+    max-width: 100%;
+
+    &__header {
+        text-align: center;
+        padding-top: 50px;
+        color: #fff;
+    }
+
+    &__text {
+        text-align: center;
+        padding-top: 50px;
+        color: #fff;
+
+        &--second {
+            text-align: center;
+            color: #fff;
+        }
+    }
+
+    &__cta {
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+        padding-top: 25px;
+    }
+
+    &__intro {
+        text-align: center;
+        padding-top: 25px;
+    }
+
+    &__posts {
+        background-color: lightgray;
+
+        h3 {
+          text-align: center;
+          padding-top: 25px;
+          padding-bottom: 25px;
+        }
+
+        .row {
+            padding-bottom: 25px;
+        }
+
+        &--col {
+            padding-bottom: 25px;
+            .card {
+                text-align: center;
+                padding: 25px;
+            }
+        
+            a {
+                margin-top: 25px;
+            } 
+        }
+    }
+
+    &__carousel {
+        padding: 0;
+        text-align: center;
+        margin-top: 25px;
+    
+        h3 {
+            padding-top: 25px;
+            padding-bottom: 15px;
+        }
+    }
+
+    &__qoute {
+        text-align: center;
+        padding-top: 25px;
+            padding-bottom: 15px;
+    }
+}

@@ -1,5 +1,120 @@
-h1 {
-  font-size: 24px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+.home {
+  background-image: url("../../images/lunden_img.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 700px;
+  max-width: 100%;
+}
+.home__header {
+  text-align: center;
+  padding-top: 50px;
+  color: #fff;
+}
+.home__text {
+  text-align: center;
+  padding-top: 50px;
+  color: #fff;
+}
+.home__text--second {
+  text-align: center;
+  color: #fff;
+}
+.home__cta {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 25px;
+}
+.home__intro {
+  text-align: center;
+  padding-top: 25px;
+}
+.home__posts {
+  background-color: lightgray;
+}
+.home__posts h3 {
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+.home__posts .row {
+  padding-bottom: 25px;
+}
+.home__posts--col {
+  padding-bottom: 25px;
+}
+.home__posts--col .card {
+  text-align: center;
+  padding: 25px;
+}
+.home__posts--col a {
+  margin-top: 25px;
+}
+.home__carousel {
+  padding: 0;
+  text-align: center;
+  margin-top: 25px;
+}
+.home__carousel h3 {
+  padding-top: 25px;
+  padding-bottom: 15px;
+}
+.home__qoute {
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 15px;
+}
+
+.navbarTop__link {
+  /* align-items: center; */
+  /* a {
+      padding-left: 15px;
+  } */
+}
+.navbarTop__link .btn {
+  margin-top: 10px;
+  width: 100px;
+  /*  margin-left: 15px; */
+}
+
+.navbar-collapse {
+  justify-content: end;
+}
+
+.navbar-nav {
+  display: flex;
+}
+
+/* .media {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 15px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    &__images {
+        position: relative;
+  padding-top: 66%;
+
+        &img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+} */
 
 /*# sourceMappingURL=styles.css.map */

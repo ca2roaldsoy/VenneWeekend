@@ -1,6 +1,11 @@
-h1 {
-    font-size: 24px;
-}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+@import "./partials/home";
+@import "./partials/navbar";
 
 /* .media {
     display: grid;
