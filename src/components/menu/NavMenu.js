@@ -31,7 +31,7 @@ function NavMenu() {
 
   return (
     <Router>
-      <Navbar role="navigation" expand="sm" className="navbarTop">
+      <Navbar role="navigation" expand="md" className="navbarTop">
         <Navbar.Brand as="h1" className="navbarTop__title">
           <NavLink to="/home" role="link" className="navbarTop__title--text">
             VenneWeekend
@@ -41,7 +41,7 @@ function NavMenu() {
         {/* hamburger menu */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto navbarTop__link">
+          <Nav className="navbarTop__link">
             {/*check if user exist in local storage*/}
             {!user ? (
               <></>
@@ -52,8 +52,7 @@ function NavMenu() {
                 <NavLink to="/foodtable">Mattabell</NavLink>
                 <NavLink to="/media">Media</NavLink>
                 <NavLink to="/posts">Innlegg</NavLink>
-                <NavLink to="/postform">InnleggForm</NavLink>
-                <NavLink to="/roomselection">Rom seleksjon</NavLink>
+                <NavLink to="/roomselection">Rom-seleksjon</NavLink>
                 <NavLink to="/kart">Kart</NavLink>
                 <LogOut />
               </>
