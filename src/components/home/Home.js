@@ -6,6 +6,7 @@ import { Button, Col, Figure, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
+import Footer from "../footer/Footer";
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -33,7 +34,7 @@ function Home() {
         break;
       } else {
         allPosts.push(
-          <Col key={index}>
+          <Col key={index} className="home__posts--col">
             <Card>
               <Card.Title>{postIndex.title}</Card.Title>
               <Card.Text>{postIndex.message}</Card.Text>
@@ -90,7 +91,7 @@ function Home() {
                 width: 400,
                 margin: "auto",
                 marginTop: 10,
-                height: 400,
+                height: "auto",
               }}
             />
           </Figure>
@@ -102,14 +103,17 @@ function Home() {
 
   return (
     <>
-      <Container>
-        <h1>Velkommen til Lunden</h1>
-        <p>Her blir det mye spill, lek og moro</p>
-        <Link to="../participate">
+      <Container className="home">
+        <h1 className="home__header">Velkommen til Lunden</h1>
+        <p className="home__text">Her blir det mye spill, lek og moro</p>
+        <p className="home__text--second">
+          Klikk for å delta på årets begivenhet
+        </p>
+        <Link to="../participate" className="home__cta">
           <Button>Delta</Button>
         </Link>
       </Container>
-      <Container>
+      <Container className="home__intro">
         <h1>Velkommen til Lunden</h1>
         <p>
           Hvert år, hver pinse, tar vi turen til Lunden leir- og fritidssenter
@@ -120,11 +124,19 @@ function Home() {
         </p>
         <p>Alle som vil kan delta. Dette vil bli forykende moro</p>
       </Container>
-      <Container>
+      <Container className="home__posts">
         <h3>Nyeste Innlegg</h3>
         <Row className="md-3 lg-4">{getPosts()}</Row>
       </Container>
-      {
+      <hr />
+      <Container className="home__qoute">
+        <h4>
+          <i>Glede i hjertet gir god helse, mismot tærer på marg og bein.</i>
+        </h4>
+      </Container>
+      <hr />
+      <Container className="home__carousel">
+        <h3>Utvalgte bilder</h3>
         <Carousel
           centerMode={true}
           responsive={responsive}
@@ -140,7 +152,10 @@ function Home() {
         >
           {showImages()}
         </Carousel>
-      }
+      </Container>
+      <Container>
+        <Footer />
+      </Container>
     </>
   );
 }
