@@ -16,14 +16,14 @@ import Home from "../home/Home";
 import Food from "../food/Food";
 import FoodForm from "../food/FoodForm";
 import Media from "../media/Media";
-import Posts from "../blogPost/Posts";
+import Posts from "../blogPost/posts/Posts";
 import RoomSelection from "../roomSelection/RoomSelection";
 import FoodTable from "../foodTable/FoodTable";
-import PostForm from "../blogPost/PostForm";
+import PostForm from "../blogPost/posts/PostForm";
 import ParticipentsForm from "../participate/ParticipateForm";
 import ParticipateForm from "../participate/ParticipateForm";
 import Registration from "../registration/Registration";
-import PostsDetails from "../blogPost/PostsDetails";
+import PostsDetails from "../blogPost/posts/PostsDetails";
 import Map from "../map/Map";
 
 function NavMenu() {

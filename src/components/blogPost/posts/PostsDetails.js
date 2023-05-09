@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import PostsComment from "./PostsComment";
+import PostsComment from "../comments/PostsComment";
 
 function PostsDetails() {
   const { title, id } = useParams();
@@ -34,7 +34,7 @@ function PostsDetails() {
           );
         }
       })}
-      <PostsComment />
+      <PostsComment key={id} id={id} />
     </>
   );
 }

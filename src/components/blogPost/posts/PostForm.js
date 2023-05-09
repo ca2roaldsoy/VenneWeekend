@@ -4,35 +4,29 @@ import * as yup from "yup";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
-import { AdminContext } from "../../context/AdminContext";
+import { AdminContext } from "../../../context/AdminContext";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { blogPosts } from "../../constants/blogPosts";
-import useFormPersist from 'react-hook-form-persist'
+import { blogPosts } from "../../../constants/blogPosts";
+import useFormPersist from "react-hook-form-persist";
 import axios from "axios";
 import EditPostRow from "./EditPostRow";
 import ReadOnlyPostRow from "./ReadOnlyPostRow";
-import { Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter, Table } from "react-bootstrap";
+import {
+  Modal,
+  ModalHeader,
+  ModalTitle,
+  ModalBody,
+  ModalFooter,
+  Table,
+} from "react-bootstrap";
 
 // validate input field
 const schema = yup.object().shape({
   author: yup.string().required("Dette feltet må fylles"),
-  message: yup
-    .string()
+  message: yup.string(),
 });
 
-/* const getForm = () => {
-    const storedValues = localStorage.getItem("blogPosts");
-    if (!storedValues)
-      return {
-        name: "",
-        title: "",
-        message: ""
-      };
-    return JSON.parse(storedValues);
-  }; */
-
 function PostForm() {
-
   const [posts, setPosts] = useState([]);
   const [editPostId, setEditPostId] = useState(null);
   const [show, setShow] = useState(false);
@@ -51,22 +45,27 @@ function PostForm() {
 
   const { watch, setValue } = useForm({
     resolver: yupResolver(schema),
-   }); 
+  });
 
-  useFormPersist("post", {
-    watch, 
-    setValue,
-  }, {    
-    storage: window.localStorage
-  }); 
+  useFormPersist(
+    "post",
+    {
+      watch,
+      setValue,
+    },
+    {
+      storage: window.localStorage,
+    }
+  );
 
   useEffect(() => {
     //localStorage.setItem("foodTable", JSON.stringify(posts));
-    axios.get("http://localhost:3001/post/get").then((response) => setPosts(response.data));
-    }, []);  
+    axios
+      .get("http://localhost:3001/post/get")
+      .then((response) => setPosts(response.data));
+  }, []);
 
   const handleAddFormChange = (event) => {
-
     const fieldName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
 
@@ -89,7 +88,6 @@ function PostForm() {
   };
 
   const handleAddFormSubmit = (event) => {
-
     const newPost = {
       author: addFormData.author,
       title: addFormData.title,
@@ -111,7 +109,7 @@ function PostForm() {
       message: editFormData.message,
     };
 
-    axios.put(`http://localhost:3001/post/update`, editedPost)
+    axios.put(`http://localhost:3001/post/update`, editedPost);
     const newposts = [...posts];
     const index = posts.findIndex((ing) => ing.id === editPostId);
     newposts[index] = editedPost;
@@ -121,7 +119,7 @@ function PostForm() {
   };
 
   const handleEditClick = (event, p) => {
-   //event.preventDefault();
+    //event.preventDefault();
     setEditPostId(p.id);
 
     const FormValues = {
@@ -142,16 +140,19 @@ function PostForm() {
     const index = posts.findIndex((p) => p.id === postId);
 
     newposts.splice(index, 1);
-    axios.delete(`http://localhost:3001/post/delete/${postId}`)
+    axios.delete(`http://localhost:3001/post/delete/${postId}`);
     setPosts(newposts);
   };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
- 
+
   return (
     <>
-      <Button variant="primary" onClick={handleShow}> Skriv ny melding </Button>
+      <Button variant="primary" onClick={handleShow}>
+        {" "}
+        Skriv ny melding{" "}
+      </Button>
       <Form onSubmit={handleEditFormSubmit} className="mt-5">
         <Table striped bordered hover>
           <thead>
@@ -191,32 +192,34 @@ function PostForm() {
           <ModalTitle>Skriv ny melding</ModalTitle>
         </ModalHeader>
         <ModalBody>
-      <Form onSubmit={handleAddFormSubmit}>
-        <Form.Control
-          type="text"
-          required
-          name="author"
-          onChange={handleAddFormChange}
-          autoFocus
-        />
-        <Form.Control
-          type="text"
-          name="title"
-          onChange={handleAddFormChange}
-        />
-        <Form.Control
-          type="text"
-          name="message"
-          onChange={handleAddFormChange}
-        />
-        <ModalFooter>
-          <Button type="submit" variant="success">Lagre</Button>
-        </ModalFooter>
-      </Form>
+          <Form onSubmit={handleAddFormSubmit}>
+            <Form.Control
+              type="text"
+              required
+              name="author"
+              onChange={handleAddFormChange}
+              autoFocus
+            />
+            <Form.Control
+              type="text"
+              name="title"
+              onChange={handleAddFormChange}
+            />
+            <Form.Control
+              type="text"
+              name="message"
+              onChange={handleAddFormChange}
+            />
+            <ModalFooter>
+              <Button type="submit" variant="success">
+                Lagre
+              </Button>
+            </ModalFooter>
+          </Form>
         </ModalBody>
-        </Modal>
+      </Modal>
     </>
   );
-};
+}
 
 export default PostForm;
