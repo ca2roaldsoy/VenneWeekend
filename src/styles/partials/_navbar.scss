@@ -1,14 +1,12 @@
-.navbarTop__link {
-   /* align-items: center; */
+.navbarTop {
+    border-bottom: 1px solid black;
+}
 
-    /* a {
-        padding-left: 15px;
-    } */
+.navbarTop__link {
 
     .btn {
         margin-top: 10px;
         width: 100px;
-       /*  margin-left: 15px; */
     }
 }
 
@@ -18,5 +16,6 @@
 
 .navbar-nav {
     display: flex;
+    font-size: 14px;
 
 }

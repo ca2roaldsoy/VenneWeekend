@@ -1,0 +1,99 @@
+@media screen and (min-width: 768px) {
+    .home {
+        &__header {
+            text-align: left;
+            padding-left: 50px;
+            padding-top: 100px;
+            font-size: 60px;
+        }
+
+        &__text {
+            text-align: left;
+            padding-left: 50px;
+            font-size: 25px;
+    
+            &--second {
+                text-align: left;
+                padding-left: 50px;
+                font-size: 25px;
+            }
+        }
+
+        &__cta {
+            display: block;
+            text-align: left;
+            padding-left: 50px;
+            padding-top: 25px;
+
+            & .btn {
+                font-size: 20px;
+            }
+        }
+        &__intro {
+        
+            h1 {
+                font-size: 42px;
+            }
+    
+            p {
+                font-size: 28px;
+            }
+        }
+
+        &__qoute h4{
+            font-size: 28px;
+        }
+    }
+
+    .navbarTop__link {
+        align-items: center;
+     
+         a {
+             padding-left: 15px;
+         }
+     
+         .btn {
+            margin-left: 15px;
+            margin-top: 0;
+         }
+     }
+     .navbarTop__title {
+        padding: 10px 0 5px 0;
+     }
+
+     fieldset {
+        display: flex;
+     }
+
+     .post {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+
+        h1 {
+            text-align: center;
+        }
+
+        &__navigate {
+            align-self: flex-end;
+        }
+     }
+}
+
+@media screen and (min-width: 1024px) {
+    .navbarTop__title {
+       font-size: 28px;
+     }
+
+     .navbar-nav {
+        font-size: 20px;
+    
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .App {
+        max-width: 80%;
+        margin: 0 auto;
+    }
+}

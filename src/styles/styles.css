@@ -4,7 +4,125 @@
   box-sizing: border-box;
 }
 
+.post {
+  text-align: center;
+}
+.post__cards {
+  color: black;
+}
+.post__cards:hover {
+  text-decoration: none;
+  width: 101%;
+}
+.post h1 {
+  margin-top: 50px;
+}
+.post__navigate {
+  margin-top: 25px;
+}
+.post .card {
+  margin: 25px 0;
+}
+.post .card:hover {
+  box-shadow: 5px 5px 5px 5px lightblue;
+  text-decoration: none;
+}
+.post .card-title {
+  font-size: 24px;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+.post .card-title:hover {
+  text-decoration: none;
+}
+.post .card-text {
+  font-size: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+.post .card-footer {
+  font-size: 18px;
+}
+
+.postDetail {
+  margin-top: 50px;
+}
+.postDetail .message {
+  margin: 25px 0;
+}
+.postDetail .author {
+  margin-top: 100px;
+}
+
+.comments__btn {
+  display: block;
+  margin: 25px auto;
+}
+.comments h3 {
+  margin-top: 50px;
+}
+.comments__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 50px 0 10px 0px;
+}
+.comments__actions--edit {
+  margin-right: 20px;
+}
+
+.addBtn {
+  display: block;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.person .form-control {
+  margin-bottom: 5px;
+}
+
+fieldset {
+  border: 1px solid black;
+  display: block;
+  padding: 10px;
+}
+fieldset .form-check {
+  padding-left: 30px;
+  padding-bottom: 2px;
+}
+
+legend {
+  width: inherit;
+  padding: 5px;
+}
+
+.allergies {
+  display: block;
+}
+.allergies .form-check {
+  padding-left: 20px;
+  padding-bottom: 2px;
+}
+
+.responsiveTable {
+  text-align: center;
+}
+.responsiveTable thead {
+  background-color: lightblue;
+}
+.responsiveTable tr:nth-of-type(even) {
+  background-color: aliceblue;
+}
+.responsiveTable tr, .responsiveTable td {
+  border: 1px solid black;
+  padding: 8px;
+}
+.responsiveTable td .btn {
+  margin: 25px auto;
+}
+
 .home {
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.65);
   background-image: url("../../images/lunden_img.jpg");
   background-position: center;
   background-repeat: no-repeat;
@@ -16,15 +134,18 @@
   text-align: center;
   padding-top: 50px;
   color: #fff;
+  font-size: 45px;
 }
 .home__text {
   text-align: center;
   padding-top: 50px;
   color: #fff;
+  font-size: 25px;
 }
 .home__text--second {
   text-align: center;
   color: #fff;
+  font-size: 25px;
 }
 .home__cta {
   display: block;
@@ -32,17 +153,22 @@
   margin: 0 auto;
   padding-top: 25px;
 }
+.home__cta .btn {
+  font-size: 20px;
+}
 .home__intro {
   text-align: center;
-  padding-top: 25px;
+  margin: 50px auto;
+}
+.home__intro h1 {
+  margin-bottom: 25px;
 }
 .home__posts {
   background-color: lightgray;
 }
 .home__posts h3 {
   text-align: center;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding: 25px 0;
 }
 .home__posts .row {
   padding-bottom: 25px;
@@ -58,7 +184,6 @@
   margin-top: 25px;
 }
 .home__carousel {
-  padding: 0;
   text-align: center;
   margin-top: 25px;
 }
@@ -72,16 +197,13 @@
   padding-bottom: 15px;
 }
 
-.navbarTop__link {
-  /* align-items: center; */
-  /* a {
-      padding-left: 15px;
-  } */
+.navbarTop {
+  border-bottom: 1px solid black;
 }
+
 .navbarTop__link .btn {
   margin-top: 10px;
   width: 100px;
-  /*  margin-left: 15px; */
 }
 
 .navbar-collapse {
@@ -90,31 +212,85 @@
 
 .navbar-nav {
   display: flex;
+  font-size: 14px;
 }
 
-/* .media {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 15px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    &__images {
-        position: relative;
-  padding-top: 66%;
-
-        &img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-        }
-    }
-} */
+@media screen and (min-width: 768px) {
+  .home__header {
+    text-align: left;
+    padding-left: 50px;
+    padding-top: 100px;
+    font-size: 60px;
+  }
+  .home__text {
+    text-align: left;
+    padding-left: 50px;
+    font-size: 25px;
+  }
+  .home__text--second {
+    text-align: left;
+    padding-left: 50px;
+    font-size: 25px;
+  }
+  .home__cta {
+    display: block;
+    text-align: left;
+    padding-left: 50px;
+    padding-top: 25px;
+  }
+  .home__cta .btn {
+    font-size: 20px;
+  }
+  .home__intro h1 {
+    font-size: 42px;
+  }
+  .home__intro p {
+    font-size: 28px;
+  }
+  .home__qoute h4 {
+    font-size: 28px;
+  }
+  .navbarTop__link {
+    align-items: center;
+  }
+  .navbarTop__link a {
+    padding-left: 15px;
+  }
+  .navbarTop__link .btn {
+    margin-left: 15px;
+    margin-top: 0;
+  }
+  .navbarTop__title {
+    padding: 10px 0 5px 0;
+  }
+  fieldset {
+    display: flex;
+  }
+  .post {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+  .post h1 {
+    text-align: center;
+  }
+  .post__navigate {
+    align-self: flex-end;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .navbarTop__title {
+    font-size: 28px;
+  }
+  .navbar-nav {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .App {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+}
 
 /*# sourceMappingURL=styles.css.map */

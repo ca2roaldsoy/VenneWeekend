@@ -1,0 +1,57 @@
+.addBtn {
+    display: block;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.person {
+    & .form-control {
+        margin-bottom: 5px; 
+    }
+}
+
+fieldset {
+    border: 1px solid black;
+    display: block;
+    padding: 10px;
+
+    & .form-check {
+       padding-left: 30px;
+       padding-bottom: 2px;
+    }
+}
+
+legend {
+    width: inherit;
+    padding: 5px;
+}
+
+.allergies {
+    display: block;
+    
+    & .form-check {
+        padding-left: 20px;
+        padding-bottom: 2px;
+     }
+}
+
+.responsiveTable {
+    text-align: center;
+    
+    & thead {
+        background-color: lightblue;
+    }
+
+    & tr:nth-of-type(even) {
+        background-color: aliceblue;
+    }
+
+    & tr, td {
+        border: 1px solid black;
+        padding: 8px;
+    }
+
+    & td .btn {
+        margin: 25px auto;
+    }
+}

@@ -1,0 +1,88 @@
+.post {
+    text-align: center;
+
+    &__cards {
+        color: black;
+        
+        &:hover {
+            text-decoration: none;
+            width: 101%;
+        }
+    }
+
+    h1 {
+        margin-top: 50px;
+
+    }
+
+    &__navigate {
+        margin-top: 25px;
+    }
+
+    .card {
+        margin: 25px 0;
+
+        &:hover {
+            box-shadow: 5px 5px 5px 5px lightblue;
+            text-decoration: none;
+        }
+
+        &-title {
+            font-size: 24px;
+            padding-left: 20px;
+            padding-top: 10px;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        &-text {
+            font-size: 20px;
+            padding-left: 20px;
+            padding-top: 10px;
+        }
+
+        &-footer {
+            font-size: 18px;
+        }
+
+    }
+}
+
+.postDetail {
+
+    margin-top: 50px;
+
+    .message {
+        margin: 25px 0;
+    }
+
+    .author {
+        margin-top: 100px;
+    }
+}
+
+.comments {
+    &__btn {
+        display: block;
+        margin: 25px auto
+    }
+
+    & h3 {
+        margin-top: 50px;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        margin: 50px 0 10px 0px;
+
+        &--edit {
+            margin-right: 20px;
+        }
+    }
+
+
+    
+}
