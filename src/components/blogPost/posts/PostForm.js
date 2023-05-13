@@ -150,8 +150,7 @@ function PostForm() {
   return (
     <>
       <Button variant="primary" onClick={handleShow}>
-        {" "}
-        Skriv ny melding{" "}
+        Skriv ny melding
       </Button>
       <Form onSubmit={handleEditFormSubmit} className="mt-5">
         <Table striped bordered hover>

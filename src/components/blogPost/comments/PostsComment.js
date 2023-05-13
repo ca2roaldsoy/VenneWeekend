@@ -3,6 +3,7 @@ import axios from "axios";
 import {
   Button,
   Card,
+  Container,
   Form,
   Modal,
   ModalBody,
@@ -75,13 +76,13 @@ function PostComment({ id }) {
   const handleAddFormSubmit = (event) => {
     //event.preventDefault();
 
-    const newPost = {
+    const newComment = {
       comment: addFormData.comment,
       name: addFormData.name,
     };
 
-    axios.post("http://localhost:3001/comments/insert", newPost);
-    const newcomments = [...comments, newPost];
+    axios.post("http://localhost:3001/comments/insert", newComment);
+    const newcomments = [...comments, newComment];
     setComments(newcomments);
     setShow(false);
   };
@@ -89,16 +90,16 @@ function PostComment({ id }) {
   const handleEditFormSubmit = (event) => {
     //event.preventDefault();
 
-    const editedPost = {
+    const editedComment = {
       id: editCommentsId,
       comment: editFormData.comment,
       name: editFormData.name,
     };
 
-    axios.put(`http://localhost:3001/comments/update`, editedPost);
+    axios.put(`http://localhost:3001/comments/update`, editedComment);
     const newcomments = [...comments];
     const index = comments.findIndex((ing) => ing.id === editCommentsId);
-    newcomments[index] = editedPost;
+    newcomments[index] = editedComment;
 
     setComments(newcomments);
     setEditCommentsId(null);
@@ -110,7 +111,7 @@ function PostComment({ id }) {
     setEditCommentsId(p.id);
 
     const FormValues = {
-      comment: p.comment,
+      comment: p.comments,
       name: p.name,
     };
 
@@ -134,31 +135,53 @@ function PostComment({ id }) {
   const handleShow = () => setShow(true);
 
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
+    <section className="comments">
+      <Button variant="primary" onClick={handleShow} className="comments__btn">
         Skriv ny kommentar
       </Button>
-      <Form onSubmit={handleEditFormSubmit} className="mt-5">
-        <Card>
-          {comments.map((p, i) =>
-            editCommentsId === p.id ? (
-              <EditPostComment
-                key={p.id}
-                handleEditFormSubmit={handleEditFormSubmit}
-                editFormData={editFormData}
-                handleEditFormChange={handleEditFormChange}
-                handleCancelClick={handleCancelClick}
-              />
-            ) : (
-              <ReadOnlyPostComment
-                key={p.id}
-                p={p}
-                handleEditClick={handleEditClick}
-                handleDeleteClick={handleDeleteClick}
-              />
-            )
-          )}
-        </Card>
+      <h3 className="text-center">Kommentarer</h3>
+      <Form onSubmit={handleEditFormSubmit} className="mt-5 comments__form">
+        {comments.map((p, i) => (
+          <div key={i}>
+            <div className="comments__actions">
+              <Button
+                type="button"
+                variant="info"
+                onClick={(event) => handleEditClick(event, p)}
+                className="comments__actions--edit"
+              >
+                Rediger
+              </Button>
+              <Button
+                type="button"
+                variant="danger"
+                onClick={() => handleDeleteClick(p.id)}
+                className="comments__actions--delete"
+              >
+                Slett
+              </Button>
+            </div>
+
+            <Card>
+              {editCommentsId === p.id ? (
+                <EditPostComment
+                  key={p.id}
+                  handleEditFormSubmit={handleEditFormSubmit}
+                  editFormData={editFormData}
+                  handleEditFormChange={handleEditFormChange}
+                  handleCancelClick={handleCancelClick}
+                />
+              ) : (
+                <ReadOnlyPostComment
+                  key={p.id}
+                  p={p}
+                  handleEditClick={handleEditClick}
+                  handleDeleteClick={handleDeleteClick}
+                />
+              )}
+            </Card>
+          </div>
+        ))}
       </Form>
 
       <Modal show={show} onHide={handleClose}>
@@ -169,14 +192,15 @@ function PostComment({ id }) {
           <Form onSubmit={handleAddFormSubmit}>
             <Form.Control
               type="text"
-              required
               name="comment"
+              placeholder="kommentar"
               onChange={handleAddFormChange}
               autoFocus
             />
             <Form.Control
               type="text"
               name="name"
+              placeholder="ditt navn"
               onChange={handleAddFormChange}
             />
             <ModalFooter>
@@ -187,7 +211,7 @@ function PostComment({ id }) {
           </Form>
         </ModalBody>
       </Modal>
-    </>
+    </section>
   );
 }
 
