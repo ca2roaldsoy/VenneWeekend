@@ -47,12 +47,12 @@ function NavMenu() {
               <></>
             ) : (
               <>
-                <NavLink to="/participate">Delta</NavLink>
+                <NavLink to="/participate">Påmelding</NavLink>
                 <NavLink to="/menu">Meny</NavLink>
                 <NavLink to="/foodtable">Mattabell</NavLink>
                 <NavLink to="/media">Media</NavLink>
                 <NavLink to="/posts">Innlegg</NavLink>
-                <NavLink to="/roomselection">Rom-seleksjon</NavLink>
+                <NavLink to="/roomselection">Romseleksjon</NavLink>
                 <NavLink to="/kart">Kart</NavLink>
                 <LogOut />
               </>
