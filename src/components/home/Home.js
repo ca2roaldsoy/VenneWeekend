@@ -58,21 +58,20 @@ function Home() {
   }
 
   const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+    lg: {
+      breakpoint: { max: 4000, min: 992 },
       items: 3,
+      slidesToSlide: 1,
     },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 1,
+    md: {
+      breakpoint: { max: 992, min: 576 },
+      items: 2,
+      slidesToSlide: 1,
     },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
+    sm: {
+      breakpoint: { max: 576, min: 0 },
       items: 1,
+      slidesToSlide: 1,
     },
   };
 
@@ -88,10 +87,10 @@ function Home() {
               variant="top"
               src={"http://localhost:3001/images/" + data[i].image}
               style={{
-                width: 400,
+                width: "100%",
+                height: 400,
                 margin: "auto",
                 marginTop: 10,
-                height: "auto",
               }}
             />
           </Figure>
@@ -110,11 +109,11 @@ function Home() {
           Klikk for å delta på årets begivenhet
         </p>
         <Link to="../participate" className="home__cta">
-          <Button>Delta</Button>
+          <Button>Påmelding</Button>
         </Link>
       </Container>
       <Container className="home__intro">
-        <h1>Velkommen til Lunden</h1>
+        <h1>Velkommen til Leir</h1>
         <p>
           Hvert år, hver pinse, tar vi turen til Lunden leir- og fritidssenter
         </p>
@@ -122,11 +121,12 @@ function Home() {
           Her blir det mye lek og moro. Vi holder også samling for å snakke Guds
           ord
         </p>
-        <p>Alle som vil kan delta. Dette vil bli forykende moro</p>
-      </Container>
-      <Container className="home__posts">
-        <h3>Nyeste Innlegg</h3>
-        <Row className="md-3 lg-4">{getPosts()}</Row>
+        <p>
+          14 km fra Hauge sentrum i Sokndal kommune, ligger Lunden leir- og
+          fritidssenter. Leiren ligger vakkert til ved Årrestadvannet omringet
+          av storslått natur for rekreasjon og fritidsaktiviteter.
+        </p>
+        <p>Alle som vil kan melde seg på. Dette vil bli forykende moro</p>
       </Container>
       <hr />
       <Container className="home__qoute">
@@ -135,12 +135,15 @@ function Home() {
         </h4>
       </Container>
       <hr />
+      <Container className="home__posts">
+        <h3>Innlegg</h3>
+        <Row className="md-3 lg-4">{getPosts()}</Row>
+      </Container>
+      <hr />
       <Container className="home__carousel">
         <h3>Utvalgte bilder</h3>
         <Carousel
-          centerMode={true}
           responsive={responsive}
-          ssr={true} // means to render carousel on server-side.
           autoPlaySpeed={1000}
           keyBoardControl={true}
           customTransition="all .5"
@@ -148,7 +151,7 @@ function Home() {
           containerClass="carousel-container"
           removeArrowOnDeviceType={["tablet", "mobile"]}
           dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px"
+          itemClass="carousel-item-padding-0-px"
         >
           {showImages()}
         </Carousel>
