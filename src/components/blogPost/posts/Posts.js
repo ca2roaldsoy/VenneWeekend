@@ -16,7 +16,9 @@ function Posts() {
     <Container className="post">
       <h1>Innlegg</h1>
       <Link to={`../postform`} className="post__navigate">
-        <Button variant="primary">Administrer innlegg</Button>
+        <Button variant="primary" className="post__navigate--btn">
+          Administrer innlegg
+        </Button>
       </Link>
       {posts.map((p, i) => {
         console.log(p);
