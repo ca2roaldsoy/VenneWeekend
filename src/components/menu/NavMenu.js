@@ -15,7 +15,6 @@ import Login from "../login/Login";
 import Home from "../home/Home";
 import Food from "../food/Food";
 import FoodForm from "../food/FoodForm";
-import Media from "../media/Media";
 import Posts from "../blogPost/posts/Posts";
 import RoomSelection from "../roomSelection/RoomSelection";
 import FoodTable from "../foodTable/FoodTable";
@@ -25,6 +24,8 @@ import ParticipateForm from "../participate/ParticipateForm";
 import Registration from "../registration/Registration";
 import PostsDetails from "../blogPost/posts/PostsDetails";
 import Map from "../map/Map";
+import Media from "../media/Media";
+import MediaDetails from "../media/MediaDetails";
 
 function NavMenu() {
   const { user } = useContext(AdminContext);
@@ -69,6 +70,7 @@ function NavMenu() {
             <Route element={<ParticipateForm />} path="/participate" />
             <Route element={<Food />} path="/menu" />
             <Route element={<FoodTable />} path="/foodtable" />
+            <Route element={<MediaDetails />} path="/media/:id" />
             <Route element={<Media />} path="/media" />
             <Route element={<PostForm />} path="/postform" />
             <Route element={<Posts />} path="/posts" />
