@@ -11,6 +11,7 @@ import {
   ModalTitle,
   ModalBody,
   ModalFooter,
+  Container,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -253,7 +254,8 @@ function ParticipateForm() {
   const handleShow = () => setShow(true);
 
   return (
-    <>
+    <Container className="participents">
+      <h1>Påmelding</h1>
       <Button variant="primary" onClick={handleShow} className="addBtn">
         + Legg til deltaker
       </Button>
@@ -407,7 +409,7 @@ function ParticipateForm() {
           </Form>
         </ModalBody>
       </Modal>
-    </>
+    </Container>
   );
 }
 

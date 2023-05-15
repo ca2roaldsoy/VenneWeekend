@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 
 const onDragEnd = (result, columns, setColumns) => {
@@ -52,13 +52,6 @@ function RoomSelection() {
       .then((response) => setParticipents(response.data));
   }, []);
 
-  const personss = [
-    { id: "2", content: "Person 2" },
-    { id: "3", content: "Person 3" },
-    { id: "4", content: "Person 4" },
-    { id: "5", content: "Person 5" },
-  ];
-
   const persons = [];
   (() => {
     for (let i = 0; i < participents.length; i++) {
@@ -100,12 +93,10 @@ function RoomSelection() {
   }, [columns]);
 
   return (
-    <>
-      <div>
-        <h1 style={{ textAlign: "center" }}>Room Selection</h1>
-        <div
-          style={{ display: "flex", justifyContent: "center", height: "100%" }}
-        >
+    <Container fluid className="roomSelect">
+      <main>
+        <h1>Room Selection</h1>
+        <Row className="roomSelect__main">
           <DragDropContext
             onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
           >
@@ -114,13 +105,12 @@ function RoomSelection() {
               const totalSmallRooms = 2;
 
               return (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                  key={columnId}
+                <Col
+                  lg={3}
+                  md={4}
+                  sm={6}
+                  key={index}
+                  className="roomSelect__section"
                 >
                   {column.items.length > totalLargeRooms ? (
                     <h2>Too much</h2>
@@ -134,25 +124,23 @@ function RoomSelection() {
                     </h2>
                   )}
                   <div style={{ margin: 8 }}>
-                    <Droppable droppableId={columnId} key={columnId}>
+                    <Droppable droppableId={columnId} key={index}>
                       {(provided, snapshot) => {
                         return (
                           <div
+                            className="roomSelect__section--item"
                             {...provided.droppableProps}
                             ref={provided.innerRef}
                             style={{
                               background: snapshot.isDraggingOver
                                 ? "lightblue"
                                 : "lightgrey",
-                              padding: 4,
-                              width: 250,
-                              minHeight: 500,
                             }}
                           >
                             {column.items.map((item, index) => {
                               return (
                                 <Draggable
-                                  key={item.id}
+                                  key={index}
                                   draggableId={item.id}
                                   index={index}
                                 >
@@ -162,15 +150,12 @@ function RoomSelection() {
                                         ref={provided.innerRef}
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
+                                        className="roomSelect__section--draggable"
                                         style={{
                                           userSelect: "none",
-                                          padding: 16,
-                                          margin: "0 0 8px 0",
-                                          minHeight: "50px",
                                           backgroundColor: snapshot.isDragging
                                             ? "#263B4A"
                                             : "#456C86",
-                                          color: "white",
                                           ...provided.draggableProps.style,
                                         }}
                                       >
@@ -187,17 +172,22 @@ function RoomSelection() {
                       }}
                     </Droppable>
                   </div>
-                </div>
+                </Col>
               );
             })}
           </DragDropContext>
-        </div>
-      </div>
+        </Row>
+      </main>
 
-      <Button type="reset" onClick={reset}>
-        Clear
+      <Button
+        type="reset"
+        onClick={reset}
+        className="roomSelect__clear"
+        variant="warning"
+      >
+        Tilbakestill
       </Button>
-    </>
+    </Container>
   );
 }
 
