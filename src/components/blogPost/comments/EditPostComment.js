@@ -40,6 +40,7 @@ function EditPostComment({
         <Form.Control
           type="text"
           name="comment"
+          as="textarea"
           placeholder="kommentar.."
           {...register("comment", {
             onChange: handleEditFormChange,
