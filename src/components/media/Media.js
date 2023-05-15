@@ -1,97 +1,32 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { ImageGroup, Image } from "react-fullscreen-image";
+import React from "react";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-export function Media() {
-  const [files, setFiles] = useState([]);
+function Media() {
+  function years() {
+    const yArr = [];
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/media/")
-      .then((res) => {
-        setFiles(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  const setimgfile = (e) => {
-    setFiles(e.target.files);
-  };
-
-  const addUserData = (event) => {
-    event.preventDefault();
-    var formData = new FormData();
-
-    for (const file of files) {
-      formData.append("files", file);
+    for (let i = 2020; i < 2023; i++) {
+      yArr.push(
+        <Col md={4} sm={1} key={i}>
+          <Link to={`${i}`}>
+            <Card>
+              <Card.Title>{i}</Card.Title>
+            </Card>
+          </Link>
+        </Col>
+      );
     }
 
-    const res = axios
-      .post("http://localhost:3001/media", formData)
-      .then((window.location.href = "./media"));
-
-    if (res.data.status === 201) {
-      console.log("NO error");
-    } else {
-      console.log("error");
-    }
-  };
-
-  const fileList = files ? [...files] : [];
-
-  const deleteFile = (fileId) => {
-    const newFiles = [...files];
-    const index = files.findIndex((file) => file.id === fileId);
-
-    newFiles.splice(index, 1);
-    axios.delete(`http://localhost:3001/media/delete/${fileId}`);
-    setFiles(newFiles);
-  };
+    return yArr;
+  }
 
   return (
-    <>
-      <div style={{ padding: 15, backgroundColor: "#fff", marginTop: 15 }}>
-        <h4>Upload file:</h4>
-        <input type="file" name="photo" onChange={setimgfile} multiple />
-        <button type="submit" onClick={addUserData}>
-          submit
-        </button>
-      </div>
-      <ImageGroup>
-        <ul
-          className="images"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gridGap: "15px",
-            listStyleType: "none",
-            margin: 0,
-            padding: 0,
-          }}
-        >
-          {fileList.map((file, i) => (
-            <>
-              <li key={i} style={{ position: "relative", paddingTop: "66%" }}>
-                <button onClick={() => deleteFile(file.id)}>Slett</button>
-                <Image
-                  key={file.id}
-                  src={"http://localhost:3001/images/" + file.image}
-                  alt={file.name}
-                  style={{
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: "auto",
-                    width: "50%",
-                  }}
-                />
-              </li>
-            </>
-          ))}
-        </ul>
-      </ImageGroup>
-    </>
+    <Container className="mediaLibrary">
+      <h1>Media</h1>
+      <Row>{years()}</Row>
+    </Container>
   );
 }
+
 export default Media;
