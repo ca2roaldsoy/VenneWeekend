@@ -16,7 +16,9 @@
     }
 
     &__navigate {
-        margin-top: 25px;
+        &--btn {
+            margin: 25px 0 10px 0;
+        }
     }
 
     .card {

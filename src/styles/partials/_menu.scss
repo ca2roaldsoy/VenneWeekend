@@ -1,0 +1,36 @@
+.menu {
+    text-align: center;
+
+    h1 {
+        margin: 50px auto;
+    }
+
+    input {
+        text-align: center;
+    }
+
+    .btn {
+        padding: 20px ;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .accordion {
+        padding: 10px;
+    
+        &-button {
+            width: 100%;
+                padding: 10px;
+        }
+    }
+
+    &__actionBtns {
+        display: flex;
+        justify-content: space-between;
+
+        .btn {
+            padding: 10px;
+        }
+    }
+}

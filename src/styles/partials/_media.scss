@@ -1,0 +1,40 @@
+.mediaDetails {
+    text-align: center;
+    h1 {
+        margin: 50px auto;
+    }
+
+    form {
+        input {
+            margin: 25px 0;
+            padding: 0px;
+            height: auto;
+        }
+
+        .btn {
+            width: 50%;
+        }
+    }
+}
+
+.mediaLibrary {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    h1 {
+        text-align: center;
+        margin: 50px auto;
+    }
+
+    .row {
+        justify-content: space-between;
+    }
+
+    .card{
+        padding: 20px;
+        margin: 20px;
+        background-color: dodgerblue;
+        color: #fff;
+    }
+}

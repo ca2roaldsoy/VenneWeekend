@@ -1,0 +1,42 @@
+.roomSelect {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    h1 {
+        margin: 50px auto;
+    }
+
+    &__section {
+       display: flex;
+        flex-direction: column;
+        align-items: center; 
+        margin: 20px 0;
+
+        &--item {
+            height: 200px;
+            padding: 4px;
+            width: 250px;
+            border: 1px solid #000;
+            color: #fff;
+        }
+
+        &--draggable {
+            padding: 16px;
+            margin: 0 0 8px 0;
+            min-Height: 50px;
+        }
+
+    }
+
+    &__clear {
+        margin: 50px 0;
+        padding: 15px 25px;
+        font-weight: 600;
+    }
+
+    .col-lg-4 {
+        min-width: 25%
+    }
+    
+}
+

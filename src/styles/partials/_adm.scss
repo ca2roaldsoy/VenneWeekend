@@ -1,0 +1,28 @@
+.admPost {
+
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        text-align: center;
+        margin: 50px auto;
+    }
+
+    .addNew {
+        align-self: center;
+        margin-bottom: 25px;
+    }
+
+    &__delete {
+        margin-left: 20px !important;
+    }
+}
+
+.admModal {
+    .modal-body label {
+        margin-top: 25px;
+        font-weight: 600;
+    }
+}
+
+

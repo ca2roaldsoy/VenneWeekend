@@ -1,8 +1,17 @@
-.addBtn {
-    display: block;
-    margin: 40px auto;
-    text-align: center;
+.participents {
+    h1 {
+        margin: 50px auto;
+        text-align: center;
+    }
+    
+    .addBtn {
+        display: block;
+        margin: 40px auto;
+        text-align: center;
+    }
+
 }
+
 
 .person {
     & .form-control {
@@ -14,6 +23,7 @@ fieldset {
     border: 1px solid black;
     display: block;
     padding: 10px;
+    margin-bottom: 20px;
 
     & .form-check {
        padding-left: 30px;

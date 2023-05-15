@@ -4,6 +4,133 @@
   box-sizing: border-box;
 }
 
+.roomSelect {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+.roomSelect h1 {
+  margin: 50px auto;
+}
+.roomSelect__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+.roomSelect__section--item {
+  height: 200px;
+  padding: 4px;
+  width: 250px;
+  border: 1px solid #000;
+  color: #fff;
+}
+.roomSelect__section--draggable {
+  padding: 16px;
+  margin: 0 0 8px 0;
+  min-Height: 50px;
+}
+.roomSelect__clear {
+  margin: 50px 0;
+  padding: 15px 25px;
+  font-weight: 600;
+}
+.roomSelect .col-lg-4 {
+  min-width: 25%;
+}
+
+.mediaDetails {
+  text-align: center;
+}
+.mediaDetails h1 {
+  margin: 50px auto;
+}
+.mediaDetails form input {
+  margin: 25px 0;
+  padding: 0px;
+  height: auto;
+}
+.mediaDetails form .btn {
+  width: 50%;
+}
+
+.mediaLibrary {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.mediaLibrary h1 {
+  text-align: center;
+  margin: 50px auto;
+}
+.mediaLibrary .row {
+  justify-content: space-between;
+}
+.mediaLibrary .card {
+  padding: 20px;
+  margin: 20px;
+  background-color: dodgerblue;
+  color: #fff;
+}
+
+.foodTable {
+  text-align: center;
+}
+.foodTable h1 {
+  margin: 50px auto;
+}
+
+.menu {
+  text-align: center;
+}
+.menu h1 {
+  margin: 50px auto;
+}
+.menu input {
+  text-align: center;
+}
+.menu .btn {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+.menu .accordion {
+  padding: 10px;
+}
+.menu .accordion-button {
+  width: 100%;
+  padding: 10px;
+}
+.menu__actionBtns {
+  display: flex;
+  justify-content: space-between;
+}
+.menu__actionBtns .btn {
+  padding: 10px;
+}
+
+.admPost {
+  display: flex;
+  flex-direction: column;
+}
+.admPost h1 {
+  text-align: center;
+  margin: 50px auto;
+}
+.admPost .addNew {
+  align-self: center;
+  margin-bottom: 25px;
+}
+.admPost__delete {
+  margin-left: 20px !important;
+}
+
+.admModal .modal-body label {
+  margin-top: 25px;
+  font-weight: 600;
+}
+
 .post {
   text-align: center;
 }
@@ -17,8 +144,8 @@
 .post h1 {
   margin-top: 50px;
 }
-.post__navigate {
-  margin-top: 25px;
+.post__navigate--btn {
+  margin: 25px 0 10px 0;
 }
 .post .card {
   margin: 25px 0;
@@ -70,7 +197,11 @@
   margin-right: 20px;
 }
 
-.addBtn {
+.participents h1 {
+  margin: 50px auto;
+  text-align: center;
+}
+.participents .addBtn {
   display: block;
   margin: 40px auto;
   text-align: center;
@@ -84,6 +215,7 @@ fieldset {
   border: 1px solid black;
   display: block;
   padding: 10px;
+  margin-bottom: 20px;
 }
 fieldset .form-check {
   padding-left: 30px;
@@ -216,6 +348,19 @@ legend {
 }
 
 @media screen and (min-width: 768px) {
+  .navbarTop__link {
+    align-items: center;
+  }
+  .navbarTop__link a {
+    padding-left: 15px;
+  }
+  .navbarTop__link .btn {
+    margin-left: 15px;
+    margin-top: 0;
+  }
+  .navbarTop__title {
+    padding: 10px 0 5px 0;
+  }
   .home__header {
     text-align: left;
     padding-left: 50px;
@@ -250,19 +395,6 @@ legend {
   .home__qoute h4 {
     font-size: 28px;
   }
-  .navbarTop__link {
-    align-items: center;
-  }
-  .navbarTop__link a {
-    padding-left: 15px;
-  }
-  .navbarTop__link .btn {
-    margin-left: 15px;
-    margin-top: 0;
-  }
-  .navbarTop__title {
-    padding: 10px 0 5px 0;
-  }
   fieldset {
     display: flex;
   }
@@ -276,6 +408,26 @@ legend {
   }
   .post__navigate {
     align-self: flex-end;
+  }
+  .comments__btn {
+    display: flex;
+    margin: 0;
+  }
+  .mediaDetails {
+    text-align: left;
+  }
+  .mediaDetails h1 {
+    text-align: center;
+  }
+  .mediaDetails form .btn {
+    width: 25%;
+  }
+  .roomSelect__main {
+    display: flex;
+    flex-direction: row;
+  }
+  .roomSelect__section--item {
+    min-height: 300px;
   }
 }
 @media screen and (min-width: 1024px) {

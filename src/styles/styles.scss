@@ -4,7 +4,11 @@
     box-sizing: border-box;
   }
 
-
+@import "./partials/roomSelect";  
+@import "./partials/media";  
+@import "./partials/foodTable";
+@import "./partials/menu";
+@import "./partials/adm";
 @import "./partials/posts";
 @import "./partials/participents";
 @import "./partials/home";

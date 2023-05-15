@@ -1,4 +1,22 @@
 @media screen and (min-width: 768px) {
+    // Navbar
+    .navbarTop__link {
+        align-items: center;
+     
+         a {
+             padding-left: 15px;
+         }
+     
+         .btn {
+            margin-left: 15px;
+            margin-top: 0;
+         }
+     }
+     .navbarTop__title {
+        padding: 10px 0 5px 0;
+     }
+
+    // Home Page
     .home {
         &__header {
             text-align: left;
@@ -45,26 +63,12 @@
         }
     }
 
-    .navbarTop__link {
-        align-items: center;
-     
-         a {
-             padding-left: 15px;
-         }
-     
-         .btn {
-            margin-left: 15px;
-            margin-top: 0;
-         }
-     }
-     .navbarTop__title {
-        padding: 10px 0 5px 0;
-     }
-
+     // Participent Page
      fieldset {
         display: flex;
      }
 
+    // post page
      .post {
         text-align: left;
         display: flex;
@@ -78,6 +82,46 @@
             align-self: flex-end;
         }
      }
+
+     .comments {
+        &__btn {
+            display: flex;
+            margin: 0
+        }
+    }
+
+    // Media page
+    .mediaDetails {
+        text-align: left;
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            .btn {
+                width: 25%;
+            }
+        }
+    }
+
+    //room selection
+    .roomSelect {
+
+        &__main {
+            display: flex;
+            flex-direction: row;
+        }
+
+        &__section {
+
+            &--item {
+                min-height: 300px;
+                //width: 100%;
+            }
+        }
+        
+    }
 }
 
 @media screen and (min-width: 1024px) {
