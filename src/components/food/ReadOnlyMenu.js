@@ -1,22 +1,22 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
 
-function ReadOnlyMenu ({ menu, handleEditClick, handleDeleteClick }) {
-
+function ReadOnlyMenu({ menu, handleEditClick, handleDeleteClick }) {
   return (
     <>
-    <Card.Header>Fredag</Card.Header>
+      <Card.Header>Fredag</Card.Header>
       <Card.Body>
         <Card.Title>{menu.friday}</Card.Title>
-        </Card.Body>
-        <Card.Header>Lørdag</Card.Header>
-        <Card.Body>
-      <Card.Title>{menu.saturday}</Card.Title>
+      </Card.Body>
+      <Card.Header>Lørdag</Card.Header>
+      <Card.Body>
+        <Card.Title>{menu.saturday}</Card.Title>
       </Card.Body>
       <Card.Header>Søndag</Card.Header>
       <Card.Body>
-      <Card.Title>{menu.sunday}</Card.Title>
+        <Card.Title>{menu.sunday}</Card.Title>
       </Card.Body>
+      <Card.Footer className="menu__actionBtns">
         <Button
           type="button"
           variant="info"
@@ -24,11 +24,16 @@ function ReadOnlyMenu ({ menu, handleEditClick, handleDeleteClick }) {
         >
           Rediger
         </Button>
-        <Button type="button" variant="danger" onClick={() => handleDeleteClick(menu.id)}>
+        <Button
+          type="button"
+          variant="danger"
+          onClick={() => handleDeleteClick(menu.id)}
+        >
           Slett
         </Button>
-        </>
+      </Card.Footer>
+    </>
   );
-};
+}
 
 export default ReadOnlyMenu;
