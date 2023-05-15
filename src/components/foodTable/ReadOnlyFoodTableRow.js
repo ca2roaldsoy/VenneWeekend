@@ -1,15 +1,15 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { Td, Tr } from "react-super-responsive-table";
 
-function ReadOnlyRow ({ ing, handleEditClick, handleDeleteClick }) {
-
+function ReadOnlyRow({ ing, handleEditClick, handleDeleteClick }) {
   return (
-    <tr>
-      <td>{ing.ingredient}</td>
-      <td>{ing.bought}</td>
-      <td>{ing.used}</td>
-      <td>{Math.floor(ing.bought - ing.used) + " / " + ing.measurement}</td>
-      <td>
+    <Tr>
+      <Td>{ing.ingredient}</Td>
+      <Td>{ing.bought}</Td>
+      <Td>{ing.used}</Td>
+      <Td>{Math.floor(ing.bought - ing.used) + " / " + ing.measurement}</Td>
+      <Td>
         <Button
           type="button"
           variant="info"
@@ -17,12 +17,17 @@ function ReadOnlyRow ({ ing, handleEditClick, handleDeleteClick }) {
         >
           Rediger
         </Button>
-        <Button type="button" variant="danger" onClick={() => handleDeleteClick(ing.id)}>
+        <Button
+          type="button"
+          variant="danger"
+          onClick={() => handleDeleteClick(ing.id)}
+          className="ml-3"
+        >
           Slett
         </Button>
-      </td>
-    </tr>
+      </Td>
+    </Tr>
   );
-};
+}
 
 export default ReadOnlyRow;

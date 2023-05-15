@@ -17,8 +17,9 @@ import {
   ModalTitle,
   ModalBody,
   ModalFooter,
-  Table,
+  Container,
 } from "react-bootstrap";
+import { Table, Thead, Tbody, Tr, Th } from "react-super-responsive-table";
 
 // validate input field
 const schema = yup.object().shape({
@@ -148,65 +149,68 @@ function PostForm() {
   const handleShow = () => setShow(true);
 
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Skriv ny melding
+    <Container className="admPost">
+      <h1>Administrer innlegg</h1>
+      <Button variant="primary" onClick={handleShow} className="addNew">
+        + Skriv ny melding
       </Button>
-      <Form onSubmit={handleEditFormSubmit} className="mt-5">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Forfatter</th>
-              <th>Tittel</th>
-              <th>Melding</th>
-            </tr>
-          </thead>
-          <tbody>
-            {posts.map((p, i) => (
-              <>
-                {editPostId === p.id ? (
-                  <EditPostRow
-                    key={p.id}
-                    handleEditFormSubmit={handleEditFormSubmit}
-                    editFormData={editFormData}
-                    handleEditFormChange={handleEditFormChange}
-                    handleCancelClick={handleCancelClick}
-                  />
-                ) : (
-                  <ReadOnlyPostRow
-                    key={p.id}
-                    p={p}
-                    handleEditClick={handleEditClick}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-                )}
-              </>
-            ))}
-          </tbody>
+      <Form onSubmit={handleEditFormSubmit}>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Forfatter</Th>
+              <Th>Tittel</Th>
+              <Th>Melding</Th>
+              <Th>#</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {posts.map((p, i) =>
+              editPostId === p.id ? (
+                <EditPostRow
+                  key={i}
+                  handleEditFormSubmit={handleEditFormSubmit}
+                  editFormData={editFormData}
+                  handleEditFormChange={handleEditFormChange}
+                  handleCancelClick={handleCancelClick}
+                />
+              ) : (
+                <ReadOnlyPostRow
+                  key={i}
+                  p={p}
+                  handleEditClick={handleEditClick}
+                  handleDeleteClick={handleDeleteClick}
+                />
+              )
+            )}
+          </Tbody>
         </Table>
       </Form>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} className="admModal">
         <ModalHeader closeButton>
           <ModalTitle>Skriv ny melding</ModalTitle>
         </ModalHeader>
         <ModalBody>
           <Form onSubmit={handleAddFormSubmit}>
+            <Form.Label>Forfatter</Form.Label>
             <Form.Control
               type="text"
-              required
               name="author"
               onChange={handleAddFormChange}
               autoFocus
             />
+            <Form.Label>Tittel</Form.Label>
             <Form.Control
               type="text"
               name="title"
               onChange={handleAddFormChange}
             />
+            <Form.Label>Melding</Form.Label>
             <Form.Control
               type="text"
               name="message"
+              as="textarea"
               onChange={handleAddFormChange}
             />
             <ModalFooter>
@@ -217,7 +221,7 @@ function PostForm() {
           </Form>
         </ModalBody>
       </Modal>
-    </>
+    </Container>
   );
 }
 

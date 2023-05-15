@@ -2,11 +2,20 @@ import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import ReadOnlyMenu from "./ReadOnlyMenu";
 import EditMenu from "./EditMenu";
-import { Form, Button, Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter, Accordion } from "react-bootstrap";
+import {
+  Form,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalTitle,
+  ModalBody,
+  ModalFooter,
+  Accordion,
+} from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import useFormPersist from 'react-hook-form-persist'
-import Card from 'react-bootstrap/Card';
+import useFormPersist from "react-hook-form-persist";
+import Card from "react-bootstrap/Card";
 import * as yup from "yup";
 import axios from "axios";
 
@@ -15,8 +24,7 @@ import axios from "axios";
 });
 const loadedMenu = JSON.parse(localStorage.getItem("menuTable")) || []; */
 
-function FoodForm () {
-
+function FoodForm() {
   const [menus, setMenus] = useState([]);
   const [editMenuId, setEditMenuId] = useState(null);
   const [show, setShow] = useState(false);
@@ -25,12 +33,14 @@ function FoodForm () {
     friday: "",
     saturday: "",
     sunday: "",
+    year: "",
   });
 
   const [editFormData, setEditFormData] = useState({
     friday: "",
     saturday: "",
     sunday: "",
+    year: "",
   });
 
   /* const { watch, setValue } = useForm({
@@ -46,8 +56,10 @@ function FoodForm () {
  */
   useEffect(() => {
     //localStorage.setItem("menuTable", JSON.stringify(menus));
-    axios.get("http://localhost:3001/foodmenu/get").then((response) => setMenus(response.data));
-    }, []);  
+    axios
+      .get("http://localhost:3001/foodmenu/get")
+      .then((response) => setMenus(response.data));
+  }, []);
 
   const handleAddFormChange = (event) => {
     event.preventDefault();
@@ -78,6 +90,7 @@ function FoodForm () {
       friday: addFormData.friday,
       saturday: addFormData.saturday,
       sunday: addFormData.sunday,
+      year: addFormData.year,
     };
 
     axios.post("http://localhost:3001/foodmenu/insert", newMenu);
@@ -93,9 +106,10 @@ function FoodForm () {
       friday: editFormData.friday,
       saturday: editFormData.saturday,
       sunday: editFormData.sunday,
+      year: editFormData.year,
     };
 
-    axios.put(`http://localhost:3001/foodmenu/update`, editedIngredient)
+    axios.put(`http://localhost:3001/foodmenu/update`, editedIngredient);
     const newMenus = [...menus];
     const index = menus.findIndex((menu) => menu.id === editMenuId);
     newMenus[index] = editedIngredient;
@@ -112,6 +126,7 @@ function FoodForm () {
       friday: menu.friday,
       saturday: menu.saturday,
       sunday: menu.sunday,
+      year: menu.year,
     };
 
     setEditFormData(FormValues);
@@ -126,44 +141,60 @@ function FoodForm () {
     const index = menus.findIndex((menu) => menu.id === menuId);
 
     newMenus.splice(index, 1);
-    axios.delete(`http://localhost:3001/foodmenu/delete/${menuId}`)
+    axios.delete(`http://localhost:3001/foodmenu/delete/${menuId}`);
     setMenus(newMenus);
   };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
- 
+
+  console.log(menus);
+
+  function menuYear() {
+    const yearArr = [];
+    for (let i = 2; i < 6; i++) {
+      yearArr.push(
+        <Accordion defaultActiveKey="0" key={i} className="menu__yearAcc">
+          <Accordion.Item eventKey={i}>
+            <Accordion.Header>202{i}</Accordion.Header>
+            <Accordion.Body>
+              <Card>
+                {menus.map((menu) =>
+                  menu.year === `202${i}` ? (
+                    editMenuId === menu.id ? (
+                      <EditMenu
+                        key={i}
+                        editFormData={editFormData}
+                        handleEditFormChange={handleEditFormChange}
+                        handleCancelClick={handleCancelClick}
+                      />
+                    ) : (
+                      <ReadOnlyMenu
+                        key={nanoid()}
+                        menu={menu}
+                        handleEditClick={handleEditClick}
+                        handleDeleteClick={handleDeleteClick}
+                      />
+                    )
+                  ) : null
+                )}
+              </Card>
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      );
+    }
+
+    return yearArr;
+  }
+
   return (
     <>
+      <Button variant="primary" onClick={handleShow} className="menuAddBtn">
+        + Legg til meny
+      </Button>
       <Form onSubmit={handleEditFormSubmit} className="mt-5">
-        <Accordion defaultActiveKey="0" alwaysOpen>
-              <Accordion.Item eventKey="0">
-        <Accordion.Header>2023</Accordion.Header>
-        <Accordion.Body>
-    <Card>
-    {menus.map((menu) => (
-              <>
-                {editMenuId === menu.id ? (
-                  <EditMenu
-                    editFormData={editFormData}
-                    handleEditFormChange={handleEditFormChange}
-                    handleCancelClick={handleCancelClick}
-                  />
-                ) : (
-                  <ReadOnlyMenu
-                    key={nanoid()}
-                    menu={menu}
-                    handleEditClick={handleEditClick}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-                )}
-              </>
-            ))}
-          </Card>
-          </Accordion.Body>
-          </Accordion.Item>
-          </Accordion>
-          <Button variant="primary" onClick={handleShow}> + Legg til meny</Button>
+        {menuYear()}
       </Form>
 
       <Modal show={show} onHide={handleClose}>
@@ -171,34 +202,42 @@ function FoodForm () {
           <ModalTitle>Legg til meny</ModalTitle>
         </ModalHeader>
         <ModalBody>
-      <Form onSubmit={handleAddFormSubmit}>
-        <Form.Control
-          type="text"
-          name="friday"
-          placeholder="Skriv fredagens meny"
-          onChange={handleAddFormChange}
-          autoFocus
-        />
-        <Form.Control
-          type="text"
-          name="saturday"
-          placeholder="Skriv lørdagens meny"
-          onChange={handleAddFormChange}
-        />
-        <Form.Control
-          type="text"
-          name="sunday"
-          placeholder="Skriv søndagens meny"
-          onChange={handleAddFormChange}
-        />
-        <ModalFooter>
-          <Button type="submit" variant="success">Lagre</Button>
-        </ModalFooter>
-      </Form>
+          <Form onSubmit={handleAddFormSubmit}>
+            <Form.Control
+              type="text"
+              name="friday"
+              placeholder="Skriv fredagens meny"
+              onChange={handleAddFormChange}
+              autoFocus
+            />
+            <Form.Control
+              type="text"
+              name="saturday"
+              placeholder="Skriv lørdagens meny"
+              onChange={handleAddFormChange}
+            />
+            <Form.Control
+              type="text"
+              name="sunday"
+              placeholder="Skriv søndagens meny"
+              onChange={handleAddFormChange}
+            />
+            <Form.Control
+              type="text"
+              name="year"
+              placeholder="Årstall"
+              onChange={handleAddFormChange}
+            />
+            <ModalFooter>
+              <Button type="submit" variant="success">
+                Lagre
+              </Button>
+            </ModalFooter>
+          </Form>
         </ModalBody>
-        </Modal>
+      </Modal>
     </>
   );
-};
+}
 
 export default FoodForm;
