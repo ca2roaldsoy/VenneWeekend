@@ -1,0 +1,27 @@
+.post__title {
+@include bgImage(url("../../images/nature.jpg"))
+}
+
+.map__title {
+@include bgImage(url("../../images/map.jpg"))
+}
+
+.participents__title {
+@include bgImage(url("../../images/boat.jpg"))
+}
+
+.media__title {
+@include bgImage(url("../../images/nature2.jpg"))
+}
+
+.foodTable__title {
+@include bgImage(url("../../images/ludo.jpg"))
+}
+
+.food__title {
+   @include bgImage(url("../../images/food.jpg")) 
+}
+
+.roomSelect__title {
+    @include bgImage(url("../../images/gym.jpg")) 
+}
