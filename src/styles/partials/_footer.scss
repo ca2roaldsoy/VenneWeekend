@@ -1,0 +1,14 @@
+.footer {
+    display: flex;
+    background-color: lightgrey;
+    padding: 20px 0;
+    text-align: center;
+    align-items: center;
+
+    &__social a img {
+        width: 18%;
+        height:auto;
+        margin: 10px auto;
+    }
+
+}

@@ -4,6 +4,137 @@
   box-sizing: border-box;
 }
 
+.post__title {
+  background-image: url("../../images/nature.jpg");
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.65);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+  max-width: 100%;
+  display: flex;
+}
+.post__title h1 {
+  font-size: 52px;
+  align-self: center;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.map__title {
+  background-image: url("../../images/map.jpg");
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.65);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+  max-width: 100%;
+  display: flex;
+}
+.map__title h1 {
+  font-size: 52px;
+  align-self: center;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.participents__title {
+  background-image: url("../../images/boat.jpg");
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.65);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+  max-width: 100%;
+  display: flex;
+}
+.participents__title h1 {
+  font-size: 52px;
+  align-self: center;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.media__title {
+  background-image: url("../../images/nature2.jpg");
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.65);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+  max-width: 100%;
+  display: flex;
+}
+.media__title h1 {
+  font-size: 52px;
+  align-self: center;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.foodTable__title {
+  background-image: url("../../images/ludo.jpg");
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.65);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+  max-width: 100%;
+  display: flex;
+}
+.foodTable__title h1 {
+  font-size: 52px;
+  align-self: center;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.food__title {
+  background-image: url("../../images/food.jpg");
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.65);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+  max-width: 100%;
+  display: flex;
+}
+.food__title h1 {
+  font-size: 52px;
+  align-self: center;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.roomSelect__title {
+  background-image: url("../../images/gym.jpg");
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.65);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+  max-width: 100%;
+  display: flex;
+}
+.roomSelect__title h1 {
+  font-size: 52px;
+  align-self: center;
+  color: #fff;
+  margin: 0 auto;
+}
+
+.container-fluid {
+  padding: 0;
+  margin: 0;
+}
+
 .roomSelect {
   text-align: center;
   padding: 0;
@@ -253,20 +384,28 @@ legend {
 }
 
 .home {
+  background-image: url("../../images/lunden_img.jpg");
   background-blend-mode: overlay;
   background-color: rgba(0, 0, 0, 0.65);
-  background-image: url("../../images/lunden_img.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   height: 700px;
   max-width: 100%;
+  display: block;
+}
+.home h1 {
+  font-size: 52px;
+  align-self: center;
+  color: #fff;
+  margin: 0 auto;
 }
 .home__header {
   text-align: center;
   padding-top: 50px;
   color: #fff;
   font-size: 45px;
+  margin: 0px 0;
 }
 .home__text {
   text-align: center;
@@ -298,12 +437,12 @@ legend {
 .home__posts {
   background-color: lightgray;
 }
-.home__posts h3 {
+.home__posts h2 {
   text-align: center;
   padding: 25px 0;
 }
 .home__posts .row {
-  padding-bottom: 25px;
+  padding: 25px;
 }
 .home__posts--col {
   padding-bottom: 25px;
@@ -311,9 +450,19 @@ legend {
 .home__posts--col .card {
   text-align: center;
   padding: 25px;
+  height: 350px;
+}
+.home__posts--col .card-title {
+  font-size: 32px;
+}
+.home__posts--col .card-text {
+  font-size: 22px;
+}
+.home__posts--col .card-footer {
+  margin-top: 100px;
 }
 .home__posts--col a {
-  margin-top: 25px;
+  padding-top: 25px;
 }
 .home__carousel {
   text-align: center;
@@ -332,6 +481,9 @@ legend {
 .navbarTop {
   border-bottom: 1px solid black;
 }
+.navbarTop__title {
+  margin: 0;
+}
 
 .navbarTop__link .btn {
   margin-top: 10px;
@@ -345,6 +497,19 @@ legend {
 .navbar-nav {
   display: flex;
   font-size: 14px;
+}
+
+.footer {
+  display: flex;
+  background-color: lightgrey;
+  padding: 20px 0;
+  text-align: center;
+  align-items: center;
+}
+.footer__social a img {
+  width: 18%;
+  height: auto;
+  margin: 10px auto;
 }
 
 @media screen and (min-width: 768px) {
@@ -438,11 +603,29 @@ legend {
     font-size: 20px;
   }
 }
-@media screen and (min-width: 1440px) {
-  .App {
-    max-width: 80%;
-    margin: 0 auto;
-  }
-}
+/* .media {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 15px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    &__images {
+        position: relative;
+  padding-top: 66%;
+
+        &img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+} */
 
 /*# sourceMappingURL=styles.css.map */

@@ -4,6 +4,9 @@
     box-sizing: border-box;
   }
 
+@import "./partials/mixins";  
+@import "./partials/pageTitles";
+@import "./partials/blocktags"; 
 @import "./partials/roomSelect";  
 @import "./partials/media";  
 @import "./partials/foodTable";
@@ -13,7 +16,8 @@
 @import "./partials/participents";
 @import "./partials/home";
 @import "./partials/navbar";
-@import "./partials/responsive"
+@import "./partials/footer";
+@import "./partials/responsive";
 
 /* .media {
     display: grid;

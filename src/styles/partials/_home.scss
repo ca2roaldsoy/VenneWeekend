@@ -1,18 +1,12 @@
 .home {
-    background-blend-mode:overlay;
-    background-color: rgba($color: #000000, $alpha: 0.65);
-    background-image: url("../../images/lunden_img.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 700px;
-    max-width: 100%;
+    @include bgImage(url("../../images/lunden_img.jpg"), 700px, $display: block);
 
     &__header {
         text-align: center;
         padding-top: 50px;
         color: #fff;
         font-size: 45px;
+        margin: 0px 0;
     }
 
     &__text {
@@ -51,13 +45,13 @@
     &__posts {
         background-color: lightgray;
 
-        h3 {
+        h2 {
           text-align: center;
           padding: 25px 0; 
         }
 
         .row {
-            padding-bottom: 25px;
+            padding: 25px;
         }
 
         &--col {
@@ -65,10 +59,23 @@
             .card {
                 text-align: center;
                 padding: 25px;
+                height: 350px;
+
+                &-title {
+                    font-size: 32px;
+                }
+
+                &-text {
+                    font-size: 22px;
+                }
+
+                &-footer {
+                    margin-top: 100px;
+                }
             }
         
             a {
-                margin-top: 25px;
+               padding-top: 25px;
             } 
         }
     }
