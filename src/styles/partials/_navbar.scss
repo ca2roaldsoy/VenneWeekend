@@ -1,5 +1,10 @@
 .navbarTop {
     border-bottom: 1px solid black;
+    
+    &__title {
+
+        margin: 0;
+    } 
 }
 
 .navbarTop__link {
@@ -7,15 +12,15 @@
     .btn {
         margin-top: 10px;
         width: 100px;
-    }
+    } 
 }
 
 .navbar-collapse {
-    justify-content: end;
+    justify-content: end; 
 }
 
 .navbar-nav {
     display: flex;
-    font-size: 14px;
+    font-size: 14px; 
 
 }
