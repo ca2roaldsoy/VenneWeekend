@@ -1,0 +1,18 @@
+@mixin bgImage($image, $height: 220px, $fontSize: 52px, $color: #fff, $display: flex) {
+    background-image: $image;
+    background-blend-mode:overlay;
+    background-color: rgba($color: #000000, $alpha: 0.65);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: $height;
+    max-width: 100%;
+    display: $display;
+
+    h1 {
+        font-size: $fontSize;
+        align-self: center;
+        color: $color;
+        margin: 0 auto;
+    }
+}
