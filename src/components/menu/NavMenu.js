@@ -34,7 +34,7 @@ function NavMenu() {
     <Router>
       <Navbar role="navigation" expand="md" className="navbarTop">
         <Navbar.Brand as="h1" className="navbarTop__title">
-          <NavLink to="/home" role="link" className="navbarTop__title--text">
+          <NavLink to="/" role="link" className="navbarTop__title--text">
             VenneWeekend
           </NavLink>
         </Navbar.Brand>
@@ -66,7 +66,7 @@ function NavMenu() {
       <Container fluid>
         <Routes>
           <Route element={<Protect />}>
-            <Route element={<Home />} path="/home" />
+            <Route element={<Home />} path="/" />
             <Route element={<ParticipateForm />} path="/participate" />
             <Route element={<Food />} path="/menu" />
             <Route element={<FoodTable />} path="/foodtable" />
@@ -78,7 +78,7 @@ function NavMenu() {
             <Route element={<RoomSelection />} path="/roomselection" />
             <Route element={<Map />} path="/kart" />
           </Route>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Container>
     </Router>

@@ -43,12 +43,12 @@ function LoginForm() {
       .then((response) => {
         if (!response.data.auth) {
           setLoggedIn(response.data.message);
-          history("/");
+          history("/login");
         } else {
           setLoggedIn("");
           localStorage.setItem("token", response.data.token);
           localStoreUser(response.data.auth);
-          history("/home");
+          history("/");
         }
       });
 
