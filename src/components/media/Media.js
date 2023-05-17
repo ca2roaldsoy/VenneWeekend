@@ -22,10 +22,14 @@ function Media() {
   }
 
   return (
-    <Container className="mediaLibrary">
-      <h1>Media</h1>
-      <Row>{years()}</Row>
-    </Container>
+    <>
+      <Container fluid className="media__title">
+        <h1>Media</h1>
+      </Container>
+      <Container className="mediaLibrary">
+        <Row>{years()}</Row>
+      </Container>
+    </>
   );
 }
 

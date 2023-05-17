@@ -4,12 +4,16 @@ import FoodForm from "./FoodForm";
 
 function Food() {
   return (
-    <Container className="containerForm menu">
-      <div className="containerForm__form">
+    <>
+      <Container fluid className="food__title">
         <h1 className="text-center">Opprett meny</h1>
-        <FoodForm />
-      </div>
-    </Container>
+      </Container>
+      <Container className="containerForm menu">
+        <div className="containerForm__form">
+          <FoodForm />
+        </div>
+      </Container>
+    </>
   );
 }
 

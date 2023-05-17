@@ -254,162 +254,166 @@ function ParticipateForm() {
   const handleShow = () => setShow(true);
 
   return (
-    <Container className="participents">
-      <h1>Påmelding</h1>
-      <Button variant="primary" onClick={handleShow} className="addBtn">
-        + Legg til deltaker
-      </Button>
-      <Form onSubmit={handleEditFormSubmit} className="mt-5">
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Navn</Th>
-              <Th>Alder</Th>
-              <Th>Antall dager</Th>
-              <Th>Sengtøy</Th>
-              <Th>Allergener</Th>
-              <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {participents.map((person, i) =>
-              editPersonId === person.id ? (
-                <EditParticipents
-                  key={i}
-                  editFormData={editFormData}
-                  handleEditFormChange={handleEditFormChange}
-                  handleCancelClick={handleCancelClick}
-                  handleEditFormSubmit={handleEditFormSubmit}
-                />
-              ) : (
-                <ReadOnlyParticipents
-                  key={nanoid()}
-                  person={person}
-                  handleEditClick={handleEditClick}
-                  handleDeleteClick={handleDeleteClick}
-                />
-              )
-            )}
-          </Tbody>
-        </Table>
-        <div className="d-flex mt-3">
-          <div>Total: {participents.length}</div>
-          <div className="pl-5">
-            Gluten: {glutenCount()} | Laktose: {lactoseCount()}
+    <>
+      <Container fluid className="participents__title">
+        <h1>Påmelding</h1>
+      </Container>
+      <Container className="participents">
+        <Button variant="primary" onClick={handleShow} className="addBtn">
+          + Legg til deltaker
+        </Button>
+        <Form onSubmit={handleEditFormSubmit} className="mt-5">
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>Navn</Th>
+                <Th>Alder</Th>
+                <Th>Antall dager</Th>
+                <Th>Sengtøy</Th>
+                <Th>Allergener</Th>
+                <Th></Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {participents.map((person, i) =>
+                editPersonId === person.id ? (
+                  <EditParticipents
+                    key={i}
+                    editFormData={editFormData}
+                    handleEditFormChange={handleEditFormChange}
+                    handleCancelClick={handleCancelClick}
+                    handleEditFormSubmit={handleEditFormSubmit}
+                  />
+                ) : (
+                  <ReadOnlyParticipents
+                    key={nanoid()}
+                    person={person}
+                    handleEditClick={handleEditClick}
+                    handleDeleteClick={handleDeleteClick}
+                  />
+                )
+              )}
+            </Tbody>
+          </Table>
+          <div className="d-flex mt-3">
+            <div>Total: {participents.length}</div>
+            <div className="pl-5">
+              Gluten: {glutenCount()} | Laktose: {lactoseCount()}
+            </div>
           </div>
-        </div>
-      </Form>
+        </Form>
 
-      <Modal show={show} onHide={handleClose}>
-        <ModalHeader closeButton>
-          <ModalTitle>Legg til deltaker</ModalTitle>
-        </ModalHeader>
-        <ModalBody>
-          <Form onSubmit={handleAddFormSubmit}>
-            <fieldset className="person">
-              <legend>Personalia</legend>
-              <Form.Control
-                type="text"
-                required
-                name="name"
-                placeholder="Navn"
-                onChange={handleAddFormChange}
-                autoFocus
-              />
-              <Form.Control
-                type="number"
-                name="age"
-                placeholder="Alder"
-                onChange={handleAddFormChange}
-              />
-            </fieldset>
-            <fieldset>
-              <legend>Dager</legend>
-              <Form.Check type={"checkbox"}>
-                <Form.Check.Input
-                  type={"checkbox"}
-                  value="Fredag"
-                  name="friday"
+        <Modal show={show} onHide={handleClose}>
+          <ModalHeader closeButton>
+            <ModalTitle>Legg til deltaker</ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <Form onSubmit={handleAddFormSubmit}>
+              <fieldset className="person">
+                <legend>Personalia</legend>
+                <Form.Control
+                  type="text"
+                  required
+                  name="name"
+                  placeholder="Navn"
+                  onChange={handleAddFormChange}
+                  autoFocus
+                />
+                <Form.Control
+                  type="number"
+                  name="age"
+                  placeholder="Alder"
                   onChange={handleAddFormChange}
                 />
-                <Form.Check.Label>Fredag</Form.Check.Label>
-              </Form.Check>
-              <Form.Check type={"checkbox"}>
-                <Form.Check.Input
-                  type={"checkbox"}
-                  value="Lørdag"
-                  name="saturday"
+              </fieldset>
+              <fieldset>
+                <legend>Dager</legend>
+                <Form.Check type={"checkbox"}>
+                  <Form.Check.Input
+                    type={"checkbox"}
+                    value="Fredag"
+                    name="friday"
+                    onChange={handleAddFormChange}
+                  />
+                  <Form.Check.Label>Fredag</Form.Check.Label>
+                </Form.Check>
+                <Form.Check type={"checkbox"}>
+                  <Form.Check.Input
+                    type={"checkbox"}
+                    value="Lørdag"
+                    name="saturday"
+                    onChange={handleAddFormChange}
+                  />
+                  <Form.Check.Label>Lørdag</Form.Check.Label>
+                </Form.Check>
+                <Form.Check type={"checkbox"}>
+                  <Form.Check.Input
+                    type={"checkbox"}
+                    value="Søndag"
+                    name="sunday"
+                    onChange={handleAddFormChange}
+                  />
+                  <Form.Check.Label>Søndag</Form.Check.Label>
+                </Form.Check>
+                <Form.Check type={"checkbox"}>
+                  <Form.Check.Input
+                    type={"checkbox"}
+                    value="Mandag"
+                    name="monday"
+                    onChange={handleAddFormChange}
+                  />
+                  <Form.Check.Label>Mandag</Form.Check.Label>
+                </Form.Check>
+              </fieldset>
+              <fieldset>
+                <legend>Sengetøy</legend>
+                <Form.Check type={"checkbox"}>
+                  <Form.Check.Input
+                    type={"checkbox"}
+                    value="v"
+                    name="sheets"
+                    onChange={handleAddFormChange}
+                  />
+                  <Form.Check.Label>Leie av sengetøy</Form.Check.Label>
+                </Form.Check>
+              </fieldset>
+              <fieldset className="allergies">
+                <legend>Allergier</legend>
+                <Form.Check type={"checkbox"}>
+                  <Form.Check.Input
+                    type={"checkbox"}
+                    value="laktose"
+                    name="lactose"
+                    onChange={handleAddFormChange}
+                  />
+                  <Form.Check.Label>Laktose</Form.Check.Label>
+                </Form.Check>
+                <Form.Check type={"checkbox"}>
+                  <Form.Check.Input
+                    type={"checkbox"}
+                    value="gluten"
+                    name="gluten"
+                    onChange={handleAddFormChange}
+                  />
+                  <Form.Check.Label>Gluten</Form.Check.Label>
+                </Form.Check>
+                <Form.Control
+                  type="text"
+                  name="other"
+                  placeholder="Annet..."
                   onChange={handleAddFormChange}
                 />
-                <Form.Check.Label>Lørdag</Form.Check.Label>
-              </Form.Check>
-              <Form.Check type={"checkbox"}>
-                <Form.Check.Input
-                  type={"checkbox"}
-                  value="Søndag"
-                  name="sunday"
-                  onChange={handleAddFormChange}
-                />
-                <Form.Check.Label>Søndag</Form.Check.Label>
-              </Form.Check>
-              <Form.Check type={"checkbox"}>
-                <Form.Check.Input
-                  type={"checkbox"}
-                  value="Mandag"
-                  name="monday"
-                  onChange={handleAddFormChange}
-                />
-                <Form.Check.Label>Mandag</Form.Check.Label>
-              </Form.Check>
-            </fieldset>
-            <fieldset>
-              <legend>Sengetøy</legend>
-              <Form.Check type={"checkbox"}>
-                <Form.Check.Input
-                  type={"checkbox"}
-                  value="v"
-                  name="sheets"
-                  onChange={handleAddFormChange}
-                />
-                <Form.Check.Label>Leie av sengetøy</Form.Check.Label>
-              </Form.Check>
-            </fieldset>
-            <fieldset className="allergies">
-              <legend>Allergier</legend>
-              <Form.Check type={"checkbox"}>
-                <Form.Check.Input
-                  type={"checkbox"}
-                  value="laktose"
-                  name="lactose"
-                  onChange={handleAddFormChange}
-                />
-                <Form.Check.Label>Laktose</Form.Check.Label>
-              </Form.Check>
-              <Form.Check type={"checkbox"}>
-                <Form.Check.Input
-                  type={"checkbox"}
-                  value="gluten"
-                  name="gluten"
-                  onChange={handleAddFormChange}
-                />
-                <Form.Check.Label>Gluten</Form.Check.Label>
-              </Form.Check>
-              <Form.Control
-                type="text"
-                name="other"
-                placeholder="Annet..."
-                onChange={handleAddFormChange}
-              />
-            </fieldset>
-            <ModalFooter>
-              <Button type="submit" variant="success">
-                Lagre
-              </Button>
-            </ModalFooter>
-          </Form>
-        </ModalBody>
-      </Modal>
-    </Container>
+              </fieldset>
+              <ModalFooter>
+                <Button type="submit" variant="success">
+                  Lagre
+                </Button>
+              </ModalFooter>
+            </Form>
+          </ModalBody>
+        </Modal>
+      </Container>
+    </>
   );
 }
 

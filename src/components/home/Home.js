@@ -34,7 +34,7 @@ function Home() {
         break;
       } else {
         allPosts.push(
-          <Col key={index} className="home__posts--col">
+          <Col lg={4} md={6} sm={12} key={index} className="home__posts--col">
             <Card>
               <Card.Title>{postIndex.title}</Card.Title>
               <Card.Text>{postIndex.message}</Card.Text>
@@ -135,8 +135,8 @@ function Home() {
         </h4>
       </Container>
       <hr />
-      <Container className="home__posts">
-        <h3>Innlegg</h3>
+      <Container fluid className="home__posts">
+        <h2>Innlegg</h2>
         <Row className="md-3 lg-4">{getPosts()}</Row>
       </Container>
       <hr />
@@ -156,7 +156,7 @@ function Home() {
           {showImages()}
         </Carousel>
       </Container>
-      <Container>
+      <Container fluid>
         <Footer />
       </Container>
     </>

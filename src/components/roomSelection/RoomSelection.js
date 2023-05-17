@@ -94,8 +94,10 @@ function RoomSelection() {
 
   return (
     <Container fluid className="roomSelect">
-      <main>
+      <div className="roomSelect__title">
         <h1>Room Selection</h1>
+      </div>
+      <main>
         <Row className="roomSelect__main">
           <DragDropContext
             onDragEnd={(result) => onDragEnd(result, columns, setColumns)}

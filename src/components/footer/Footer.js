@@ -1,6 +1,6 @@
 import React from "react";
 import FacebookIcon from "../../images/face_v1.png";
-import { Col, Row, Image } from "react-bootstrap";
+import { Col, Row, Image, Container } from "react-bootstrap";
 import FooterMenu from "./FooterMenu";
 
 function Footer() {

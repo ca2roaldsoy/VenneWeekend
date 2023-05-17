@@ -151,101 +151,105 @@ function FoodTable() {
   const handleShow = () => setShow(true);
 
   return (
-    <Container className="foodTable">
-      <h1>Mattabell</h1>
-      <Button variant="primary" onClick={handleShow}>
-        + Legg til ingredient
-      </Button>
-      <Form onSubmit={handleEditFormSubmit} className="mt-5">
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Ingredient</Th>
-              <Th>Kjøpt</Th>
-              <Th>Brukt</Th>
-              <Th>Total</Th>
-              <Th>Handling</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {ingredients.map((ing) =>
-              editIngId === ing.id ? (
-                <EditableRow
-                  editFormData={editFormData}
-                  handleEditFormChange={handleEditFormChange}
-                  handleCancelClick={handleCancelClick}
-                  handleEditFormSubmit={handleEditFormSubmit}
-                />
-              ) : (
-                <ReadOnlyRow
-                  key={nanoid()}
-                  ing={ing}
-                  handleEditClick={handleEditClick}
-                  handleDeleteClick={handleDeleteClick}
-                />
-              )
-            )}
-          </Tbody>
-        </Table>
-      </Form>
+    <>
+      <Container fluid className="foodTable__title">
+        <h1>Mattabell</h1>
+      </Container>
+      <Container className="foodTable">
+        <Button variant="primary" onClick={handleShow}>
+          + Legg til ingredient
+        </Button>
+        <Form onSubmit={handleEditFormSubmit} className="mt-5">
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>Ingredient</Th>
+                <Th>Kjøpt</Th>
+                <Th>Brukt</Th>
+                <Th>Total</Th>
+                <Th>Handling</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {ingredients.map((ing) =>
+                editIngId === ing.id ? (
+                  <EditableRow
+                    editFormData={editFormData}
+                    handleEditFormChange={handleEditFormChange}
+                    handleCancelClick={handleCancelClick}
+                    handleEditFormSubmit={handleEditFormSubmit}
+                  />
+                ) : (
+                  <ReadOnlyRow
+                    key={nanoid()}
+                    ing={ing}
+                    handleEditClick={handleEditClick}
+                    handleDeleteClick={handleDeleteClick}
+                  />
+                )
+              )}
+            </Tbody>
+          </Table>
+        </Form>
 
-      <Modal show={show} onHide={handleClose}>
-        <ModalHeader closeButton>
-          <ModalTitle>Legg til ingredient</ModalTitle>
-        </ModalHeader>
-        <ModalBody>
-          <Form onSubmit={handleAddFormSubmit}>
-            <Form.Control
-              type="text"
-              required
-              name="ingredient"
-              placeholder="Skriv en ingredient"
-              onChange={handleAddFormChange}
-              autoFocus
-            />
-            <Form.Control
-              type="text"
-              name="bought"
-              placeholder="Hvor mye ble kjøpt inn"
-              onChange={handleAddFormChange}
-            />
-            <Form.Control
-              type="text"
-              name="used"
-              placeholder="Hvor mye ble brukt"
-              onChange={handleAddFormChange}
-            />
-            <Form.Control
-              as="select"
-              name="measurement"
-              onChange={handleAddFormChange}
-            >
-              <option defaultValue="select">Velg målenhet</option>
-              <option value="stk" name="stk">
-                STK
-              </option>
-              <option value="kg" name="kg">
-                KG
-              </option>
-              <option value="gr" name="gr">
-                GR
-              </option>
-              <option value="l" name="l">
-                L
-              </option>
-              <option value="dl" name="dl">
-                DL
-              </option>
-            </Form.Control>
-            <ModalFooter>
-              <Button type="submit" variant="success">
-                Lagre
-              </Button>
-            </ModalFooter>
-          </Form>
-        </ModalBody>
-      </Modal>
-    </Container>
+        <Modal show={show} onHide={handleClose}>
+          <ModalHeader closeButton>
+            <ModalTitle>Legg til ingredient</ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <Form onSubmit={handleAddFormSubmit}>
+              <Form.Control
+                type="text"
+                required
+                name="ingredient"
+                placeholder="Skriv en ingredient"
+                onChange={handleAddFormChange}
+                autoFocus
+              />
+              <Form.Control
+                type="text"
+                name="bought"
+                placeholder="Hvor mye ble kjøpt inn"
+                onChange={handleAddFormChange}
+              />
+              <Form.Control
+                type="text"
+                name="used"
+                placeholder="Hvor mye ble brukt"
+                onChange={handleAddFormChange}
+              />
+              <Form.Control
+                as="select"
+                name="measurement"
+                onChange={handleAddFormChange}
+              >
+                <option defaultValue="select">Velg målenhet</option>
+                <option value="stk" name="stk">
+                  STK
+                </option>
+                <option value="kg" name="kg">
+                  KG
+                </option>
+                <option value="gr" name="gr">
+                  GR
+                </option>
+                <option value="l" name="l">
+                  L
+                </option>
+                <option value="dl" name="dl">
+                  DL
+                </option>
+              </Form.Control>
+              <ModalFooter>
+                <Button type="submit" variant="success">
+                  Lagre
+                </Button>
+              </ModalFooter>
+            </Form>
+          </ModalBody>
+        </Modal>
+      </Container>
+    </>
   );
 }
 
