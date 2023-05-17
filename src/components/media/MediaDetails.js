@@ -1,8 +1,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import axios from "axios";
-import { ImageGroup, Image } from "react-fullscreen-image";
 import { useParams } from "react-router-dom";
-import { Button, Container, Form, FormControl } from "react-bootstrap";
+import { Button, Container, Form, FormControl, Image } from "react-bootstrap";
 import Loading from "./Loading";
 import ErrorHandler from "../errorHandler/ErrorHandler";
 
@@ -76,63 +75,61 @@ export function MediaDetails() {
           Submit
         </Button>
       </Form>
-      <ImageGroup>
-        <ul
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gridGap: "15px",
-            listStyleType: "none",
-            margin: 0,
-            padding: 0,
-          }}
-        >
-          {fileList.map((file, i) =>
-            file.year === id ? (
-              <div
-                key={i}
+      <ul
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gridGap: "15px",
+          listStyleType: "none",
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        {fileList.map((file, i) =>
+          file.year === id ? (
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <li
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
+                  position: "relative",
+                  paddingTop: "100%",
+                  marginBottom: "0px",
+                  marginTop: "40px",
                 }}
               >
-                <li
+                <Image
+                  src={"http://localhost:3001/images/" + file.image}
+                  alt={file.name}
                   style={{
-                    position: "relative",
-                    paddingTop: "100%",
-                    marginBottom: "0px",
-                    marginTop: "40px",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: "100%",
+                    width: "auto",
                   }}
-                >
-                  <Image
-                    src={"http://localhost:3001/images/" + file.image}
-                    alt={file.name}
-                    style={{
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      height: "100%",
-                      width: "auto",
-                    }}
-                  />
-                </li>
-                <Button
-                  variant="danger"
-                  onClick={() => deleteFile(file.id)}
-                  style={{
-                    marginTop: "25px",
-                    width: "50%",
-                    alignSelf: "center",
-                  }}
-                >
-                  Slett
-                </Button>
-              </div>
-            ) : null
-          )}
-        </ul>
-      </ImageGroup>
+                />
+              </li>
+              <Button
+                variant="danger"
+                onClick={() => deleteFile(file.id)}
+                style={{
+                  marginTop: "25px",
+                  width: "50%",
+                  alignSelf: "center",
+                }}
+              >
+                Slett
+              </Button>
+            </div>
+          ) : null
+        )}
+      </ul>
     </Container>
   );
 }
