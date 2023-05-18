@@ -21,7 +21,7 @@ const AdminContextProvider = ({ children }) => {
 
   let timer;
 
-  /* function handleLogoutTimer() {
+  function handleLogoutTimer() {
     timer = setTimeout(() => {
       resetTimer();
 
@@ -48,7 +48,7 @@ const AdminContextProvider = ({ children }) => {
 
   const logoutAction = () => {
     logout();
-  }; */
+  };
 
   function localStoreUser(user) {
     axios
