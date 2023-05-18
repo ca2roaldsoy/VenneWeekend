@@ -7,20 +7,21 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import Footer from "../footer/Footer";
+import { axiosURL } from "../../../constants/axiosURL";
 
 function Home() {
   const [posts, setPosts] = useState([]);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/post/get").then((response) => {
+    axios.get(axiosURL + "post/get").then((response) => {
       setPosts(response.data);
     });
   }, []);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/media")
+      .get(axiosURL + "media")
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, []);
@@ -85,7 +86,7 @@ function Home() {
           <Figure key={i}>
             <Figure.Image
               variant="top"
-              src={"http://localhost:3001/images/" + data[i].image}
+              src={axiosURL + "images/" + data[i].image}
               style={{
                 width: "100%",
                 height: 400,

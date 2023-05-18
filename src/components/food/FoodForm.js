@@ -18,6 +18,7 @@ import useFormPersist from "react-hook-form-persist";
 import Card from "react-bootstrap/Card";
 import * as yup from "yup";
 import axios from "axios";
+import { axiosURL } from "../../../constants/axiosURL";
 
 /* const schema = yup.object().shape({
   friday: yup.string(),
@@ -57,7 +58,7 @@ function FoodForm() {
   useEffect(() => {
     //localStorage.setItem("menuTable", JSON.stringify(menus));
     axios
-      .get("http://localhost:3001/foodmenu/get")
+      .get(axiosURL + "foodmenu/get")
       .then((response) => setMenus(response.data));
   }, []);
 
@@ -93,7 +94,7 @@ function FoodForm() {
       year: addFormData.year,
     };
 
-    axios.post("http://localhost:3001/foodmenu/insert", newMenu);
+    axios.post(axiosURL + "foodmenu/insert", newMenu);
     const newMenus = [...menus, newMenu];
     setMenus(newMenus);
   };
@@ -109,7 +110,7 @@ function FoodForm() {
       year: editFormData.year,
     };
 
-    axios.put(`http://localhost:3001/foodmenu/update`, editedIngredient);
+    axios.put(axiosURL + `foodmenu/update`, editedIngredient);
     const newMenus = [...menus];
     const index = menus.findIndex((menu) => menu.id === editMenuId);
     newMenus[index] = editedIngredient;
@@ -141,7 +142,7 @@ function FoodForm() {
     const index = menus.findIndex((menu) => menu.id === menuId);
 
     newMenus.splice(index, 1);
-    axios.delete(`http://localhost:3001/foodmenu/delete/${menuId}`);
+    axios.delete(axiosURL + `foodmenu/delete/${menuId}`);
     setMenus(newMenus);
   };
 

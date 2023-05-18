@@ -2,12 +2,13 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { axiosURL } from "../../../constants/axiosURL";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/post/get").then((response) => {
+    axios.get(axiosURL + "post/get").then((response) => {
       setPosts(response.data);
     });
   }, []);

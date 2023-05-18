@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import PostsComment from "../comments/PostsComment";
 import { Container } from "react-bootstrap";
+import { axiosURL } from "../../../constants/axiosURL";
 
 function PostsDetails() {
   const { title, id } = useParams();
@@ -11,7 +12,7 @@ function PostsDetails() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/post/get/", {
+      .get(axiosURL + "post/get/", {
         params: {
           id: id,
         },

@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import EditPostComment from "./EditPostComment";
 import ReadOnlyPostComment from "./ReadOnlyPostComment";
+import { axiosURL } from "../../../constants/axiosURL";
 
 function PostComment({ id }) {
   const [comments, setComments] = useState([]);
@@ -47,7 +48,7 @@ function PostComment({ id }) {
   useEffect(() => {
     //localStorage.setItem("foodTable", JSON.stringify(comments));
     axios
-      .get("http://localhost:3001/comments/get")
+      .get(axiosURL + "comments/get")
       .then((response) => setComments(response.data));
   }, []);
 
@@ -81,7 +82,7 @@ function PostComment({ id }) {
       name: addFormData.name,
     };
 
-    axios.post("http://localhost:3001/comments/insert", newComment);
+    axios.post(axiosURL + "comments/insert", newComment);
     const newcomments = [...comments, newComment];
     setComments(newcomments);
     setShow(false);
@@ -96,7 +97,7 @@ function PostComment({ id }) {
       name: editFormData.name,
     };
 
-    axios.put(`http://localhost:3001/comments/update`, editedComment);
+    axios.put(axiosURL + "comments/update", editedComment);
     const newcomments = [...comments];
     const index = comments.findIndex((ing) => ing.id === editCommentsId);
     newcomments[index] = editedComment;
@@ -127,7 +128,7 @@ function PostComment({ id }) {
     const index = comments.findIndex((p) => p.id === commentsId);
 
     newcomments.splice(index, 1);
-    axios.delete(`http://localhost:3001/comments/delete/${commentsId}`);
+    axios.delete(axiosURL + `comments/delete/${commentsId}`);
     setComments(newcomments);
   };
 

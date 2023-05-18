@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Button, Container, Form, FormControl, Image } from "react-bootstrap";
 import Loading from "./Loading";
 import ErrorHandler from "../errorHandler/ErrorHandler";
+import { axiosURL } from "../../../constants/axiosURL";
 
 export function MediaDetails() {
   const [files, setFiles] = useState([]);
@@ -14,7 +15,7 @@ export function MediaDetails() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/media/", {
+      .get(axiosURL + "media/", {
         params: {
           id: id,
         },
@@ -44,7 +45,7 @@ export function MediaDetails() {
     formData.append("year", id);
 
     axios
-      .post(`http://localhost:3001/media/`, formData)
+      .post(axiosURL + `media/`, formData)
       .then((window.location.href = `../media/${id}`));
   };
 
@@ -55,7 +56,7 @@ export function MediaDetails() {
     const index = files.findIndex((file) => file.id === fileId);
 
     newFiles.splice(index, 1);
-    axios.delete(`http://localhost:3001/media/delete/${fileId}`);
+    axios.delete(axiosURL + `media/delete/${fileId}`);
     setFiles(newFiles);
   };
 
@@ -103,7 +104,7 @@ export function MediaDetails() {
                 }}
               >
                 <Image
-                  src={"http://localhost:3001/images/" + file.image}
+                  src={axiosURL + "images/" + file.image}
                   alt={file.name}
                   style={{
                     top: 0,

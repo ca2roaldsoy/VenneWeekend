@@ -20,6 +20,7 @@ import {
   Container,
 } from "react-bootstrap";
 import { Table, Thead, Tbody, Tr, Th } from "react-super-responsive-table";
+import { axiosURL } from "../../../constants/axiosURL";
 
 // validate input field
 const schema = yup.object().shape({
@@ -62,7 +63,7 @@ function PostForm() {
   useEffect(() => {
     //localStorage.setItem("foodTable", JSON.stringify(posts));
     axios
-      .get("http://localhost:3001/post/get")
+      .get(axiosURL + "post/get")
       .then((response) => setPosts(response.data));
   }, []);
 
@@ -95,7 +96,7 @@ function PostForm() {
       message: addFormData.message,
     };
 
-    axios.post("http://localhost:3001/post/insert", newPost);
+    axios.post(axiosURL + "post/insert", newPost);
     const newposts = [...posts, newPost];
     setPosts(newposts);
   };
@@ -110,7 +111,7 @@ function PostForm() {
       message: editFormData.message,
     };
 
-    axios.put(`http://localhost:3001/post/update`, editedPost);
+    axios.put(axiosURL + `post/update`, editedPost);
     const newposts = [...posts];
     const index = posts.findIndex((ing) => ing.id === editPostId);
     newposts[index] = editedPost;
@@ -141,7 +142,7 @@ function PostForm() {
     const index = posts.findIndex((p) => p.id === postId);
 
     newposts.splice(index, 1);
-    axios.delete(`http://localhost:3001/post/delete/${postId}`);
+    axios.delete(axiosURL + `post/delete/${postId}`);
     setPosts(newposts);
   };
 

@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
 import axios from "axios";
+import { axiosURL } from "../../../constants/axiosURL";
 
 // create context to work with all components
 
@@ -51,7 +52,7 @@ const AdminContextProvider = ({ children }) => {
 
   function localStoreUser(user) {
     axios
-      .get("http://localhost:3001/login", {
+      .get(axiosURL + "login", {
         headers: {
           "x-access-token": localStorage.getItem("token"),
         },

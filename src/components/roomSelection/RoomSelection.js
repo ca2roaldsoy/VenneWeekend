@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
+import { axiosURL } from "../../../constants/axiosURL";
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -48,7 +49,7 @@ function RoomSelection() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/participents/get")
+      .get(axiosURL + "participents/get")
       .then((response) => setParticipents(response.data));
   }, []);
 

@@ -19,6 +19,7 @@ import useFormPersist from "react-hook-form-persist";
 import * as yup from "yup";
 import axios from "axios";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
+import { axiosURL } from "../../../constants/axiosURL";
 
 const schema = yup.object().shape({
   name: yup.string(),
@@ -75,7 +76,7 @@ function ParticipateForm() {
   useEffect(() => {
     //localStorage.setItem("participents", JSON.stringify(participents));
     axios
-      .get("http://localhost:3001/participents/get")
+      .get(axiosURL + "participents/get")
       .then((response) => setParticipents(response.data));
   }, []);
 
@@ -157,7 +158,7 @@ function ParticipateForm() {
       other: addFormData.other,
     };
 
-    axios.post("http://localhost:3001/participents/insert", newParticipent);
+    axios.post(axiosURL + "participents/insert", newParticipent);
     const newParticipents = [...participents, newParticipent];
     setParticipents(newParticipents);
   };
@@ -179,7 +180,7 @@ function ParticipateForm() {
       other: editFormData.other,
     };
 
-    axios.put(`http://localhost:3001/participents/update`, editedParticipent);
+    axios.put(axiosURL + `participents/update`, editedParticipent);
     const newParticipents = [...participents];
     const index = participents.findIndex(
       (person) => person.id === editPersonId
@@ -220,7 +221,7 @@ function ParticipateForm() {
     const index = participents.findIndex((person) => person.id === personId);
 
     newParticipents.splice(index, 1);
-    axios.delete(`http://localhost:3001/participents/delete/${personId}`);
+    axios.delete(axiosURL + `participents/delete/${personId}`);
     setParticipents(newParticipents);
   };
 

@@ -18,6 +18,7 @@ import useFormPersist from "react-hook-form-persist";
 import * as yup from "yup";
 import axios from "axios";
 import { Table, Thead, Tbody, Tr, Th } from "react-super-responsive-table";
+import { axiosURL } from "../../../constants/axiosURL";
 
 const schema = yup.object().shape({
   ingredient: yup.string(),
@@ -61,7 +62,7 @@ function FoodTable() {
   useEffect(() => {
     //localStorage.setItem("foodTable", JSON.stringify(ingredients));
     axios
-      .get("http://localhost:3001/foodtable/get")
+      .get(axiosURL + "foodtable/get")
       .then((response) => setIngredients(response.data));
   }, []);
 
@@ -95,7 +96,7 @@ function FoodTable() {
       measurement: addFormData.measurement,
     };
 
-    axios.post("http://localhost:3001/foodtable/insert", newIngredient);
+    axios.post(axiosURL + "foodtable/insert", newIngredient);
     const newIngredients = [...ingredients, newIngredient];
     setIngredients(newIngredients);
   };
@@ -111,7 +112,7 @@ function FoodTable() {
       measurement: editFormData.measurement,
     };
 
-    axios.put(`http://localhost:3001/foodtable/update`, editedIngredient);
+    axios.put(axiosURL + `foodtable/update`, editedIngredient);
     const newingredients = [...ingredients];
     const index = ingredients.findIndex((ing) => ing.id === editIngId);
     newingredients[index] = editedIngredient;
@@ -143,7 +144,7 @@ function FoodTable() {
     const index = ingredients.findIndex((ing) => ing.id === ingId);
 
     newingredients.splice(index, 1);
-    axios.delete(`http://localhost:3001/foodtable/delete/${ingId}`);
+    axios.delete(axiosURL + `foodtable/delete/${ingId}`);
     setIngredients(newingredients);
   };
 

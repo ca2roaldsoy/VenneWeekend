@@ -8,6 +8,7 @@ import { AdminContext } from "../../context/AdminContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { FormText } from "react-bootstrap";
+import { axiosURL } from "../../../constants/axiosURL";
 
 // validate input field
 const schema = yup.object().shape({
@@ -36,7 +37,7 @@ function LoginForm() {
     console.log("data", data);
 
     axios
-      .post("http://localhost:3001/login", {
+      .post(axiosURL + "login", {
         username: data.username,
         password: data.password,
       })
