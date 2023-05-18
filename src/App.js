@@ -15,9 +15,9 @@ function App() {
 
   return (
     <div className="App">
-      <AdminContextProvider>
-        <NavMenu />
-      </AdminContextProvider>
+      {/*  <AdminContextProvider> */}
+      <NavMenu />
+      {/* </AdminContextProvider> */}
     </div>
   );
 }
