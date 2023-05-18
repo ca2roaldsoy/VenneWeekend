@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { axiosURL } from "../../../constants/axiosURL";
+import { axiosURL } from "../../../constants";
 
 function Posts() {
   const [posts, setPosts] = useState([]);

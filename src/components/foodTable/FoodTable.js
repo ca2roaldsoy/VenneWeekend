@@ -18,7 +18,7 @@ import useFormPersist from "react-hook-form-persist";
 import * as yup from "yup";
 import axios from "axios";
 import { Table, Thead, Tbody, Tr, Th } from "react-super-responsive-table";
-import { axiosURL } from "../../../constants/axiosURL";
+import { axiosURL } from "../../constants/axiosURL";
 
 const schema = yup.object().shape({
   ingredient: yup.string(),
