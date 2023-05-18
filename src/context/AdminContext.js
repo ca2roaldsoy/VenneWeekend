@@ -1,6 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
 import axios from "axios";
-import { axiosURL } from "../../../constants/axiosURL";
+import { axiosURL } from "../constants/axiosURL";
 
 // create context to work with all components
 

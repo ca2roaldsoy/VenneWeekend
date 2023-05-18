@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
-import { axiosURL } from "../../../constants/axiosURL";
+import { axiosURL } from "../../constants/axiosURL";
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;

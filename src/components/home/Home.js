@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import Footer from "../footer/Footer";
-import { axiosURL } from "../../../constants/axiosURL";
+import { axiosURL } from "../../constants/axiosURL";
 
 function Home() {
   const [posts, setPosts] = useState([]);

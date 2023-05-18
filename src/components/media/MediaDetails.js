@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Button, Container, Form, FormControl, Image } from "react-bootstrap";
 import Loading from "./Loading";
 import ErrorHandler from "../errorHandler/ErrorHandler";
-import { axiosURL } from "../../../constants/axiosURL";
+import { axiosURL } from "../../constants/axiosURL";
 
 export function MediaDetails() {
   const [files, setFiles] = useState([]);

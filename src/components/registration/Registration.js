@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AdminContext } from "../../context/AdminContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import { axiosURL } from "../../../constants/axiosURL";
+import { axiosURL } from "../../constants/axiosURL";
 
 function Registration() {
   const [userReg, setUserReg] = useState("");

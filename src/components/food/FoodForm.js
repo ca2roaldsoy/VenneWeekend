@@ -18,7 +18,7 @@ import useFormPersist from "react-hook-form-persist";
 import Card from "react-bootstrap/Card";
 import * as yup from "yup";
 import axios from "axios";
-import { axiosURL } from "../../../constants/axiosURL";
+import { axiosURL } from "../../constants/axiosURL";
 
 /* const schema = yup.object().shape({
   friday: yup.string(),
