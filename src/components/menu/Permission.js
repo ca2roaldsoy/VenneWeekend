@@ -30,8 +30,8 @@ function Permission() {
           --- or ---
         </Card.Text>
         <Card.Text className="pageError__container--text">
-          <Link to="/">
-            <Button>Go to home page</Button>
+          <Link to="/login">
+            <Button>Go to login page</Button>
           </Link>
         </Card.Text>
       </Card>
