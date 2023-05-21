@@ -6,7 +6,7 @@ import LoginForm from "./LoginForm";
 function Login() {
   return (
     <>
-      <h1>Logg Inn</h1>
+      <h1>Logg Inn form</h1>
       <Registration />
       <LoginForm />
     </>
