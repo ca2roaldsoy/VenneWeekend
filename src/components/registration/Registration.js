@@ -36,10 +36,10 @@ function Registration() {
       username: data.username,
       password: data.password,
     });
-    setUserReg([
+    /*  setUserReg([
       ...userReg,
       { username: data.username, password: data.password },
-    ]);
+    ]); */
 
     /*localStorage.setItem("blogPosts", JSON.stringify(data));
         setValues(data) */
