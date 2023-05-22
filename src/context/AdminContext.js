@@ -19,7 +19,7 @@ const AdminContextProvider = ({ children }) => {
   const getUser = localStorage.getItem("user") || null;
   const [user, setUser] = useState(getUser);
 
-  let timer;
+  /*  let timer;
 
   function handleLogoutTimer() {
     timer = setTimeout(() => {
@@ -45,7 +45,7 @@ const AdminContextProvider = ({ children }) => {
       });
     });
   }, []);
-
+ */
   const logoutAction = () => {
     logout();
   };
@@ -54,7 +54,7 @@ const AdminContextProvider = ({ children }) => {
     axios
       .get(axiosURL + "login", {
         headers: {
-          "x-access-token": localStorage.getItem("token"),
+          "x-access-token": localStorage.getItem(user),
         },
       })
       .then(localStorage.setItem("user", user), setUser(user));
@@ -65,7 +65,7 @@ const AdminContextProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    window.location.pathname = "/";
+    window.location.pathname = "/login";
   }
 
   return (

@@ -19,7 +19,7 @@ const schema = yup.object().shape({
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
   axios.defaults.withCredentials = true;
 
@@ -43,10 +43,10 @@ function LoginForm() {
       })
       .then((response) => {
         if (!response.data.auth) {
-          setLoggedIn(response.data.message);
+          setLoggedIn(false);
           history("/login");
         } else {
-          setLoggedIn("");
+          setLoggedIn(true);
           localStorage.setItem("token", response.data.token);
           localStoreUser(response.data.auth);
           history("/");

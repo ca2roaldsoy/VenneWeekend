@@ -45,7 +45,9 @@ function NavMenu() {
           <Nav className="navbarTop__link">
             {/*check if user exist in local storage*/}
             {!user ? (
-              <></>
+              <>
+                <NavLink to="/login">Login</NavLink>
+              </>
             ) : (
               <>
                 <NavLink to="/participate">Påmelding</NavLink>
