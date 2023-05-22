@@ -1,2 +1,2 @@
 export const axiosURL =
-  "https://venneweekend.herokuapp.com/"; /*  "http://localhost:3001/" */
+  "https://venneweekend.netlify.app/"; /*  "http://localhost:3001/" */
