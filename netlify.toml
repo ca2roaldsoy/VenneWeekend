@@ -1,6 +1,6 @@
 [[redirects]]
-from = '/*'
-to = 'index/.html'
+from = '/api/*'
+to = 'https://venneweekend.herokuapp.com/:splat'
 status = 200
 
 [[headers]]
