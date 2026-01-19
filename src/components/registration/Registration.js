@@ -1,13 +1,7 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useNavigate } from "react-router-dom";
-import { AdminContext } from "../../context/AdminContext";
-import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
-import { axiosURL } from "../../constants/axiosURL";
+import { useForm } from "react-hook-form";
 
 function Registration() {
   const [userReg, setUserReg] = useState("");
@@ -31,18 +25,18 @@ function Registration() {
   function onSubmit(data, event) {
     console.log("data", data);
     /* event.preventDefault() */
-
+/* 
     axios.post(axiosURL + "register", {
       username: data.username,
       password: data.password,
-    });
-    /*  setUserReg([
+    }); */
+    setUserReg([
       ...userReg,
       { username: data.username, password: data.password },
-    ]); */
+    ]); 
 
-    /*localStorage.setItem("blogPosts", JSON.stringify(data));
-        setValues(data) */
+    localStorage.setItem("blogPosts", JSON.stringify(data));
+        /* setValues(data); */
   }
 
   return (

@@ -1,20 +1,21 @@
-import React, { useState, useEffect, Suspense } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Button, Container, Form, FormControl, Image } from "react-bootstrap";
-import Loading from "./Loading";
+import { useParams } from "react-router-dom";
 import ErrorHandler from "../errorHandler/ErrorHandler";
-import { axiosURL } from "../../constants/axiosURL";
+import Loading from "./Loading";
+
+const loadedFiles = JSON.parse(localStorage.getItem("images")) || [];
 
 export function MediaDetails() {
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState(loadedFiles);
   const [loading, setLoading] = useState(false);
   const [errorHandle, setErrorHandle] = useState(false);
 
   const { id } = useParams();
 
   useEffect(() => {
-    axios
+    localStorage.setItem("images", JSON.stringify(files));
+    /*  axios
       .get(axiosURL + "media/", {
         params: {
           id: id,
@@ -28,8 +29,8 @@ export function MediaDetails() {
         }
       })
       .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }, []);
+      .finally(() => setLoading(false)); */
+  }, [files]);
 
   const setimgfile = (event) => {
     setFiles(event.target.files);
@@ -44,9 +45,12 @@ export function MediaDetails() {
     }
     formData.append("year", id);
 
-    axios
+    localStorage.setItem("images", JSON.stringify(formData));
+    setFiles([...files, ...formData]);
+
+    /* axios
       .post(axiosURL + `media/`, formData)
-      .then((window.location.href = `../media/${id}`));
+      .then((window.location.href = `../media/${id}`)); */
   };
 
   const fileList = files ? [...files] : [];
@@ -56,7 +60,8 @@ export function MediaDetails() {
     const index = files.findIndex((file) => file.id === fileId);
 
     newFiles.splice(index, 1);
-    axios.delete(axiosURL + `media/delete/${fileId}`);
+    //axios.delete(axiosURL + `media/delete/${fileId}`);
+    localStorage.removeItem("images");
     setFiles(newFiles);
   };
 
@@ -104,7 +109,8 @@ export function MediaDetails() {
                 }}
               >
                 <Image
-                  src={axiosURL + "images/" + file.image}
+                  //src={axiosURL + "images/" + file.image}
+                  src={"images/" + file.image}
                   alt={file.name}
                   style={{
                     top: 0,

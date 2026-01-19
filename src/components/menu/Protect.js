@@ -8,7 +8,7 @@ const Protect = () => {
   const { user } = useContext(AdminContext);
 
   return (
-    user ? <Outlet /> : <Permission />
+    <Outlet />
   );
 };
 

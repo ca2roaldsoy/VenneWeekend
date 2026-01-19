@@ -1,32 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { nanoid } from "nanoid";
-import ReadOnlyRow from "./ReadOnlyFoodTableRow";
-import EditableRow from "./EditableFoodTableRow";
+import { useEffect, useState } from "react";
 import {
-  Form,
   Button,
+  Container,
+  Form,
   Modal,
-  ModalHeader,
-  ModalTitle,
   ModalBody,
   ModalFooter,
-  Container,
+  ModalHeader,
+  ModalTitle,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import useFormPersist from "react-hook-form-persist";
+import { Table, Tbody, Th, Thead, Tr } from "react-super-responsive-table";
 import * as yup from "yup";
-import axios from "axios";
-import { Table, Thead, Tbody, Tr, Th } from "react-super-responsive-table";
-import { axiosURL } from "../../constants/axiosURL";
+import EditableRow from "./EditableFoodTableRow";
+import ReadOnlyRow from "./ReadOnlyFoodTableRow";
 
 const schema = yup.object().shape({
   ingredient: yup.string(),
 });
-//const loadedIngredients = JSON.parse(localStorage.getItem("foodTable")) || [];
+const loadedIngredients = JSON.parse(localStorage.getItem("foodTable")) || [];
 
 function FoodTable() {
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState(loadedIngredients);
   const [editIngId, setEditIngId] = useState(null);
   const [show, setShow] = useState(false);
 
@@ -60,27 +58,22 @@ function FoodTable() {
   );
 
   useEffect(() => {
-    //localStorage.setItem("foodTable", JSON.stringify(ingredients));
-    axios
+    localStorage.setItem("foodTable", JSON.stringify(ingredients));
+    /*   axios
       .get(axiosURL + "foodtable/get")
-      .then((response) => setIngredients(response.data));
-  }, []);
+      .then((response) => setIngredients(response.data)); */
+  }, [ingredients]);
 
   const handleAddFormChange = (event) => {
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
-
-    const newFormData = { ...addFormData };
-    newFormData[fieldName] = fieldValue;
-
-    setAddFormData(newFormData);
+    const { name, value } = event.target;
+    setAddFormData({ ...addFormData, [name]: value });
   };
 
   const handleEditFormChange = (event) => {
-    event.preventDefault();
-
     const fieldName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
+
+    console.log(event);
 
     const newFormData = { ...editFormData };
     newFormData[fieldName] = fieldValue;
@@ -90,29 +83,30 @@ function FoodTable() {
 
   const handleAddFormSubmit = (event) => {
     const newIngredient = {
+      id: nanoid(),
       ingredient: addFormData.ingredient,
       bought: addFormData.bought,
       used: addFormData.used,
       measurement: addFormData.measurement,
     };
 
-    axios.post(axiosURL + "foodtable/insert", newIngredient);
+    //axios.post(axiosURL + "foodtable/insert", newIngredient);
     const newIngredients = [...ingredients, newIngredient];
+    localStorage.setItem("foodTable", JSON.stringify(newIngredients));
     setIngredients(newIngredients);
   };
 
-  const handleEditFormSubmit = (event) => {
-    event.preventDefault();
-
+  const handleEditFormSubmit = (event, id) => {
     const editedIngredient = {
-      id: editIngId,
+      id: id,
       ingredient: editFormData.ingredient,
       bought: editFormData.bought,
       used: editFormData.used,
       measurement: editFormData.measurement,
     };
 
-    axios.put(axiosURL + `foodtable/update`, editedIngredient);
+    //axios.put(axiosURL + `foodtable/update`, editedIngredient);
+
     const newingredients = [...ingredients];
     const index = ingredients.findIndex((ing) => ing.id === editIngId);
     newingredients[index] = editedIngredient;
@@ -140,12 +134,11 @@ function FoodTable() {
   };
 
   const handleDeleteClick = (ingId) => {
-    const newingredients = [...ingredients];
-    const index = ingredients.findIndex((ing) => ing.id === ingId);
+    const newIngredients = ingredients.filter((ing) => ing.id !== ingId);
 
-    newingredients.splice(index, 1);
-    axios.delete(axiosURL + `foodtable/delete/${ingId}`);
-    setIngredients(newingredients);
+    //axios.delete(axiosURL + `foodtable/delete/${ingId}`);
+    setIngredients(newIngredients);
+    localStorage.setItem("foodTable", JSON.stringify(newIngredients));
   };
 
   const handleClose = () => setShow(false);
@@ -172,9 +165,10 @@ function FoodTable() {
               </Tr>
             </Thead>
             <Tbody>
-              {ingredients.map((ing) =>
+              {ingredients.map((ing, i) =>
                 editIngId === ing.id ? (
                   <EditableRow
+                    key={i}
                     editFormData={editFormData}
                     handleEditFormChange={handleEditFormChange}
                     handleCancelClick={handleCancelClick}

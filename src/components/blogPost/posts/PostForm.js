@@ -1,35 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { Link, useNavigate } from "react-router-dom";
-import { AdminContext } from "../../../context/AdminContext";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { blogPosts } from "../../../constants/blogPosts";
-import useFormPersist from "react-hook-form-persist";
-import axios from "axios";
-import EditPostRow from "./EditPostRow";
-import ReadOnlyPostRow from "./ReadOnlyPostRow";
+import { useEffect, useState } from "react";
 import {
+  Container,
   Modal,
-  ModalHeader,
-  ModalTitle,
   ModalBody,
   ModalFooter,
-  Container,
+  ModalHeader,
+  ModalTitle,
 } from "react-bootstrap";
-import { Table, Thead, Tbody, Tr, Th } from "react-super-responsive-table";
-import { axiosURL } from "../../../constants/axiosURL";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { useForm } from "react-hook-form";
+import useFormPersist from "react-hook-form-persist";
+import { Table, Tbody, Th, Thead, Tr } from "react-super-responsive-table";
+import * as yup from "yup";
+import EditPostRow from "./EditPostRow";
+import ReadOnlyPostRow from "./ReadOnlyPostRow";
 
 // validate input field
 const schema = yup.object().shape({
   author: yup.string().required("Dette feltet må fylles"),
   message: yup.string(),
 });
+const loadedPosts = JSON.parse(localStorage.getItem("posts")) || [];
 
 function PostForm() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(loadedPosts);
   const [editPostId, setEditPostId] = useState(null);
   const [show, setShow] = useState(false);
 
@@ -61,11 +57,11 @@ function PostForm() {
   );
 
   useEffect(() => {
-    //localStorage.setItem("foodTable", JSON.stringify(posts));
-    axios
+    localStorage.setItem("posts", JSON.stringify(posts));
+    /* axios
       .get(axiosURL + "post/get")
-      .then((response) => setPosts(response.data));
-  }, []);
+      .then((response) => setPosts(response.data)); */
+  }, [posts]);
 
   const handleAddFormChange = (event) => {
     const fieldName = event.target.getAttribute("name");
@@ -96,8 +92,9 @@ function PostForm() {
       message: addFormData.message,
     };
 
-    axios.post(axiosURL + "post/insert", newPost);
+    //axios.post(axiosURL + "post/insert", newPost);
     const newposts = [...posts, newPost];
+    localStorage.setItem("posts", JSON.stringify(newposts));
     setPosts(newposts);
   };
 
@@ -111,7 +108,7 @@ function PostForm() {
       message: editFormData.message,
     };
 
-    axios.put(axiosURL + `post/update`, editedPost);
+    //axios.put(axiosURL + `post/update`, editedPost);
     const newposts = [...posts];
     const index = posts.findIndex((ing) => ing.id === editPostId);
     newposts[index] = editedPost;
@@ -121,7 +118,7 @@ function PostForm() {
   };
 
   const handleEditClick = (event, p) => {
-    //event.preventDefault();
+    event.preventDefault();
     setEditPostId(p.id);
 
     const FormValues = {
@@ -138,12 +135,11 @@ function PostForm() {
   };
 
   const handleDeleteClick = (postId) => {
-    const newposts = [...posts];
-    const index = posts.findIndex((p) => p.id === postId);
+    const newposts = posts.filter((post) => post.id !== postId);
 
-    newposts.splice(index, 1);
-    axios.delete(axiosURL + `post/delete/${postId}`);
+    /*  axios.delete(axiosURL + `post/delete/${postId}`); */
     setPosts(newposts);
+    localStorage.setItem("posts", JSON.stringify(newposts));
   };
 
   const handleClose = () => setShow(false);

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
+} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "react-bootstrap";
-import {
-  Modal,
-  ModalHeader,
-  ModalTitle,
-  ModalBody,
-  ModalFooter,
-} from "react-bootstrap";
 
 const schema = yup.object().shape({
   comment: yup.string(),

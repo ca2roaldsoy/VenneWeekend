@@ -44,11 +44,11 @@ function NavMenu() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="navbarTop__link">
             {/*check if user exist in local storage*/}
-            {!user ? (
+         {/*    {!user ? (
               <>
                 <NavLink to="/login">Login</NavLink>
               </>
-            ) : (
+            ) : ( */}
               <>
                 <NavLink to="/participate">Påmelding</NavLink>
                 <NavLink to="/menu">Meny</NavLink>
@@ -59,7 +59,7 @@ function NavMenu() {
                 <NavLink to="/kart">Kart</NavLink>
                 <LogOut />
               </>
-            )}
+           {/*  )} */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

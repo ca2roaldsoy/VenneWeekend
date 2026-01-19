@@ -1,32 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { nanoid } from "nanoid";
-import ReadOnlyMenu from "./ReadOnlyMenu";
-import EditMenu from "./EditMenu";
+import { useEffect, useState } from "react";
 import {
-  Form,
+  Accordion,
   Button,
+  Form,
   Modal,
-  ModalHeader,
-  ModalTitle,
   ModalBody,
   ModalFooter,
-  Accordion,
+  ModalHeader,
+  ModalTitle,
 } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import useFormPersist from "react-hook-form-persist";
 import Card from "react-bootstrap/Card";
+import { useForm } from "react-hook-form";
+import useFormPersist from "react-hook-form-persist";
 import * as yup from "yup";
-import axios from "axios";
-import { axiosURL } from "../../constants/axiosURL";
+import EditMenu from "./EditMenu";
+import ReadOnlyMenu from "./ReadOnlyMenu";
 
-/* const schema = yup.object().shape({
+const schema = yup.object().shape({
   friday: yup.string(),
 });
-const loadedMenu = JSON.parse(localStorage.getItem("menuTable")) || []; */
+const loadedMenu = JSON.parse(localStorage.getItem("menuTable")) || [];
 
 function FoodForm() {
-  const [menus, setMenus] = useState([]);
+  const [menus, setMenus] = useState(loadedMenu);
   const [editMenuId, setEditMenuId] = useState(null);
   const [show, setShow] = useState(false);
 
@@ -44,39 +42,34 @@ function FoodForm() {
     year: "",
   });
 
-  /* const { watch, setValue } = useForm({
+  const { watch, setValue } = useForm({
     resolver: yupResolver(schema),
-   }); 
-
-  useFormPersist("menuTable", {
-    watch, 
-    setValue,
-  }, {    
-    storage: window.localStorage
   });
- */
+
+  useFormPersist(
+    "menuTable",
+    {
+      watch,
+      setValue,
+    },
+    {
+      storage: window.localStorage,
+    }
+  );
+
   useEffect(() => {
-    //localStorage.setItem("menuTable", JSON.stringify(menus));
-    axios
+    localStorage.setItem("menuTable", JSON.stringify(menus));
+    /*   axios
       .get(axiosURL + "foodmenu/get")
-      .then((response) => setMenus(response.data));
+      .then((response) => setMenus(response.data)); */
   }, []);
 
   const handleAddFormChange = (event) => {
-    event.preventDefault();
-
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
-
-    const newFormData = { ...addFormData };
-    newFormData[fieldName] = fieldValue;
-
-    setAddFormData(newFormData);
+    const { name, value } = event.target;
+    setAddFormData({ ...addFormData, [name]: value });
   };
 
   const handleEditFormChange = (event) => {
-    event.preventDefault();
-
     const fieldName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
 
@@ -94,8 +87,9 @@ function FoodForm() {
       year: addFormData.year,
     };
 
-    axios.post(axiosURL + "foodmenu/insert", newMenu);
+    /*   axios.post(axiosURL + "foodmenu/insert", newMenu); */
     const newMenus = [...menus, newMenu];
+    localStorage.setItem("menuTable", JSON.stringify(newMenus));
     setMenus(newMenus);
   };
 
@@ -110,7 +104,7 @@ function FoodForm() {
       year: editFormData.year,
     };
 
-    axios.put(axiosURL + `foodmenu/update`, editedIngredient);
+    //axios.put(axiosURL + `foodmenu/update`, editedIngredient);
     const newMenus = [...menus];
     const index = menus.findIndex((menu) => menu.id === editMenuId);
     newMenus[index] = editedIngredient;
@@ -138,18 +132,15 @@ function FoodForm() {
   };
 
   const handleDeleteClick = (menuId) => {
-    const newMenus = [...menus];
-    const index = menus.findIndex((menu) => menu.id === menuId);
+    const newMenus = menus.filter((person) => person.id !== menuId);
 
-    newMenus.splice(index, 1);
-    axios.delete(axiosURL + `foodmenu/delete/${menuId}`);
+    // axios.delete(axiosURL + `foodmenu/delete/${menuId}`);
     setMenus(newMenus);
+    localStorage.setItem("menus", JSON.stringify(newMenus));
   };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  console.log(menus);
 
   function menuYear() {
     const yearArr = [];

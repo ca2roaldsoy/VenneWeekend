@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { nanoid } from "nanoid";
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
-  Container,
   Form,
   Modal,
   ModalBody,
@@ -11,12 +11,20 @@ import {
   ModalHeader,
   ModalTitle,
 } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import useFormPersist from "react-hook-form-persist";
+import * as yup from "yup";
 import EditPostComment from "./EditPostComment";
 import ReadOnlyPostComment from "./ReadOnlyPostComment";
-import { axiosURL } from "../../../constants/axiosURL";
+
+const schema = yup.object().shape({
+  author: yup.string().required("Dette feltet må fylles"),
+  comment: yup.string(),
+});
+const loadedComments = JSON.parse(localStorage.getItem("comments")) || [];
 
 function PostComment({ id }) {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(loadedComments);
   const [editCommentsId, setEditCommentsId] = useState(null);
   const [show, setShow] = useState(false);
 
@@ -30,12 +38,12 @@ function PostComment({ id }) {
     name: "",
   });
 
-  /* const { watch, setValue } = useForm({
+  const { watch, setValue } = useForm({
     resolver: yupResolver(schema),
   });
 
   useFormPersist(
-    "post",
+    "comments",
     {
       watch,
       setValue,
@@ -43,23 +51,18 @@ function PostComment({ id }) {
     {
       storage: window.localStorage,
     }
-  ); */
+  );
 
   useEffect(() => {
-    //localStorage.setItem("foodTable", JSON.stringify(comments));
-    axios
+    localStorage.setItem("comments", JSON.stringify(comments));
+    /*  axios
       .get(axiosURL + "comments/get")
-      .then((response) => setComments(response.data));
-  }, []);
+      .then((response) => setComments(response.data)); */
+  }, [comments]);
 
   const handleAddFormChange = (event) => {
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
-
-    const newFormData = { ...addFormData };
-    newFormData[fieldName] = fieldValue;
-
-    setAddFormData(newFormData);
+    const { name, value } = event.target;
+    setAddFormData({ ...addFormData, [name]: value });
   };
 
   const handleEditFormChange = (event) => {
@@ -78,41 +81,43 @@ function PostComment({ id }) {
     //event.preventDefault();
 
     const newComment = {
+      id: nanoid(),
       comment: addFormData.comment,
       name: addFormData.name,
     };
 
-    axios.post(axiosURL + "comments/insert", newComment);
-    const newcomments = [...comments, newComment];
-    setComments(newcomments);
-    setShow(false);
+    //axios.post(axiosURL + "comments/insert", newComment);
+    const newComments = [...comments, newComment];
+    localStorage.setItem("comments", JSON.stringify(newComments));
+    setComments(newComments);
   };
 
-  const handleEditFormSubmit = (event) => {
+  const handleEditFormSubmit = (event, id) => {
     //event.preventDefault();
 
     const editedComment = {
-      id: editCommentsId,
+      id: id,
       comment: editFormData.comment,
       name: editFormData.name,
     };
 
-    axios.put(axiosURL + "comments/update", editedComment);
+    //axios.put(axiosURL + "comments/update", editedComment);
     const newcomments = [...comments];
-    const index = comments.findIndex((ing) => ing.id === editCommentsId);
+    const index = comments.findIndex(
+      (comment) => comment.id === editCommentsId
+    );
     newcomments[index] = editedComment;
 
     setComments(newcomments);
     setEditCommentsId(null);
-    setShow(false);
   };
 
   const handleEditClick = (event, p) => {
-    //event.preventDefault();
+    event.preventDefault();
     setEditCommentsId(p.id);
 
     const FormValues = {
-      comment: p.comments,
+      comment: p.comment,
       name: p.name,
     };
 
@@ -124,12 +129,11 @@ function PostComment({ id }) {
   };
 
   const handleDeleteClick = (commentsId) => {
-    const newcomments = [...comments];
-    const index = comments.findIndex((p) => p.id === commentsId);
+    const newcomments = comments.filter((comment) => comment.id !== commentsId);
 
-    newcomments.splice(index, 1);
-    axios.delete(axiosURL + `comments/delete/${commentsId}`);
+    /*  axios.delete(axiosURL + `comments/delete/${commentsId}`); */
     setComments(newcomments);
+    localStorage.setItem("comments", JSON.stringify(newcomments));
   };
 
   const handleClose = () => setShow(false);

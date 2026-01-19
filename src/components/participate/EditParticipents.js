@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
 import {
   Button,
   Modal,
@@ -11,6 +8,9 @@ import {
   ModalHeader,
   ModalTitle,
 } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
 const schema = yup.object().shape({
   name: yup.string(),
@@ -113,13 +113,12 @@ function EditParticipents({
             <Form.Check type={"checkbox"}>
               <Form.Check.Input
                 type={"checkbox"}
+                value={"v"}
                 name="sheets"
-                onChange={handleEditFormChange}
-                value={editFormData.sheets}
-                /*  {...register("sheets", {
+                {...register("sheets", {
                   onChange: handleEditFormChange,
                   value: editFormData.sheets,
-                })} */
+                })}
               />
               <Form.Check.Label>Leie av sengetøy</Form.Check.Label>
             </Form.Check>

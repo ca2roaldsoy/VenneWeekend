@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import PostsComment from "../comments/PostsComment";
+import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import { axiosURL } from "../../../constants/axiosURL";
+import { useParams } from "react-router-dom";
+import PostsComment from "../comments/PostsComment";
 
 function PostsDetails() {
   const { title, id } = useParams();
@@ -11,16 +9,8 @@ function PostsDetails() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(axiosURL + "post/get/", {
-        params: {
-          id: id,
-        },
-      })
-      .then((response) => {
-        setPosts(response.data);
-      });
-  }, []);
+    localStorage.setItem("post", JSON.stringify(posts));
+  }, [posts]);
 
   return (
     <Container className="postDetail">

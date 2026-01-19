@@ -1,6 +1,5 @@
-import React from "react";
 import { Button } from "react-bootstrap";
-import { Tr, Td } from "react-super-responsive-table";
+import { Td, Tr } from "react-super-responsive-table";
 
 function ReadOnlyParticipents({ person, handleEditClick, handleDeleteClick }) {
   const allergiesArr = [person.lactose, person.gluten, person.other];
@@ -24,13 +23,13 @@ function ReadOnlyParticipents({ person, handleEditClick, handleDeleteClick }) {
       <Td>{person.sheets}</Td>
       <Td>{removeEmptyStringsFromAllergies}</Td>
       <Td>
-        {/*  <Button
+        <Button
           type="button"
           variant="info"
           onClick={(event) => handleEditClick(event, person)}
         >
           Rediger
-        </Button> */}
+        </Button> 
         <Button
           type="button"
           variant="danger"

@@ -1,17 +1,17 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { axiosURL } from "../../../constants/axiosURL";
+
+const loadedPosts = JSON.parse(localStorage.getItem("posts")) || [];
 
 function Posts() {
-  const [posts, setPosts] = useState([]);
-
+  const [posts, setPosts] = useState(loadedPosts);
   useEffect(() => {
-    axios.get(axiosURL + "post/get").then((response) => {
+    /*  axios.get(axiosURL + "post/get").then((response) => {
       setPosts(response.data);
-    });
-  }, []);
+    }); */
+    localStorage.setItem("post", JSON.stringify(posts));
+  }, [posts]);
 
   return (
     <>

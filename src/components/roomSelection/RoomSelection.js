@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import axios from "axios";
-import { axiosURL } from "../../constants/axiosURL";
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -41,19 +39,23 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
+const loadedParticipents =
+  JSON.parse(localStorage.getItem("participents")) || [];
+
 function RoomSelection() {
   const [columns, setColumns] = useState(
     JSON.parse(localStorage.getItem("RS")) || []
   );
-  const [participents, setParticipents] = useState({});
+  const [participents, setParticipents] = useState(loadedParticipents);
 
-  useEffect(() => {
-    axios
+  /*  useEffect(() => {
+    localStorage.setItem("Participent", JSON.stringify(participents));
+   axios
       .get(axiosURL + "participents/get")
-      .then((response) => setParticipents(response.data));
-  }, []);
+      .then((response) => setParticipents(response.data));  
+  }, [participents]); */
 
-  const persons = [];
+  /*  const persons = []; */
   (() => {
     for (let i = 0; i < participents.length; i++) {
       const participentId = participents[i].id;
@@ -64,14 +66,15 @@ function RoomSelection() {
         content: participentName,
       };
 
-      persons.push(obj);
+      /*  persons.push(obj); */
+      setParticipents(obj);
     }
   })();
 
   const rooms = {
     persons: {
       name: "Persons",
-      items: persons,
+      items: [participents],
     },
     room1: {
       name: "Room 1",
@@ -87,11 +90,15 @@ function RoomSelection() {
     },
   };
 
+  console.log(rooms);
+
   const reset = () => setColumns(rooms);
 
   useEffect(() => {
     localStorage.setItem("RS", JSON.stringify(columns));
   }, [columns]);
+
+  console.log("col " + columns);
 
   return (
     <Container fluid className="roomSelect">

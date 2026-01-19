@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { nanoid } from "nanoid";
-import ReadOnlyParticipents from "./ReadOnlyParticipents";
-import EditParticipents from "./EditParticipents";
+import { useEffect, useState } from "react";
 import {
+  Button,
+  Container,
   //Table,
   Form,
-  Button,
   Modal,
-  ModalHeader,
-  ModalTitle,
   ModalBody,
   ModalFooter,
-  Container,
+  ModalHeader,
+  ModalTitle,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import useFormPersist from "react-hook-form-persist";
+import { Table, Tbody, Th, Thead, Tr } from "react-super-responsive-table";
 import * as yup from "yup";
-import axios from "axios";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import { axiosURL } from "../../constants/axiosURL";
+import EditParticipents from "./EditParticipents";
+import ReadOnlyParticipents from "./ReadOnlyParticipents";
 
 const schema = yup.object().shape({
   name: yup.string(),
 });
-/* const loadedParticipents = JSON.parse(localStorage.getItem("participents")) || []; */
+const loadedParticipents =
+  JSON.parse(localStorage.getItem("participents")) || [];
 
 function ParticipateForm() {
-  const [participents, setParticipents] = useState([]);
+  const [participents, setParticipents] = useState(loadedParticipents);
   const [editPersonId, setEditPersonId] = useState(null);
   const [show, setShow] = useState(false);
 
@@ -74,69 +73,23 @@ function ParticipateForm() {
   );
 
   useEffect(() => {
-    //localStorage.setItem("participents", JSON.stringify(participents));
-    axios
+    localStorage.setItem("participents", JSON.stringify(participents));
+
+    /*  axios
       .get(axiosURL + "participents/get")
-      .then((response) => setParticipents(response.data));
-  }, []);
+      .then((response) => setParticipents(response.data)); */
+  }, [participents]);
 
   const handleAddFormChange = (event) => {
-    if (event.target.checked && event.target.name === "friday") {
-      addFormData.friday = event.target.name;
-    } else if (!event.target.checked && event.target.name === "friday") {
-      addFormData.friday = "";
-    }
-
-    if (event.target.checked && event.target.name === "saturday") {
-      addFormData.saturday = event.target.name;
-    } else if (!event.target.checked && event.target.name === "saturday") {
-      addFormData.saturday = "";
-    }
-
-    if (event.target.checked && event.target.name === "sunday") {
-      addFormData.sunday = event.target.name;
-    } else if (!event.target.checked && event.target.name === "sunday") {
-      addFormData.sunday = "";
-    }
-
-    if (event.target.checked && event.target.name === "monday") {
-      addFormData.monday = event.target.name;
-    } else if (!event.target.checked && event.target.name === "monday") {
-      addFormData.monday = "";
-    }
-
-    if (event.target.checked && event.target.name === "laktose") {
-      addFormData.lactose = event.target.name;
-    } else if (!event.target.checked && event.target.name === "laktose") {
-      addFormData.lactose = "";
-    }
-
-    if (event.target.checked && event.target.name === "gluten") {
-      addFormData.gluten = event.target.name;
-    } else if (!event.target.checked && event.target.name === "gluten") {
-      addFormData.gluten = "";
-    }
-
-    if (event.target.checked && event.target.name === "v") {
-      addFormData.sheets = event.target.name;
-    } else if (!event.target.checked && event.target.name === "v") {
-      addFormData.sheets = "";
-    }
-
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
-
-    const newFormData = { ...addFormData };
-    newFormData[fieldName] = fieldValue;
-
-    setAddFormData(newFormData);
+    const { name, value } = event.target;
+    setAddFormData({ ...addFormData, [name]: value });
   };
 
   const handleEditFormChange = (event) => {
-    event.preventDefault();
-
     const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+    const isChecked = event.target.type === "checkbox" && event.target.checked;
+    const checkedFieldValue = isChecked ? event.target.value : undefined;
+    const fieldValue = checkedFieldValue ?? event.target.value;
 
     const newFormData = { ...editFormData };
     newFormData[fieldName] = fieldValue;
@@ -144,8 +97,9 @@ function ParticipateForm() {
     setEditFormData(newFormData);
   };
 
-  const handleAddFormSubmit = (event) => {
+  const handleAddFormSubmit = (data) => {
     const newParticipent = {
+      id: nanoid(),
       name: addFormData.name,
       age: addFormData.age,
       friday: addFormData.friday,
@@ -158,16 +112,16 @@ function ParticipateForm() {
       other: addFormData.other,
     };
 
-    axios.post(axiosURL + "participents/insert", newParticipent);
+    //axios.post(axiosURL + "participents/insert", newParticipent);
+
     const newParticipents = [...participents, newParticipent];
+    localStorage.setItem("participents", JSON.stringify(newParticipents));
     setParticipents(newParticipents);
   };
 
-  const handleEditFormSubmit = (event) => {
-    //event.preventDefault();
-
+  const handleEditFormSubmit = (event, id) => {
     const editedParticipent = {
-      id: editPersonId,
+      id: id,
       name: editFormData.name,
       age: editFormData.age,
       friday: editFormData.friday,
@@ -180,7 +134,7 @@ function ParticipateForm() {
       other: editFormData.other,
     };
 
-    axios.put(axiosURL + `participents/update`, editedParticipent);
+    //axios.put(axiosURL + `participents/update`, editedParticipent);
     const newParticipents = [...participents];
     const index = participents.findIndex(
       (person) => person.id === editPersonId
@@ -192,7 +146,7 @@ function ParticipateForm() {
   };
 
   const handleEditClick = (event, person) => {
-    //event.preventDefault();
+    event.preventDefault();
 
     setEditPersonId(person.id);
 
@@ -217,12 +171,13 @@ function ParticipateForm() {
   };
 
   const handleDeleteClick = (personId) => {
-    const newParticipents = [...participents];
-    const index = participents.findIndex((person) => person.id === personId);
+    const newParticipents = participents.filter(
+      (person) => person.id !== personId
+    );
 
-    newParticipents.splice(index, 1);
-    axios.delete(axiosURL + `participents/delete/${personId}`);
+    //axios.delete(axiosURL + `participents/delete/${personId}`);
     setParticipents(newParticipents);
+    localStorage.setItem("participents", JSON.stringify(newParticipents));
   };
 
   const glutenCount = () => {

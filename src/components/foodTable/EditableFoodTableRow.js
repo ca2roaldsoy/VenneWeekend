@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
 import {
   Button,
   FormLabel,
@@ -12,7 +9,9 @@ import {
   ModalHeader,
   ModalTitle,
 } from "react-bootstrap";
-import { Tr } from "react-super-responsive-table";
+import Form from "react-bootstrap/Form";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 
 const schema = yup.object().shape({
   ingrediens: yup.string(),
@@ -79,7 +78,11 @@ function EditableRow({
         />
 
         <ModalFooter>
-          <Button variant="success" type="submit">
+          <Button
+            variant="success"
+            type="submit"
+            onClick={handleEditFormSubmit}
+          >
             Lagre
           </Button>
           <Button variant="danger" type="button" onClick={handleCancelClick}>
