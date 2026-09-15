@@ -162,7 +162,7 @@ function EditParticipents({
           <ModalFooter>
             <Button
               variant="success"
-              type="submit"
+              type="button"
               onClick={handleEditFormSubmit}
             >
               Lagre

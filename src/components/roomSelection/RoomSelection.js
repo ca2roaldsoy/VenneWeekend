@@ -42,63 +42,73 @@ const onDragEnd = (result, columns, setColumns) => {
 const loadedParticipents =
   JSON.parse(localStorage.getItem("participents")) || [];
 
-function RoomSelection() {
-  const [columns, setColumns] = useState(
-    JSON.parse(localStorage.getItem("RS")) || []
+const buildDefaultRooms = (personItems) => ({
+  persons: {
+    name: "Persons",
+    items: personItems,
+  },
+  room1: {
+    name: "Room 1",
+    items: [],
+  },
+  room2: {
+    name: "Room 2",
+    items: [],
+  },
+  room3: {
+    name: "Room 3",
+    items: [],
+  },
+});
+
+const syncParticipentsWithColumns = (columns, personItems) => {
+  const currentIds = new Set(personItems.map((item) => item.id));
+  const existingIds = new Set();
+
+  const prunedColumns = Object.fromEntries(
+    Object.entries(columns).map(([columnId, column]) => {
+      const items = column.items.filter((item) => currentIds.has(item.id));
+      items.forEach((item) => existingIds.add(item.id));
+      return [columnId, { ...column, items }];
+    })
   );
-  const [participents, setParticipents] = useState(loadedParticipents);
 
-  /*  useEffect(() => {
-    localStorage.setItem("Participent", JSON.stringify(participents));
-   axios
-      .get(axiosURL + "participents/get")
-      .then((response) => setParticipents(response.data));  
-  }, [participents]); */
+  const newItems = personItems.filter((item) => !existingIds.has(item.id));
 
-  /*  const persons = []; */
-  (() => {
-    for (let i = 0; i < participents.length; i++) {
-      const participentId = participents[i].id;
-      const participentName = participents[i].name;
+  if (newItems.length === 0) return prunedColumns;
 
-      const obj = {
-        id: participentId.toString(),
-        content: participentName,
-      };
-
-      /*  persons.push(obj); */
-      setParticipents(obj);
-    }
-  })();
-
-  const rooms = {
+  return {
+    ...prunedColumns,
     persons: {
-      name: "Persons",
-      items: [participents],
-    },
-    room1: {
-      name: "Room 1",
-      items: [],
-    },
-    room2: {
-      name: "Room 2",
-      items: [],
-    },
-    room3: {
-      name: "Room 3",
-      items: [],
+      ...prunedColumns.persons,
+      items: [...prunedColumns.persons.items, ...newItems],
     },
   };
+};
 
-  console.log(rooms);
+function RoomSelection() {
+  const participents = loadedParticipents;
 
-  const reset = () => setColumns(rooms);
+  const personItems = participents
+    .filter((participent) => participent && participent.id != null)
+    .map((participent) => ({
+      id: participent.id.toString(),
+      content: participent.name,
+    }));
+
+  const [columns, setColumns] = useState(() => {
+    const savedColumns = JSON.parse(localStorage.getItem("RS"));
+    if (savedColumns && Object.keys(savedColumns).length > 0) {
+      return syncParticipentsWithColumns(savedColumns, personItems);
+    }
+    return buildDefaultRooms(personItems);
+  });
+
+  const reset = () => setColumns(buildDefaultRooms(personItems));
 
   useEffect(() => {
     localStorage.setItem("RS", JSON.stringify(columns));
   }, [columns]);
-
-  console.log("col " + columns);
 
   return (
     <Container fluid className="roomSelect">

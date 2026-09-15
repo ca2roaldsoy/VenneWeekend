@@ -25,6 +25,20 @@ const schema = yup.object().shape({
 const loadedParticipents =
   JSON.parse(localStorage.getItem("participents")) || [];
 
+const syncRoomSelectionItems = (updateItems) => {
+  const savedColumns = JSON.parse(localStorage.getItem("RS"));
+  if (!savedColumns) return;
+
+  const updatedColumns = Object.fromEntries(
+    Object.entries(savedColumns).map(([columnId, column]) => [
+      columnId,
+      { ...column, items: updateItems(column.items) },
+    ])
+  );
+
+  localStorage.setItem("RS", JSON.stringify(updatedColumns));
+};
+
 function ParticipateForm() {
   const [participents, setParticipents] = useState(loadedParticipents);
   const [editPersonId, setEditPersonId] = useState(null);
@@ -62,7 +76,7 @@ function ParticipateForm() {
   });
 
   useFormPersist(
-    "participents",
+    "participentFormDraft",
     {
       watch,
       setValue,
@@ -97,7 +111,9 @@ function ParticipateForm() {
     setEditFormData(newFormData);
   };
 
-  const handleAddFormSubmit = (data) => {
+  const handleAddFormSubmit = (event) => {
+    event.preventDefault();
+
     const newParticipent = {
       id: nanoid(),
       name: addFormData.name,
@@ -117,11 +133,26 @@ function ParticipateForm() {
     const newParticipents = [...participents, newParticipent];
     localStorage.setItem("participents", JSON.stringify(newParticipents));
     setParticipents(newParticipents);
+    setAddFormData({
+      name: "",
+      age: "",
+      friday: "",
+      saturday: "",
+      sunday: "",
+      monday: "",
+      sheets: "",
+      lactose: "",
+      gluten: "",
+      other: "",
+    });
+    setShow(false);
   };
 
-  const handleEditFormSubmit = (event, id) => {
+  const handleEditFormSubmit = (event) => {
+    event.preventDefault();
+
     const editedParticipent = {
-      id: id,
+      id: editPersonId,
       name: editFormData.name,
       age: editFormData.age,
       friday: editFormData.friday,
@@ -142,6 +173,13 @@ function ParticipateForm() {
     newParticipents[index] = editedParticipent;
 
     setParticipents(newParticipents);
+    syncRoomSelectionItems((items) =>
+      items.map((item) =>
+        item.id === String(editPersonId)
+          ? { ...item, content: editedParticipent.name }
+          : item
+      )
+    );
     setEditPersonId(null);
   };
 
@@ -178,6 +216,9 @@ function ParticipateForm() {
     //axios.delete(axiosURL + `participents/delete/${personId}`);
     setParticipents(newParticipents);
     localStorage.setItem("participents", JSON.stringify(newParticipents));
+    syncRoomSelectionItems((items) =>
+      items.filter((item) => item.id !== String(personId))
+    );
   };
 
   const glutenCount = () => {
@@ -242,7 +283,7 @@ function ParticipateForm() {
                   />
                 ) : (
                   <ReadOnlyParticipents
-                    key={nanoid()}
+                    key={person.id}
                     person={person}
                     handleEditClick={handleEditClick}
                     handleDeleteClick={handleDeleteClick}
