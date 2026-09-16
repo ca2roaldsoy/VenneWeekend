@@ -1,17 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const loadedPosts = JSON.parse(localStorage.getItem("posts")) || [];
 
 function Posts() {
-  const [posts, setPosts] = useState(loadedPosts);
-  useEffect(() => {
-    /*  axios.get(axiosURL + "post/get").then((response) => {
-      setPosts(response.data);
-    }); */
-    localStorage.setItem("post", JSON.stringify(posts));
-  }, [posts]);
+  const [posts] = useState(loadedPosts);
 
   return (
     <>
@@ -38,7 +32,7 @@ function Posts() {
                   {p.author}, {""}
                   {new Date().getFullYear() +
                     "/" +
-                    new Date().getMonth() +
+                    (new Date().getMonth() + 1) +
                     "/" +
                     new Date().getDate()}
                 </Card.Footer>

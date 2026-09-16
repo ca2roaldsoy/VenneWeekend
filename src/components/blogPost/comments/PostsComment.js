@@ -78,10 +78,11 @@ function PostComment({ id }) {
   };
 
   const handleAddFormSubmit = (event) => {
-    //event.preventDefault();
+    event.preventDefault();
 
     const newComment = {
       id: nanoid(),
+      postId: id,
       comment: addFormData.comment,
       name: addFormData.name,
     };
@@ -90,13 +91,14 @@ function PostComment({ id }) {
     const newComments = [...comments, newComment];
     localStorage.setItem("comments", JSON.stringify(newComments));
     setComments(newComments);
+    setAddFormData({ comment: "", name: "" });
+    setShow(false);
   };
 
-  const handleEditFormSubmit = (event, id) => {
-    //event.preventDefault();
-
+  const handleEditFormSubmit = (event) => {
     const editedComment = {
-      id: id,
+      id: editCommentsId,
+      postId: id,
       comment: editFormData.comment,
       name: editFormData.name,
     };
@@ -146,7 +148,9 @@ function PostComment({ id }) {
       </Button>
       <h3 className="text-center">Kommentarer</h3>
       <Form onSubmit={handleEditFormSubmit} className="mt-5 comments__form">
-        {comments.map((p, i) => (
+        {comments
+          .filter((p) => p.postId === id)
+          .map((p, i) => (
           <div key={i}>
             <div className="comments__actions">
               <Button

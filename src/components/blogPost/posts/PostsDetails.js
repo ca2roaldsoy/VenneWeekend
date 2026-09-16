@@ -1,33 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import PostsComment from "../comments/PostsComment";
 
+const loadedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+
 function PostsDetails() {
   const { title, id } = useParams();
 
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    localStorage.setItem("post", JSON.stringify(posts));
-  }, [posts]);
+  const [posts] = useState(loadedPosts);
+  const post = posts.find((p) => p.id === id);
 
   return (
     <Container className="postDetail">
       <h1>{title}</h1>
-      {posts.map((p) => {
-        const numId = parseInt(id);
-        if (p.id === numId) {
-          return (
-            <div key={p.id}>
-              <p className="message">{p.message}</p>
-              <h6 className="author">Forfatter</h6>
-              <p className="author__name">{p.author}</p>
-              <hr />
-            </div>
-          );
-        }
-      })}
+      {post && (
+        <div key={post.id}>
+          <p className="message">{post.message}</p>
+          <h6 className="author">Forfatter</h6>
+          <p className="author__name">{post.author}</p>
+          <hr />
+        </div>
+      )}
       <PostsComment key={id} id={id} />
     </Container>
   );
