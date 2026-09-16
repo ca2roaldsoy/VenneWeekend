@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 function Media() {
   function years() {
     const yArr = [];
+    const currentYear = new Date().getFullYear();
 
-    for (let i = 2020; i < 2023; i++) {
+    for (let i = 2020; i <= currentYear; i++) {
       yArr.push(
         <Col md={4} sm={1} key={i}>
           <Link to={`${i}`}>

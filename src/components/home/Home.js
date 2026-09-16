@@ -1,31 +1,17 @@
-import React, { useState, useEffect } from "react";
-import Image from "react-bootstrap/Image";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { Button, Col, Figure, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Carousel from "react-multi-carousel";
 import Footer from "../footer/Footer";
 
+const loadedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+const loadedImages = JSON.parse(localStorage.getItem("images")) || [];
+
 function Home() {
-  const [posts, setPosts] = useState([]);
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-  /*   axios.get(axiosURL + "post/get").then((response) => {
-      setPosts(response.data);
-    }); */
-    localStorage.setItem("post", JSON.stringify(posts));
-  }, []);
-
-  useEffect(() => {
- /*    axios
-      .get(axiosURL + "media")
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err)); */
-      localStorage.setItem("images", JSON.stringify(data));
-  }, []);
+  const [posts] = useState(loadedPosts);
+  const [data] = useState(loadedImages);
 
   function getPosts() {
     const allPosts = [];
@@ -44,7 +30,7 @@ function Home() {
                 {postIndex.author},{" "}
                 {new Date().getFullYear() +
                   "/" +
-                  new Date().getMonth() +
+                  (new Date().getMonth() + 1) +
                   "/" +
                   new Date().getDate()}
               </Card.Footer>
@@ -87,7 +73,8 @@ function Home() {
           <Figure key={i}>
             <Figure.Image
               variant="top"
-              /* src={axiosURL + "images/" + data[i].image} */
+              src={data[i].image}
+              alt={data[i].name}
               style={{
                 width: "100%",
                 height: 400,
