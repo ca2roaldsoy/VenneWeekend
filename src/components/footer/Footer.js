@@ -7,7 +7,7 @@ function Footer() {
   return (
     <Row as="footer" role="contentinfo" className="footer">
       <Col sm={12} md={3} lg={3} as="section" className="footer__title">
-        <h1 className="footer__title--text">Holidaze</h1>
+        <h1 className="footer__title--text">VenneWeekend</h1>
       </Col>
       <Col sm={12} md={3} lg={3} as="section" className="footer__contact">
         <FooterMenu />
@@ -22,8 +22,8 @@ function Footer() {
         </a>
       </Col>
       <Col sm={12} md={3} lg={3} as="section" className="footer__copy">
-        <p>2023 VenneWeekend</p>
-        <p>Lunden Lunden leir- og fritidssenter</p>
+        <p>{new Date().getFullYear()} VenneWeekend</p>
+        <p>Lunden leir- og fritidssenter</p>
       </Col>
     </Row>
   );
