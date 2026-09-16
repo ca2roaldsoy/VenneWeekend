@@ -44,19 +44,19 @@ const loadedParticipents =
 
 const buildDefaultRooms = (personItems) => ({
   persons: {
-    name: "Persons",
+    name: "Deltakere",
     items: personItems,
   },
   room1: {
-    name: "Room 1",
+    name: "Rom 1",
     items: [],
   },
   room2: {
-    name: "Room 2",
+    name: "Rom 2",
     items: [],
   },
   room3: {
-    name: "Room 3",
+    name: "Rom 3",
     items: [],
   },
 });
@@ -113,7 +113,7 @@ function RoomSelection() {
   return (
     <Container fluid className="roomSelect">
       <div className="roomSelect__title">
-        <h1>Room Selection</h1>
+        <h1>Romseleksjon</h1>
       </div>
       <main>
         <Row className="roomSelect__main">
@@ -122,7 +122,6 @@ function RoomSelection() {
           >
             {Object.entries(columns).map(([columnId, column], index) => {
               const totalLargeRooms = 4;
-              const totalSmallRooms = 2;
 
               return (
                 <Col
@@ -133,7 +132,7 @@ function RoomSelection() {
                   className="roomSelect__section"
                 >
                   {column.items.length > totalLargeRooms ? (
-                    <h2>Too much</h2>
+                    <h2>For mange</h2>
                   ) : (
                     <h2>
                       {column.name +
