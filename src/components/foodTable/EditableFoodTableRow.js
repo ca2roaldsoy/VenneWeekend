@@ -33,7 +33,7 @@ function EditableRow({
   return (
     <Modal show={!open} onHide={handleClose} className="admModal">
       <ModalHeader>
-        <ModalTitle>Rediger melding</ModalTitle>
+        <ModalTitle>Rediger ingrediens</ModalTitle>
       </ModalHeader>
       <ModalBody>
         <FormLabel>Ingrediens</FormLabel>

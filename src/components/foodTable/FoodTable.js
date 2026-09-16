@@ -73,8 +73,6 @@ function FoodTable() {
     const fieldName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
 
-    console.log(event);
-
     const newFormData = { ...editFormData };
     newFormData[fieldName] = fieldValue;
 
@@ -82,6 +80,8 @@ function FoodTable() {
   };
 
   const handleAddFormSubmit = (event) => {
+    event.preventDefault();
+
     const newIngredient = {
       id: nanoid(),
       ingredient: addFormData.ingredient,
@@ -94,11 +94,13 @@ function FoodTable() {
     const newIngredients = [...ingredients, newIngredient];
     localStorage.setItem("foodTable", JSON.stringify(newIngredients));
     setIngredients(newIngredients);
+    setAddFormData({ ingredient: "", bought: "", used: "", measurement: "" });
+    setShow(false);
   };
 
-  const handleEditFormSubmit = (event, id) => {
+  const handleEditFormSubmit = (event) => {
     const editedIngredient = {
-      id: id,
+      id: editIngId,
       ingredient: editFormData.ingredient,
       bought: editFormData.bought,
       used: editFormData.used,
@@ -111,6 +113,7 @@ function FoodTable() {
     const index = ingredients.findIndex((ing) => ing.id === editIngId);
     newingredients[index] = editedIngredient;
 
+    localStorage.setItem("foodTable", JSON.stringify(newingredients));
     setIngredients(newingredients);
     setEditIngId(null);
   };
