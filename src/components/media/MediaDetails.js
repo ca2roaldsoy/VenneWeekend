@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
+import { useState } from "react";
 import { Button, Container, Form, FormControl, Image } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import ErrorHandler from "../errorHandler/ErrorHandler";
@@ -6,62 +7,52 @@ import Loading from "./Loading";
 
 const loadedFiles = JSON.parse(localStorage.getItem("images")) || [];
 
+const readAsDataUrl = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
 export function MediaDetails() {
   const [files, setFiles] = useState(loadedFiles);
-  const [loading, setLoading] = useState(false);
-  const [errorHandle, setErrorHandle] = useState(false);
+  const [pendingFiles, setPendingFiles] = useState([]);
+  const [loading] = useState(false);
+  const [errorHandle] = useState(false);
 
   const { id } = useParams();
 
-  useEffect(() => {
-    localStorage.setItem("images", JSON.stringify(files));
-    /*  axios
-      .get(axiosURL + "media/", {
-        params: {
-          id: id,
-        },
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          setFiles(response.data);
-        } else {
-          setErrorHandle(true);
-        }
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false)); */
-  }, [files]);
-
   const setimgfile = (event) => {
-    setFiles(event.target.files);
+    setPendingFiles([...event.target.files]);
   };
 
-  const addUserData = (event) => {
+  const addUserData = async (event) => {
     event.preventDefault();
-    var formData = new FormData();
 
-    for (const file of files) {
-      formData.append("files", file);
-    }
-    formData.append("year", id);
+    if (pendingFiles.length === 0) return;
 
-    localStorage.setItem("images", JSON.stringify(formData));
-    setFiles([...files, ...formData]);
+    const newFiles = await Promise.all(
+      pendingFiles.map(async (file) => ({
+        id: nanoid(),
+        year: id,
+        name: file.name,
+        image: await readAsDataUrl(file),
+      }))
+    );
 
-    /* axios
-      .post(axiosURL + `media/`, formData)
-      .then((window.location.href = `../media/${id}`)); */
+    const updatedFiles = [...files, ...newFiles];
+    localStorage.setItem("images", JSON.stringify(updatedFiles));
+    setFiles(updatedFiles);
+    setPendingFiles([]);
+    event.target.reset();
   };
-
-  const fileList = files ? [...files] : [];
 
   const deleteFile = (fileId) => {
-    const newFiles = [...files];
-    const index = files.findIndex((file) => file.id === fileId);
+    const newFiles = files.filter((file) => file.id !== fileId);
 
-    newFiles.splice(index, 1);
     //axios.delete(axiosURL + `media/delete/${fileId}`);
-    localStorage.removeItem("images");
+    localStorage.setItem("images", JSON.stringify(newFiles));
     setFiles(newFiles);
   };
 
@@ -74,11 +65,11 @@ export function MediaDetails() {
   ) : (
     <Container className="mediaDetails">
       <h1>Media for {id}</h1>
-      <Form>
-        <h4>Upload file:</h4>
+      <Form onSubmit={addUserData}>
+        <h4>Last opp bilde:</h4>
         <FormControl type="file" name="photo" onChange={setimgfile} multiple />
-        <Button variant="success" type="submit" onClick={addUserData}>
-          Submit
+        <Button variant="success" type="submit">
+          Last opp
         </Button>
       </Form>
       <ul
@@ -91,10 +82,10 @@ export function MediaDetails() {
           padding: 0,
         }}
       >
-        {fileList.map((file, i) =>
+        {files.map((file) =>
           file.year === id ? (
             <div
-              key={i}
+              key={file.id}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -109,8 +100,7 @@ export function MediaDetails() {
                 }}
               >
                 <Image
-                  //src={axiosURL + "images/" + file.image}
-                  src={"images/" + file.image}
+                  src={file.image}
                   alt={file.name}
                   style={{
                     top: 0,

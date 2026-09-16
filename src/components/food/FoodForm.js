@@ -79,8 +79,11 @@ function FoodForm() {
     setEditFormData(newFormData);
   };
 
-  const handleAddFormSubmit = () => {
+  const handleAddFormSubmit = (event) => {
+    event.preventDefault();
+
     const newMenu = {
+      id: nanoid(),
       friday: addFormData.friday,
       saturday: addFormData.saturday,
       sunday: addFormData.sunday,
@@ -91,6 +94,8 @@ function FoodForm() {
     const newMenus = [...menus, newMenu];
     localStorage.setItem("menuTable", JSON.stringify(newMenus));
     setMenus(newMenus);
+    setAddFormData({ friday: "", saturday: "", sunday: "", year: "" });
+    setShow(false);
   };
 
   const handleEditFormSubmit = (event) => {
@@ -109,6 +114,7 @@ function FoodForm() {
     const index = menus.findIndex((menu) => menu.id === editMenuId);
     newMenus[index] = editedIngredient;
 
+    localStorage.setItem("menuTable", JSON.stringify(newMenus));
     setMenus(newMenus);
     setEditMenuId(null);
   };
@@ -136,48 +142,48 @@ function FoodForm() {
 
     // axios.delete(axiosURL + `foodmenu/delete/${menuId}`);
     setMenus(newMenus);
-    localStorage.setItem("menus", JSON.stringify(newMenus));
+    localStorage.setItem("menuTable", JSON.stringify(newMenus));
   };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   function menuYear() {
-    const yearArr = [];
-    for (let i = 2; i < 6; i++) {
-      yearArr.push(
-        <Accordion defaultActiveKey="0" key={i} className="menu__yearAcc">
-          <Accordion.Item eventKey={i}>
-            <Accordion.Header>202{i}</Accordion.Header>
-            <Accordion.Body>
-              <Card>
-                {menus.map((menu) =>
-                  menu.year === `202${i}` ? (
-                    editMenuId === menu.id ? (
-                      <EditMenu
-                        key={i}
-                        editFormData={editFormData}
-                        handleEditFormChange={handleEditFormChange}
-                        handleCancelClick={handleCancelClick}
-                      />
-                    ) : (
-                      <ReadOnlyMenu
-                        key={nanoid()}
-                        menu={menu}
-                        handleEditClick={handleEditClick}
-                        handleDeleteClick={handleDeleteClick}
-                      />
-                    )
-                  ) : null
-                )}
-              </Card>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-      );
-    }
+    const currentYear = new Date().getFullYear().toString();
+    const years = Array.from(
+      new Set([...menus.map((menu) => menu.year).filter(Boolean), currentYear])
+    ).sort();
 
-    return yearArr;
+    return years.map((year) => (
+      <Accordion defaultActiveKey="0" key={year} className="menu__yearAcc">
+        <Accordion.Item eventKey={year}>
+          <Accordion.Header>{year}</Accordion.Header>
+          <Accordion.Body>
+            <Card>
+              {menus.map((menu) =>
+                menu.year === year ? (
+                  editMenuId === menu.id ? (
+                    <EditMenu
+                      key={menu.id}
+                      editFormData={editFormData}
+                      handleEditFormChange={handleEditFormChange}
+                      handleCancelClick={handleCancelClick}
+                    />
+                  ) : (
+                    <ReadOnlyMenu
+                      key={menu.id}
+                      menu={menu}
+                      handleEditClick={handleEditClick}
+                      handleDeleteClick={handleDeleteClick}
+                    />
+                  )
+                ) : null
+              )}
+            </Card>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+    ));
   }
 
   return (

@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import {
   Container,
@@ -86,7 +87,10 @@ function PostForm() {
   };
 
   const handleAddFormSubmit = (event) => {
+    event.preventDefault();
+
     const newPost = {
+      id: nanoid(),
       author: addFormData.author,
       title: addFormData.title,
       message: addFormData.message,
@@ -96,11 +100,11 @@ function PostForm() {
     const newposts = [...posts, newPost];
     localStorage.setItem("posts", JSON.stringify(newposts));
     setPosts(newposts);
+    setAddFormData({ author: "", title: "", message: "" });
+    setShow(false);
   };
 
   const handleEditFormSubmit = (event) => {
-    //event.preventDefault();
-
     const editedPost = {
       id: editPostId,
       author: editFormData.author,
